@@ -1,0 +1,171 @@
+.search-tool{
+    padding-top: 60px !important;
+}
+.results{
+    margin-left: 100px;
+    margin-top: 15px;
+    font-size: 20px;
+}
+    .container-4 {
+        overflow: hidden;
+        width: 600px;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+    
+    .container-4 input#search {
+        position: absolute;
+        width: 600px;
+        height: 50px;
+        background: #2b303b;
+        border: none;
+        font-size: 15pt;
+        float: left;
+        color: #fff;
+        padding-left: 15px;
+        -webkit-border-right-radius: 5px;
+        -moz-border-right-radius: 5px;
+		 border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        border:none;
+    }
+    
+    input:focus {
+        outline: none;
+    }
+    
+    .container-4 input#search::-webkit-input-placeholder {
+        color: #65737e;
+    }
+    
+    .container-4 input#search::-moz-placeholder {
+        /* Firefox 19+ */
+        color: #65737e;
+    }
+    
+    .container-4 input#search:-ms-input-placeholder {
+        color: #65737e;
+    }
+    
+    .container-4 button.icon {
+        -webkit-border-top-right-radius: 5px;
+        -webkit-border-bottom-right-radius: 5px;
+        -moz-border-radius-topright: 5px;
+        -moz-border-radius-bottomright: 5px;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        border: none;
+        background: #fff;
+        position: fixed;
+        margin-left: 50px;
+        height: 50px;
+        width: 50px;
+        color: #4f5b66;
+        opacity: 0;
+        font-size: 10pt;
+        -webkit-transition: all .55s ease;
+        -moz-transition: all .55s ease;
+        -ms-transition: all .55s ease;
+        -o-transition: all .55s ease;
+        transition: all .55s ease;
+    }
+    
+    .container-4:hover button.icon,
+    .container-4:active button.icon,
+    .container-4:focus button.icon {
+        outline: none;
+        opacity: 1;
+        margin-left: 550px;
+    }
+    
+    .container-4:hover button.icon:hover {
+        background: #F96;
+    }
+    
+    .dropbtn {
+		outline:none;
+        -webkit-border-top-left-radius: 5px;
+        -webkit-border-bottom-left-radius: 5px;
+        -moz-border-radius-topleft: 5px;
+        -moz-border-radius-bottomleft: 5px;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        border: none;
+
+        font-family: 'Libre Baskerville';
+        width: 120px;
+        height: 50px;
+        background-color: #000;
+        color: #FC0;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
+    /* Dropdown button on hover & focus */
+    
+    .dropbtn:hover,
+    .dropbtn:focus {
+        background-color: #CCC;
+    }
+    /* The container <div> - needed to position the dropdown content */
+    
+    #dropdown {
+
+        position: absolute;      
+        margin-left: 230px;
+        display: inline-block;
+    }
+    /* Dropdown Content (Hidden by Default) */
+    
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 100px;
+		border-radius:5px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    }
+    /* Links inside the dropdown */
+    
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+    /* Change color of dropdown links on hover */
+    
+    .dropdown-content a:hover {
+        background-color: #f1f1f1
+    }
+    /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+    
+    .show {
+        display: block;
+    }
+    
+    #hacky-input {
+        display: none;
+    }
+    
+    .crossRotate {
+        -webkit-transition-duration: 0.5s;
+        -moz-transition-duration: 0.5s;
+        -ms-transition-duration: 0.5s;
+        -o-transition-duration: 0.5s;
+        transition-duration: 0.5s;
+        -webkit-transition-property: -webkit-transform;
+        -moz-transition-property: -moz-transform;
+        -ms-transition-property: -ms-transform;
+        -o-transition-property: -o-transform;
+        transition-property: transform;
+    }
+    
+    #hacky-input:checked + label img.crossRotate {
+        -webkit-transform: rotate(180deg);
+        -moz-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+        -o-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }

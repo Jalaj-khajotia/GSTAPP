@@ -1,0 +1,52 @@
+<div class="container">
+    <h3>Explore {{books.length}} Books in our {{catalogType}} Catalog</h3>
+   <div class="row" style="margin-top: 20px;">
+       <div class="input-field col s9">
+           <input id="first_name" type="text" ng-model="search">
+           <label for="first_name">Search Books by author or name </label>
+       </div>
+       <div class="input-field col s2">
+       <a class="waves-effect waves-green btn-large" ng-show="areItemsSelected" ng-click="checkout()"><i class="material-icons right">Add Books to cart</i></a>
+   </div> </div>
+    <table class="bordered highlight responsive-table">
+        <thead>
+        <tr>
+            <th>Select Books</th>
+            <th>No.</th>
+            <th>Name</th>
+            <th>Cover Image</th>
+            <th>Author</th>
+            <th>Price (INR)</th>
+            <th>Availability</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="book in books |filter: search" ng-class="{'book-unavailable': !book.Available}">
+            <td>
+                <input type="checkbox" style="position: initial; opacity: 1;" ng-click="selectBook($index)" ng-disabled="!book.Available" />
+            </td>
+            <td>{{$index + 1}}</td>
+            <td>{{book.Name}}</td>
+            <td><img ng-src="{{book.Image}}" class="book-image" style="width:50px;"/></td>
+            <td>{{book.Author}}</td>
+            <td>{{book.Price}}</td>
+            <td>{{book.Available? 'Available': 'Not-available'}}</td>
+        </tr>
+        </tbody>
+    </table>
+ <!-- <div class="row" style="margin-top: 20px;">
+    <div class="col s1">No.</div>
+    <div class="col s2">Name</div>
+    <div class="col s3">Cover Image</div>
+    <div class="col s3">Author</div>
+    <div class="col s3">Price (INR)</div>
+  </div>
+    <div class="row" ng-repeat="book in books |filter: search">
+        <div class="col s1">{{$index + 1}}</div>
+        <div class="col s2">{{book.Name}}</div>
+        <div class="col s3"><img ng-src="{{book.Image}}" class="book-image" style="width:50px;"/></div>
+        <div class="col s3">{{book.Author}}</div>
+        <div class="col s3">{{book.Price}}</div>
+    </div>-->
+</div>

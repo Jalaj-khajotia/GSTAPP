@@ -1,0 +1,357 @@
+/* Space out content a bit */
+
+body {
+    padding-bottom: 20px;
+}
+.categories-img{
+    width: 150px !important;
+    opacity: 0.6;
+}
+
+.col.row-column{
+    text-align: center;
+    margin: 0 40px;
+}
+
+.book-image{
+    transition: all 1s ease-in-out;
+}
+
+.book-image:hover{
+    transform: scale(3);
+ }
+
+.book-unavailable{
+    opacity: 0.6;
+}
+.over-due{
+    background-color: #efc2c2;
+}
+.column-header{
+    font-size: 15px;
+    font-weight: bold;
+    position: absolute;
+    z-index: 4;
+    margin: 10px 15px;
+}
+.col.row-column >.column-header { transition: all 1s ease-in-out; }
+.col.row-column > .column-header:hover { transform: scale(1.3); }
+/* Everything but the jumbotron gets side spacing for mobile first views */
+
+.header,
+.marketing,
+.footer {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+
+/* Custom page header */
+
+.header {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+
+/* Make the masthead heading the same height as the navigation */
+
+.header h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 40px;
+    padding-bottom: 19px;
+}
+
+
+/* Custom page footer */
+
+.footer {
+    padding-top: 19px;
+    color: #777;
+    border-top: 1px solid #e5e5e5;
+}
+
+
+/* Customize container */
+
+@media (min-width: 768px) {
+    /* .container {
+    max-width: 730px;
+  } */
+}
+
+.container-narrow > hr {
+    margin: 30px 0;
+}
+
+
+/* Main marketing message and sign up button */
+
+.jumbotron {
+    text-align: center;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.jumbotron .btn {
+    font-size: 21px;
+    padding: 14px 24px;
+}
+
+
+/* Supporting marketing content */
+
+.marketing {
+    margin: 40px 0;
+}
+
+.marketing p + h4 {
+    margin-top: 28px;
+}
+
+
+/* Responsive: Portrait tablets and up */
+
+@media screen and (min-width: 768px) {
+    /*Remove the padding we set earlier */
+    .header,
+    .marketing,
+    .footer {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    /* Space out the masthead */
+    .header {
+        margin-bottom: 30px;
+    }
+    /*Remove the bottom border on the jumbotron for visual effect */
+    .jumbotron {
+        border-bottom: 0;
+    }
+}
+
+.nav>li.active>a {
+    text-decoration: none;
+    background-color: #eee;
+}
+
+#page-wrapper {
+    top: -50px;
+    position: absolute;
+    margin: 0 0 0 250px !important;
+}
+
+#page-wrapper.Mainview {
+    margin: 0 0 0 50px !important;
+}
+
+.dropdown-toggle > .fa {
+    height: 20px;
+}
+
+.card.large {
+    height: 400px;
+}
+
+.card-image {
+    max-height: 70%;
+}
+
+.star-rating {
+    margin: 15px 0px 0 15px;
+}
+
+.card .card-content {
+    padding: 10px 20px !important;
+}
+
+#slides_control > div {
+    height: 200px;
+}
+
+#carasol {
+    margin: auto;
+    width: 600px;
+}
+
+#slides_control {
+    position: absolute;
+    width: 400px;
+    left: 50%;
+    top: 20px;
+    margin-left: -200px;
+}
+
+h6.header {
+    margin-bottom: 10px;
+}
+
+#club-reviews {
+    max-height: 200px;
+    overflow: hidden;
+}
+
+.card-content.review-headline {
+    padding: 0px 10px !important;
+}
+
+.add-review-head {
+    font-size: 25px;
+    color: white;
+    text-align: center;
+    /* margin: 20px; */
+    background: royalblue !important;
+}
+
+#upload-photos {
+    height: 150px;
+}
+
+li>img {
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+
+/*item review page Grid CSS */
+
+#product-list {
+    max-height: 476px;
+    overflow: hidden;
+}
+
+#left-btn {}
+
+#leftbtn:hover #product-list {
+    margin-left: -220px;
+    transition: margin-left 4s;
+    animation: move 1s ease 1s;
+}
+
+#rightbtn:hover #product-list {
+    margin-left: 220px;
+    transition: margin-left 4s;
+}
+
+.cs-style-3 figure {
+    overflow: hidden;
+}
+
+.cs-style-3 figure #details {
+    -webkit-transition: -webkit-transform 0.4s;
+    -moz-transition: -moz-transform 0.4s;
+    transition: transform 0.4s;
+}
+
+.cs-style-3 figure:hover #details,
+.cs-style-3 figure.cs-hover #details {
+    -webkit-transform: translateY(-50px);
+    -moz-transform: translateY(-50px);
+    -ms-transform: translateY(-50px);
+    transform: translateY(-50px);
+}
+
+#product {
+    bottom: 53px;
+    left: 19px;
+    z-index: 15;
+    position: absolute;
+    margin-bottom: 6px;
+    color: white;
+    font-size: 18px;
+}
+
+.cs-style-3 figcaption {
+    height: 100px;
+    width: 100%;
+    top: auto;
+    bottom: 0;
+    opacity: 0;
+    -webkit-transform: translateY(100%);
+    -moz-transform: translateY(100%);
+    -ms-transform: translateY(100%);
+    transform: translateY(100%);
+    -webkit-transition: -webkit-transform 0.4s, opacity 0.1s 0.3s;
+    -moz-transition: -moz-transform 0.4s, opacity 0.1s 0.3s;
+    transition: transform 0.4s, opacity 0.1s 0.3s;
+}
+
+.cs-style-3 figure:hover figcaption,
+.cs-style-3 figure.cs-hover figcaption {
+    opacity: 1;
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    -ms-transform: translateY(0px);
+    transform: translateY(0px);
+    -webkit-transition: -webkit-transform 0.4s, opacity 0.1s;
+    -moz-transition: -moz-transform 0.4s, opacity 0.1s;
+    transition: transform 0.4s, opacity 0.1s;
+}
+
+.cs-style-3 figcaption a {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.grid {
+    padding: 20px 20px 100px 20px;
+    max-width: 1300px;
+    margin: 0 auto;
+    list-style: none;
+    text-align: center;
+}
+
+.grid >.li {
+    display: inline-block;
+    width: 440px;
+    margin: 0;
+    padding: 20px;
+    text-align: left;
+    position: relative;
+    max-width: 395px;
+}
+
+.grid figure {
+    margin: 0;
+    position: relative;
+}
+
+.grid figure img {
+    max-width: 100%;
+    display: block;
+    position: relative;
+}
+
+.grid figcaption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 20px;
+    background: #2c3f52;
+    color: #ed4e6e;
+    font-size: 16px;
+}
+
+figcaption h3 {
+    font-size: 18px !important;
+}
+
+.grid figcaption h3 {
+    margin: 0;
+    padding: 0;
+    color: #fff;
+}
+
+.grid figcaption span:before {
+    content: 'by ';
+}
+
+.grid figcaption a {
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 2px;
+    display: inline-block;
+    background: #ed4e6e;
+    color: #fff;
+}
+
