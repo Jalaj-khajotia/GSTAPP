@@ -1,0 +1,30 @@
+<div class="container">
+    <h3>Return Dashboard</h3>
+    <div class="row">
+      <div class="col s4" style="background-color:rgba(180, 235, 113, 0.64); font-size:20px; margin-top: 25px;">
+          Returning <span style="color:red ">{{totalBooksReturning}}</span> Books
+      </div>
+    </div>
+    <div class="row">
+        <table class="bordered highlight responsive-table">
+            <thead>
+            <tr>
+                <th>No.</th>
+                <th>Issue Date</th>
+                <th>No. of books issued</th>
+                <th>Anything Due</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr></tr>
+            <tr ng-repeat="issue in issueHistory |filter: search" ng-class="{'over-due': book.Status ==='Over-Due'}"
+                ng-click="openIssueHistory($index)" style="cursor:pointer">
+                <td>{{$index + 1}}</td>
+                <td>{{issue.Date}}</td>
+                <td>{{issue.TotalBooksIssued}}</td>
+                <td>{{issue.TotalDueBooks}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

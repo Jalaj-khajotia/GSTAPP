@@ -13,9 +13,9 @@
         <div class="input-field col s2">
             <a class="waves-effect waves-red btn" ng-show="areItemsPresent" ng-click="confirmBooks()">
                 <i class="fa fa-plus" aria-hidden="true"></i>
-                Add</a>
+                Confirm Issue</a>
         </div>
-        </div>
+    </div>
     <table class="bordered highlight responsive-table">
         <thead>
         <tr>
@@ -25,69 +25,25 @@
             <th>Cover Image</th>
             <th>Author</th>
             <th>Price (INR)</th>
+            <th>Category</th>
             <th>Availability</th>
         </tr>
         </thead>
 
         <tbody>
-        <tr>
-            <td>AutoBiography</td>
-        </tr>
-        <tr ng-repeat="book in autoBooks |filter: search" ng-class="{'book-unavailable': !book.Available}">
+        <tr ng-repeat="book in cartBooks |filter: search" ng-class="{'book-unavailable': book.available < 1}">
             <td>
-                <input type="checkbox" style="position: initial; opacity: 1;" ng-click="selectAutoBook($index)" ng-disabled="!book.Available" />
+                <input type="checkbox" style="position: initial; opacity: 1;" ng-click="selectBook($index)" ng-disabled="book.available < 1" />
             </td>
             <td>{{$index + 1}}</td>
-            <td>{{book.Name}}</td>
-            <td><img ng-src="{{book.Image}}" class="book-image" style="width:50px;"/></td>
-            <td>{{book.Author}}</td>
-            <td>{{book.Price}}</td>
-            <td>{{book.Available? 'Available': 'Not-available'}}</td>
-        </tr>
-
-        <tr>
-            <td>Fiction</td>
-        </tr>
-        <tr ng-repeat="book in fictionBooks |filter: search" ng-class="{'book-unavailable': !book.Available}">
-            <td>
-                <input type="checkbox" style="position: initial; opacity: 1;" ng-click="selectFictionBook($index)" ng-disabled="!book.Available" />
-            </td>
-            <td>{{$index + 1}}</td>
-            <td>{{book.Name}}</td>
-            <td><img ng-src="{{book.Image}}" class="book-image" style="width:50px;"/></td>
-            <td>{{book.Author}}</td>
-            <td>{{book.Price}}</td>
-            <td>{{book.Available? 'Available': 'Not-available'}}</td>
-        </tr>
-
-        <tr>
-            <td>Sci-Fi</td>
-        </tr>
-        <tr ng-repeat="book in sciBooks |filter: search" ng-class="{'book-unavailable': !book.Available}">
-            <td>
-                <input type="checkbox" style="position: initial; opacity: 1;" ng-click="selectSciBook($index)" ng-disabled="!book.Available" />
-            </td>
-            <td>{{$index + 1}}</td>
-            <td>{{book.Name}}</td>
-            <td><img ng-src="{{book.Image}}" class="book-image" style="width:50px;"/></td>
-            <td>{{book.Author}}</td>
-            <td>{{book.Price}}</td>
-            <td>{{book.Available? 'Available': 'Not-available'}}</td>
+            <td>{{book.name}}</td>
+            <td><img ng-src="{{book.image}}" class="book-image" style="width:50px;"/></td>
+            <td>{{book.zuthor}}</td>
+            <td>{{book.price}}</td>
+            <td>{{book.categoryName}}</td>
+            <td>{{book.available > 0 ?'Available': 'Not-available'}}</td>
         </tr>
         </tbody>
     </table>
-    <!-- <div class="row" style="margin-top: 20px;">
-       <div class="col s1">No.</div>
-       <div class="col s2">Name</div>
-       <div class="col s3">Cover Image</div>
-       <div class="col s3">Author</div>
-       <div class="col s3">Price (INR)</div>
-     </div>
-       <div class="row" ng-repeat="book in books |filter: search">
-           <div class="col s1">{{$index + 1}}</div>
-           <div class="col s2">{{book.Name}}</div>
-           <div class="col s3"><img ng-src="{{book.Image}}" class="book-image" style="width:50px;"/></div>
-           <div class="col s3">{{book.Author}}</div>
-           <div class="col s3">{{book.Price}}</div>
-       </div>-->
+
 </div>

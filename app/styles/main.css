@@ -7,7 +7,9 @@ body {
     width: 150px !important;
     opacity: 0.6;
 }
-
+.modal-footer>a{
+    margin:0 10px !important;
+}
 .col.row-column{
     text-align: center;
     margin: 0 40px;

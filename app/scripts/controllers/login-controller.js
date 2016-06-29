@@ -10,10 +10,9 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')
-    .controller('LoginCtrl', function($scope, $http, $location) {
+    .controller('LoginCtrl', function($scope, $http, $location, $cookieStore) {
         $scope.signin = function() {
-            $location.path('/dashboard/home');
-            /*$http({
+            $http({
                 method: 'POST',
                 url: 'http://localhost:8000/login',
                 data: {
@@ -22,12 +21,10 @@ angular.module('sbAdminApp')
                 }
             })
                 .then(function(response) {
-
-                    $location.path('/#/dashboard/home');
-
-                    sessionStorage.setItem('token', response.data.token);
+                    $location.path('/dashboard/home');
+                    $cookieStore.put('loggedUser',response.data);
                 }, function(response) {
                     alert("Either password or username is wrong");
-                });*/
+                });
         }
     });

@@ -2,23 +2,11 @@
 <div class="container">
     <div class="row" style="font-size: 18px;margin-top:25px; ">Choose your category to browse</div>
     <div class="row">
-        <a href="#/dashboard/catalog/Autobiography">
+        <a ng-href="#/dashboard/catalog/{{category}}" ng-repeat="category in catalogBooks">
         <div class="col row-column">
-            <div class="column-header">Autobiography</div>
-            <img class="categories-img" src="images/categories/auto.jpg"/>
+            <div class="column-header">{{category}}</div>
+            <img class="categories-img" ng-src="{{images[$index]}}"/>
         </div>
         </a>
-        <a href="#/dashboard/catalog/Fiction">
-        <div class="col row-column">
-            <div class="column-header">Fiction</div>
-            <img class="categories-img" src="images/categories/fiction.jpg"/>
-            </div>
-        </a>
-            <a href="#/dashboard/catalog/SciFi">
-        <div class="col row-column">
-            <div class="column-header">SciFi</div>
-            <img class="categories-img" src="images/categories/sci-fi.jpg"/>
-           </div>
-            </a>
     </div>
 </div>

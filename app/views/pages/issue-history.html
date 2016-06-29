@@ -1,36 +1,74 @@
 <div class="container">
     <h3>Your Issued History</h3>
+
     <div class="row" style="margin-top: 20px;">
         <div class="input-field col s9">
             <input id="first_name" type="text" ng-model="search">
-            <label for="first_name">Search Books by author or name </label>
+            <label for="first_name">Search via Date </label>
         </div>
-        <div class="input-field col s2">
-            <a class="waves-effect waves-green btn-large" ng-show="areItemsSelected" ng-click="checkout()"><i class="material-icons right">Add Books to cart</i></a>
-        </div> </div>
+    </div>
     <table class="bordered highlight responsive-table">
         <thead>
         <tr>
             <th>No.</th>
-            <th>Name</th>
-            <th>Cover Image</th>
-            <th>Author</th>
-            <th>Price (INR)</th>
-            <th>Due-Date</th>
-            <th>Status</th>
+            <th>Issue Date</th>
+            <th>No. of books issued</th>
+            <th>Anything Due</th>
         </tr>
         </thead>
-
         <tbody>
-        <tr ng-repeat="book in books |filter: search" ng-class="{'over-due': book.Status ==='Over-Due'}">
+        <tr></tr>
+        <tr ng-repeat="issue in issueHistory |filter: search" ng-class="{'over-due': book.Status ==='Over-Due'}"
+            ng-click="openIssueHistory($index)" style="cursor:pointer">
             <td>{{$index + 1}}</td>
-            <td>{{book.Name}}</td>
-            <td><img ng-src="{{book.Image}}" class="book-image" style="width:50px;"/></td>
-            <td>{{book.Author}}</td>
-            <td>{{book.Price}}</td>
-            <th>{{book.DueOn}}</th>
-            <th>{{book.Status}}</th>
+            <td>{{issue.date}}</td>
+            <td>{{issue.Issue_books.length}}</td>
+            <td>{{issue.dueBooks}}</td>
         </tr>
         </tbody>
     </table>
+
+    <div id="modal1" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h5>Issue Date: {{issueDate}}</h5>
+            <table class="bordered highlight responsive-table">
+                <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Name</th>
+                    <th>Cover Image</th>
+                    <th>Author</th>
+                    <th>Price (INR)</th>
+                    <th>Due-Date</th>
+                    <th>Status</th>
+                    <th>Select</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr></tr>
+                <tr ng-repeat="book in books |filter: search" ng-class="{'over-due': book.Status ==='Over-Due'}">
+                    <td>{{$index + 1}}</td>
+                    <td>{{book.bookName}}</td>
+                    <td><img ng-src="{{book.Image}}" class="book-image" style="width:50px;"/></td>
+                    <td>{{book.bookAuthor}}</td>
+                    <td>{{book.bookPrice}}</td>
+                    <td>{{book.returnDate}}</td>
+                    <td>{{book.pending?'Due':'Returned'}}</td>
+                    <td>
+                        <input type="checkbox" style="position: initial; opacity: 1;" ng-click="selectBook($index)"
+                               ng-disabled="book.Status !=='Due'" />
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <a href="" class="modal-action modal-close waves-effect waves-green btn">Close</a>
+            <a href="" class="modal-action modal-close waves-effect waves-green btn" ng-show="areRBooksSelected"
+               ng-click="ReturnBooks()">Return Books</a>
+        </div>
+    </div>
 </div>
+
+<!--
+-->

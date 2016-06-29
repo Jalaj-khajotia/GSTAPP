@@ -12,6 +12,16 @@ angular.module('sbAdminApp')
         templateUrl:'scripts/directives/header/header-notification/header-notification.html',
         restrict: 'E',
         replace: true,
+		scope: {},
+		constroller:function($scope, $cookieStore, $location) {
+
+			$scope.logout = function(){
+				$cookieStore.remove('loggedUser');
+				$location.path('/login');
+			}
+
+
+			}
     	}
 	});
 

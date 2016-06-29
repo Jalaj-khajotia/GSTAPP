@@ -11,85 +11,148 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')
-    .controller('CartCtrl', function($scope, $http, $location, $stateParams, $localStorage ,$cookieStore) {
+    .controller('CartCtrl', function ($scope, $http, $location, $stateParams, $localStorage, $cookieStore, Library, NgTableParams,
+                                      ngTableDefaults) {
 
-        //$scope.sciBooks =   $cookieStore.get('sci');
-       var sciBooks = $cookieStore.get('SciFi');
+        var sciBooks = $cookieStore.get('SciFi');
         var autoBooks = $cookieStore.get('Autobiography');
         var fictionBooks = $cookieStore.get('Fiction');
-
-        if(typeof(sciBooks) !== "undefined"){
-               $scope.sciBooks = JSON.parse(sciBooks);
+        $scope.cartBooks = [];
+        if (typeof(sciBooks) !== "undefined") {
+            $scope.sciBooks = JSON.parse(sciBooks);
         }
 
-        if(typeof(autoBooks) !== "undefined" ){
-           $scope.autoBooks = JSON.parse(autoBooks);
+        if (typeof(autoBooks) !== "undefined") {
+            $scope.autoBooks = JSON.parse(autoBooks);
         }
 
-        if(typeof(fictionBooks) !== "undefined"){
-           $scope.fictionBooks = JSON.parse(fictionBooks);
+        if (typeof(fictionBooks) !== "undefined") {
+            $scope.fictionBooks = JSON.parse(fictionBooks);
         }
-        var sciBooksNew = angular.copy($scope.sciBooks);
-        var autoBooksNew = angular.copy($scope.autoBooks);
-        var fictionBooksNew = angular.copy($scope.fictionBooks);
+        var cartBooks = $cookieStore.get('cartBooks');
+        if (typeof(cartBooks) !== "undefined") {
+            if(typeof (cartBooks) == "string"){
+                $scope.cartBooks = JSON.parse(cartBooks);
+            }else{
+                $scope.cartBooks = cartBooks;
+            }
+
+        }
+        ngTableDefaults.params.count = 5;
+        ngTableDefaults.settings.counts = [];
+
+        Library.getAllInfo().then(function (data) {
+            $scope.catalogBooks = data;
+            function duplicate(n) {
+                for (var i = 0; i < n.Books.length; i++) {
+                    n.Books[i].categoryName = n.name;
+                }
+                return n.Books;
+            }
+
+            console.log($scope.cartBooks);
+            var result = _.flatMap(data, duplicate);
+            console.log(result);
+            $scope.tableParams = new NgTableParams({
+                // initial grouping
+                group: "categoryName"
+            }, {
+                dataset: $scope.cartBooks
+            });
+
+        }, function () {
+            alert('may be service is down')
+        });
 
         $scope.areItemsSelected = false;
-
-        if($scope.sciBooks.length >0 || $scope.autoBooks.length >0  ||
-            $scope.fictionBooks.length >0  ) {
-            $scope.areItemsPresent= true;
+        if ($scope.cartBooks.length > 0) {
+            $scope.areItemsPresent = true;
         }
-        else{
-            $scope.areItemsPresent= false;
+/*
+        if ($scope.sciBooks.length > 0 || $scope.autoBooks.length > 0 ||
+            $scope.fictionBooks.length > 0) {
+            $scope.areItemsPresent = true;
         }
+        else {
+            $scope.areItemsPresent = false;
+        }
+*/
 
-        function shouldDisplayRemove(){
-            if(sciBooksNew.length !== $scope.sciBooks.length || fictionBooksNew.length !== $scope.autoBooks.length ||
-                autoBooksNew.length !== $scope.fictionBooks.length ){
+
+
+      /*  this.del = del;
+        function del(row) {
+            console.log(row);
+            _.remove(this.tableParams.settings().dataset, function (item) {
+                return row === item;
+            });
+            this.tableParams.reload().then(function (data) {
+                if (data.length === 0 && this.tableParams.total() > 0) {
+                    this.tableParams.page(this.tableParams.page() - 1);
+                    this.tableParams.reload();
+                }
+            });
+        }*/
+        var cartBooksNew = angular.copy($scope.cartBooks);
+        $scope.selectBook = function (index) {
+            var position = _.findIndex(cartBooksNew, function (o) {
+                return o.id === $scope.cartBooks[index].id;
+            });
+
+            console.log(position);
+            if (position >= 0) {
+                cartBooksNew.splice(position, 1);
+            }
+            else {
+                cartBooksNew.push($scope.cartBooks[index]);
+            }
+            if (cartBooksNew.length !=  $scope.cartBooks.length) {
                 $scope.areItemsSelected = true;
-            }else{
+            } else {
                 $scope.areItemsSelected = false;
             }
         }
-        $scope.selectSciBook = function(index){
-            var  position =  _.findIndex(sciBooksNew, function(o) { return o.Name == $scope.sciBooks[index].Name; });
-            console.log(position);
-            if(position>=0){
-                sciBooksNew.splice(position,1);
-            }
-            else{
-                sciBooksNew.push($scope.sciBooks[index]);
-            }
-            shouldDisplayRemove();
-        }
-        $scope.selectFictionBook= function(index){
-            var  position =  _.findIndex(fictionBooksNew, function(o) { return o.Name == $scope.fictionBooks[index].Name; });
 
-            if(position>=0){
-                fictionBooksNew.splice(position,1);
-            }
-            else{
-                fictionBooksNew.push($scope.fictionBooks[index]);
-            }
-            shouldDisplayRemove();
+        $scope.removeBooks = function () {
+            $scope.cartBooks = angular.copy(cartBooksNew);
+            $scope.areItemsSelected = false;
         }
-        $scope.selectAutoBook= function(index){
-            var  position =  _.findIndex(autoBooksNew, function(o) { return o.Name == $scope.autoBooks[index].Name; });
-            if(position>=0){
-                autoBooksNew.splice(position,1);
-            }
-            else{
-                autoBooksNew.push($scope.autoBooks[index]);
-            }
-            shouldDisplayRemove();
-        }
-        $scope.removeBooks = function(){
-            $scope.sciBooks = angular.copy(sciBooksNew);
-            $scope.autoBooks = angular.copy(autoBooksNew);
-            $scope.fictionBooks = angular.copy(fictionBooksNew);
+        var userID = {};
+        var loggedUser = $cookieStore.get('loggedUser');
+        if(typeof(loggedUser)!== "undefined" ){
+            userID = loggedUser.id;
         }
 
-        $scope.confirmBooks = function(){
+        $scope.confirmBooks = function () {
+            $cookieStore.put('finalIssue',$scope.cartBooks);
 
+            var currentDate = new Date().toJSON().slice(0,10);
+            Library.generateIssueId(userID, currentDate).then(function(data){
+                var obj = generateIssueObject($scope.cartBooks,data.id);
+                Library.saveIssuedBooks(obj).then(function(data){
+                    console.log('success');
+                    $cookieStore.remove('cartBooks');
+                    $cookieStore.remove('finalIssue');
+                    $location.path('/dashboard/issue-history');
+                }, function(err){
+                    console.log(err);
+                });
+            },function(){
+            });
+        };
+
+        function generateIssueObject(obj, issueid){
+            var issueobj=[];
+            for(var i= 0; i<obj.length;i++){
+                issueobj.push({
+                    "pending": 1,
+                    "issueDate": obj[i].updatedAt.split('.')[0],
+                    "issueExpiry": obj[i].updatedAt.split('.')[0],
+                    "IssueId": issueid,
+                    "BookId": obj[i].id
+                });
+            }
+            var retObj = {"issueBook": issueobj}
+            return retObj;
         }
     });

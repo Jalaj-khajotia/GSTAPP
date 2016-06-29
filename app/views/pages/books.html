@@ -22,16 +22,16 @@
         </thead>
 
         <tbody>
-        <tr ng-repeat="book in books |filter: search" ng-class="{'book-unavailable': !book.Available}">
+        <tr ng-repeat="book in books |filter: search" ng-class="{'book-unavailable': !(book.available > 0)}">
             <td>
-                <input type="checkbox" style="position: initial; opacity: 1;" ng-click="selectBook($index)" ng-disabled="!book.Available" />
+                <input type="checkbox" style="position: initial; opacity: 1;" ng-click="selectBook($index)" ng-disabled="!(book.available > 0)" />
             </td>
             <td>{{$index + 1}}</td>
-            <td>{{book.Name}}</td>
-            <td><img ng-src="{{book.Image}}" class="book-image" style="width:50px;"/></td>
-            <td>{{book.Author}}</td>
-            <td>{{book.Price}}</td>
-            <td>{{book.Available? 'Available': 'Not-available'}}</td>
+            <td>{{book.name}}</td>
+            <td><img ng-src="{{book.image}}" class="book-image" style="width:50px;"/></td>
+            <td>{{book.author}}</td>
+            <td>{{book.price}}</td>
+            <td>{{book.available > 0 ? 'Available': 'Not-available'}}</td>
         </tr>
         </tbody>
     </table>
