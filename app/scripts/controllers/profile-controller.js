@@ -36,12 +36,14 @@ angular.module('sbAdminApp')
                 "email": loggedUser.email,
                 "password": $scope.password,
                 "department": $scope.department,
-                "name": $scope.name
+                "name": $scope.name,
+                "token":loggedUser.token
             }
             Library.updateUserData(payload, loggedUser.id).then(function(){
                 $scope.savingform = false;
                 payload.password = "";
                 $cookieStore.put('loggedUser',payload );
+                $('#profile-success').openModal();
             },function(){
                 alert('error while updating user info');
             });

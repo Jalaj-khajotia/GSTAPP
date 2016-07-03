@@ -1,6 +1,13 @@
 .avatar{
     position: relative;
 }
+#profile-success{
+    top: 0%;
+    text-align: center;
+    max-height: 30%;
+    background-color: transparent;
+    top: -30%;
+}
 #avatar{
 
 }
