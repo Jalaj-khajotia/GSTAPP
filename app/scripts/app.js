@@ -135,7 +135,7 @@ angular
                 }
             })
             .state('dashboard.browseCatalog', {
-                url: '/catalog/:type',
+                url: '/catalog/:type/:id',
                 controller: 'BookCtrl',
                 templateUrl: 'views/pages/books.html',
                 resolve: {

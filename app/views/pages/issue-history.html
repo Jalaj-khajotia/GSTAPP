@@ -39,7 +39,7 @@
                     <th>Cover Image</th>
                     <th>Author</th>
                     <th>Price (INR)</th>
-                    <th>Due-Date</th>
+                    <th>Issue-Date</th>
                     <th>Status</th>
                     <th>Select</th>
                 </tr>
@@ -52,7 +52,7 @@
                     <td><img ng-src="{{book.Image}}" class="book-image" style="width:50px;"/></td>
                     <td>{{book.bookAuthor}}</td>
                     <td>{{book.bookPrice}}</td>
-                    <td>{{book.returnDate}}</td>
+                    <td>{{book.createdAt.split('T')[0]}}</td>
                     <td>{{book.pending?'Due':'Returned'}}</td>
                     <td>
                         <input type="checkbox" style="position: initial; opacity: 1;" ng-click="addOrRemoveBook($index)"

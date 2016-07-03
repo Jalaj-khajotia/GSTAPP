@@ -14,6 +14,7 @@
 angular.module('sbAdminApp')
     .controller('ReturnCtrl', function ($scope, $http, $location, $stateParams, $localStorage, $cookieStore, Library) {
 
+        Library.checkForLogin();
         var selectedBooks = [];
         Library.getReturnBooks().then(function (result) {
             $scope.returnBooks = result;

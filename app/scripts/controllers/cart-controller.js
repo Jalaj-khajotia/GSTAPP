@@ -14,6 +14,7 @@ angular.module('sbAdminApp')
     .controller('CartCtrl', function ($scope, $http, $location, $stateParams, $localStorage, $cookieStore, Library, NgTableParams,
                                       ngTableDefaults) {
 
+        Library.checkForLogin();
         var sciBooks = $cookieStore.get('SciFi');
         var autoBooks = $cookieStore.get('Autobiography');
         var fictionBooks = $cookieStore.get('Fiction');

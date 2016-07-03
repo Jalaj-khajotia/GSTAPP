@@ -1,3 +1,9 @@
+#login{
+    top: 0%;
+    text-align: center;
+    max-height: 30%;
+    background-color: transparent;
+}
 .search-tool{
     padding-top: 60px !important;
 }

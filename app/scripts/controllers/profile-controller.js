@@ -11,6 +11,7 @@
  */
 angular.module('sbAdminApp')
     .controller('ProfileCtrl', function ($scope, $http, $location, $timeout) {
+        Library.checkForLogin();
         $scope.edit = true;
 
         $scope.editform = function () {

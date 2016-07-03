@@ -14,29 +14,13 @@ angular.module('sbAdminApp')
         var catalogType = $stateParams.type;
         $scope.catalogType = $stateParams.type;
 
-        Library.getBooksByName(catalogType).then(function (data) {
+        Library.checkForLogin();
+
+        Library.getBooksByCategoryId($stateParams.id).then(function (data) {
             $scope.books = data;
             console.log(data);
-        })
+        });
 
-
-        /*    if(catalogType === "Fiction"){
-         $scope.books=[{"name":"twilight","author":"Stephen Mayor","Available":true,"Price": 300,"Image": "images/dummy-data/twilight.jpg"},
-         {"name":"If tomorrow comes","author":"Shedney Shildon","Available":true,"Price": 400,"Image": "images/dummy-data/tomm.jpg"},
-         {"name":"The oath of vayuputras","author":"Amish Triphi","Available":false,"Price": 300,"Image": "images/dummy-data/oath.jpg"},
-         {"name":"Five point someone","author":"Chetan Bhagat","Available":true,"Price": 180,"Image": "images/dummy-data/five.jpg"}];
-         } else if(catalogType === "SciFi"){
-         $scope.books=[{"name":"Ender's Game (The Ender Quintet, #1) ","Author":"Orson Scott Card","selected":false,"Available":false,"Price": 300,"Image": "images/dummy-data/twilight.jpg"},
-         {"name":"Dune (Dune Chronicles, #1) ","author":"Frank Herbert","Available":true,"Price": 400,"selected":false,"Image": "images/dummy-data/tomm.jpg"},
-         {"name":"1984 ","author":"George Orwell","Available":false,"Price": 300,"selected":false,"Image": "images/dummy-data/oath.jpg"},
-         {"name":"Fahrenheit 451 ","author":"Ray Bradbury ","Available":true,"Price": 180,"selected":true,"Image": "images/dummy-data/five.jpg"}];
-         }else{
-         $scope.books=[{"name":"The Diary of a Young Girl (Mass Market Paperback)","Author":" Anne Frank","Available":true,"Price": 300,"Image": "images/dummy-data/twilight.jpg"},
-         {"name":"Night (The Night Trilogy, #1) ","author":"Elie Wiesel","Available":true, "Price": 400,"Image": "images/dummy-data/tomm.jpg"},
-         {"name":"The Glass Castle (Paperback) ","author":" Jeannette Walls ","Available":true, "Price": 300,"Image": "images/dummy-data/oath.jpg"},
-         {"name":"I Know Why the Caged Bird Sings (Paperback)","author":"Maya Angelou","Available":false,"Price": 180,"Image": "images/dummy-data/five.jpg"}];
-         }
-         */
         $scope.areItemsSelected = false;
 
         $scope.selectedBooks = [];

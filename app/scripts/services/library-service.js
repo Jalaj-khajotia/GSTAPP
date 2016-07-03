@@ -5,15 +5,22 @@
 
 var module = angular.module('sbAdminApp');
 
-function service($http, $q) {
+function service($http, $q, $cookieStore) {
 
-    var libraryBooks = [], bookCatalog = [], returnBooks =[];
+    var libraryBooks = [], bookCatalog = [], returnBooks = [];
 
     this.getCatalog = function () {
         var deferred = $q.defer();
         $http.get("http://localhost:8000/categories")
             .success(function (data) {
-                bookCatalog = _.map(data, 'name');
+                var bookCatalog = [];
+                for (var i = 0; i < data.length; i++) {
+                    bookCatalog.push({
+                        "name": data[i].name,
+                        "id": data[i].id
+                    });
+                }
+                //bookCatalog = _.map(data, 'name');
                 deferred.resolve(bookCatalog);
             })
             .error(function (data, status, headers, config) {
@@ -22,26 +29,34 @@ function service($http, $q) {
         return deferred.promise;
     };
 
-    this.getReturnBooks = function(){
+    this.checkForLogin = function () {
+        var loggedUser = $cookieStore.get('loggedUser');
+
+        if (typeof(loggedUser) === "undefined" || loggedUser === '' || !loggedUser) {
+            $('#login').openModal();
+        }
+    }
+
+    this.getReturnBooks = function () {
         var deferred = $q.defer();
         deferred.resolve(returnBooks);
         return deferred.promise;
     }
 
-    this.setReturnBooks = function(data){
+    this.setReturnBooks = function (data) {
         returnBooks = data;
     }
 
-    this.updateReturnBooks = function(data){
+    this.updateReturnBooks = function (data) {
         var newReturnBooks = [];
 
-            if(returnBooks.length > 0 && data.length >0){
-                newReturnBooks =  joinarrays(returnBooks, data);
-                returnBooks = newReturnBooks;
-            }
-             else{
-                returnBooks = data;
-            }
+        if (returnBooks.length > 0 && data.length > 0) {
+            newReturnBooks = joinarrays(returnBooks, data);
+            returnBooks = newReturnBooks;
+        }
+        else {
+            returnBooks = data;
+        }
     }
 
     this.getBooksByName = function (name) {
@@ -52,6 +67,44 @@ function service($http, $q) {
                     return o.name == name;
                 });
                 deferred.resolve(bookCatalog.Books);
+            })
+            .error(function (data, status, headers, config) {
+                console.log(status + " Data: " + data);
+            });
+        return deferred.promise;
+    };
+
+    this.getBooksByCategoryId = function (id) {
+        var deferred = $q.defer();
+        $http.get("http://localhost:8000/booksbycategory/" + id)
+            .success(function (data) {
+                var books = [], isBookAvailable;
+
+                for (var i = 0; i < data.length; i++) {
+                    var count = 0;
+                    for (var j = 0; j < data[i].Issue_books.length; j++) {
+                        if (data[i].Issue_books[j].pending) {
+                            count++;
+                        }
+                    }
+                    if (count < data[i].available) {
+                        isBookAvailable = true;
+                    } else {
+                        isBookAvailable = false;
+                    }
+                    books.push({
+                        "name": data[i].name,
+                        "author": data[i].author,
+                        "price": data[i].price,
+                        "id": data[i].id,
+                        "totalIssued": data[i].Issue_books.length,
+                        "isBookAvailable": isBookAvailable,
+                        "createdAt":data[i].createdAt,
+                        "updatedAt":data[i].updatedAt
+                    });
+                }
+
+                deferred.resolve(books);
             })
             .error(function (data, status, headers, config) {
                 console.log(status + " Data: " + data);
@@ -81,10 +134,14 @@ function service($http, $q) {
         return deferred.promise;
     };
 
-    this.generateIssueId = function(userid,issueDate){
+    this.generateIssueId = function (userid, issueDate) {
         var deferred = $q.defer();
-        var payload = {"issue":{"UserId":userid,
-        "issueDate": issueDate}};
+        var payload = {
+            "issue": {
+                "UserId": userid,
+                "issueDate": issueDate
+            }
+        };
         $http.post('http://localhost:8000/issue', payload).success(function (data) {
             deferred.resolve(data);
         }).error(function (error) {
@@ -93,9 +150,9 @@ function service($http, $q) {
         return deferred.promise;
     }
 
-    this.getAllIssueForUser = function(userId){
+    this.getAllIssueForUser = function (userId) {
         var deferred = $q.defer();
-        $http.get("http://localhost:8000/issuebyuserid/"+userId)
+        $http.get("http://localhost:8000/issuebyuserid/" + userId)
             .success(function (data) {
                 deferred.resolve(data);
             })
@@ -105,7 +162,7 @@ function service($http, $q) {
         return deferred.promise;
     };
 
-    this.getAllBooks = function(){
+    this.getAllBooks = function () {
         var deferred = $q.defer();
         $http.get("http://localhost:8000/books")
             .success(function (data) {
@@ -117,7 +174,7 @@ function service($http, $q) {
         return deferred.promise;
     };
 
-    this.getAllIssuedBooks = function(){
+    this.getAllIssuedBooks = function () {
         var deferred = $q.defer();
         $http.get("http://localhost:8000/issues")
             .success(function (data) {
@@ -130,10 +187,10 @@ function service($http, $q) {
     };
     /*
 
-    * */
-    this.returnIssueBooks = function(payload){
+     * */
+    this.returnIssueBooks = function (payload) {
         var deferred = $q.defer();
-        $http.put('http://localhost:8000/issuebooksReturn' , payload).success(function (data) {
+        $http.put('http://localhost:8000/issuebooksReturn', payload).success(function (data) {
             deferred.resolve(data);
         }).error(function (error) {
             deferred.reject(error);
@@ -159,4 +216,4 @@ function service($http, $q) {
     }
 
 };
-module.service('Library', ['$http', '$q', service]);
+module.service('Library', ['$http', '$q', '$cookieStore', service]);

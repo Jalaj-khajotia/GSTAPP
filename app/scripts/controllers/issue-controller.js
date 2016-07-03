@@ -13,7 +13,7 @@
  */
 angular.module('sbAdminApp')
     .controller('IssueCtrl', function ($scope, $http, $location, $stateParams, $localStorage, $cookieStore, Library) {
-
+        Library.checkForLogin();
         $scope.openIssueHistory = function (index) {
             console.log(index);
             $scope.books = $scope.issueHistory[index].Issue_books;

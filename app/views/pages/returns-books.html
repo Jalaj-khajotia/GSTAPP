@@ -13,7 +13,7 @@
                 Remove selected</a>
         </div>
         <div class="col s4">
-            <a class="waves-effect waves-red btn" ng-click="confirmReturnBooks()">
+            <a class="waves-effect waves-red btn" ng-click="confirmReturnBooks()" ng-hide="returnBooks.length === 0">
                 <i class="fa fa-minus" aria-hidden="true"></i>
                 Confirm return</a>
         </div>

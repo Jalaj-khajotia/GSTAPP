@@ -7,6 +7,7 @@ var module = angular.module('sbAdminApp');
 
 controller.$inject = ['$scope','Library'];
  function controller($scope, Library ) {
+     Library.checkForLogin();
      $scope.images= [];
      Library.getCatalog().then(function(data){
          $scope.catalogBooks = data;

@@ -13,7 +13,7 @@ angular.module('sbAdminApp')
        var loggedUser = $cookieStore.get('loggedUser');
 
         if(typeof(loggedUser)=== "undefined" ){
-            $location.path('/login');
+            $('#login').openModal();
         }else{
             $location.path('/dashboard/home');
         }
