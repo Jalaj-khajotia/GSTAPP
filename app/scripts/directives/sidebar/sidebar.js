@@ -23,7 +23,6 @@ angular.module('sbAdminApp')
                 $scope.getWidth = function() {
                     return window.innerWidth;
                 };
-                // 
 
                 $scope.$watch($scope.getWidth, function(newValue, oldValue) {
                     if (newValue >= mobileView) {

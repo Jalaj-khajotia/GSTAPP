@@ -39,7 +39,6 @@ angular.module('sbAdminApp')
          */
         $scope.areItemsSelected = false;
 
-
         $scope.selectedBooks = [];
         $scope.selectBook = function (index) {
             var contains = false, containAt = -1;

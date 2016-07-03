@@ -55,8 +55,8 @@
                     <td>{{book.returnDate}}</td>
                     <td>{{book.pending?'Due':'Returned'}}</td>
                     <td>
-                        <input type="checkbox" style="position: initial; opacity: 1;" ng-click="selectBook($index)"
-                               ng-disabled="book.Status !=='Due'" />
+                        <input type="checkbox" style="position: initial; opacity: 1;" ng-click="addOrRemoveBook($index)"
+                               ng-disabled="!book.pending" />
                     </td>
                 </tr>
                 </tbody>

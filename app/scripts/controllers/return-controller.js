@@ -12,63 +12,100 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')
-    .controller('ReturnCtrl', function ($scope, $http, $location, $stateParams, $localStorage, $cookieStore) {
+    .controller('ReturnCtrl', function ($scope, $http, $location, $stateParams, $localStorage, $cookieStore, Library) {
 
-        $scope.issueHistory =[{
-            "Date" : "01/02/2016" ,
-            "TotalBooksIssued": "5",
-            "TotalDueBooks": "1"
-        },{
-            "Date" : "01/05/2016" ,
-            "TotalBooksIssued": "1",
-            "TotalDueBooks": "1"
-        },{
-            "Date" : "01/06/2016" ,
-            "TotalBooksIssued": "3",
-            "TotalDueBooks": "0"
-        },{
-            "Date" : "01/07/2016" ,
-            "TotalBooksIssued": "1",
-            "TotalDueBooks": "0"
-        }];
+        var selectedBooks = [];
+        Library.getReturnBooks().then(function (result) {
+            $scope.returnBooks = result;
+            selectedBooks = angular.copy(result);
+        });
 
-        $scope.openIssueHistory = function(index){
-            console.log(index);
-            $('#modal1').openModal();
+
+        $scope.openIssueHistory = function (index) {
+
         };
 
-        $scope.totalBooksReturning = 10;
+        $scope.addOrRemoveBook = function (index) {
+            var position = _.findIndex(selectedBooks, function (o) {
+                return o.id === $scope.returnBooks[index].id;
+            });
+            console.log(position);
+            if (position >= 0) {
+                selectedBooks.splice(position, 1);
+            }
+            else {
+                selectedBooks.push($scope.returnBooks[index]);
+            }
+            if (selectedBooks.length != $scope.returnBooks.length) {
+                $scope.areRBooksSelected = true;
+            } else {
+                $scope.areRBooksSelected = false;
+            }
+        };
 
-        $scope.books = [{
-            "Name": "The Diary of a Young Girl (Mass Market Paperback)",
-            "Author": " Anne Frank",
-            "DueOn": "7/8/2016",
-            "Price": 300,
-            "Status": "Due",
-            "Image": "images/dummy-data/twilight.jpg"
-        },
-            {
-                "Name": "Night (The Night Trilogy, #1) ",
-                "Author": "Elie Wiesel",
-                "DueOn": "15/7/2016",
-                "Price": 400,
-                "Status": "Due",
-                "Image": "images/dummy-data/tomm.jpg"
-            },
-            {
-                "Name": "The Glass Castle (Paperback) ",
-                "Author": " Jeannette Walls ",
-                "DueOn": "NA",
-                "Price": 300,
-                "Status": "Returned",
-                "Image": "images/dummy-data/oath.jpg"
-            },
-            {
-                "Name": "I Know Why the Caged Bird Sings (Paperback)",
-                "Author": "Maya Angelou",
-                "DueOn": "10/05/2016",
-                "Status": "Over-Due",
-                "Price": 180,
-                "Image": "images/dummy-data/five.jpg"
-            }];
+        $scope.removeSelectedBooks = function () {
+            $scope.returnBooks = angular.copy(selectedBooks);
+            Library.setReturnBooks($scope.returnBooks);
+            $scope.areRBooksSelected = false;
+        };
+
+        $scope.confirmReturnBooks = function () {
+            var payload = createReturnPayload($scope.returnBooks);
+            console.log({'issueBook': payload});
+            Library.returnIssueBooks({'issueBook': payload}).then(function () {
+                Library.setReturnBooks({});
+                $location.path('/dashboard/issue-history');
+            }, function () {
+                alert('some error occured while updating');
+            });
+        };
+        function createReturnPayload(dataarray) {
+            var payload = [];
+            var today = new Date().toJSON().slice(0, 10);
+            dataarray.forEach(callback);
+            function callback(element, index, array) {
+
+                payload.push({
+                    'returnDate': today,
+                    'pending': 0,
+                    'BookId': element.BookId,
+                    'IssueId': element.IssueId
+                });
+            };
+            return payload;
+
+        }
+
+        /*$scope.returnBooks = [{
+         "bookName": "The Diary of a Young Girl (Mass Market Paperback)",
+         "bookAuthor": " Anne Frank",
+         "DueOn": "7/8/2016",
+         "Price": 300,
+         "Status": "Due",
+         "Image": "images/dummy-data/twilight.jpg"
+         },
+         {
+         "bookName": "Night (The Night Trilogy, #1) ",
+         "bookAuthor": "Elie Wiesel",
+         "DueOn": "15/7/2016",
+         "Price": 400,
+         "Status": "Due",
+         "Image": "images/dummy-data/tomm.jpg"
+         },
+         {
+         "Name": "The Glass Castle (Paperback) ",
+         "Author": " Jeannette Walls ",
+         "DueOn": "NA",
+         "Price": 300,
+         "Status": "Returned",
+         "Image": "images/dummy-data/oath.jpg"
+         },
+         {
+         "Name": "I Know Why the Caged Bird Sings (Paperback)",
+         "Author": "Maya Angelou",
+         "DueOn": "10/05/2016",
+         "Status": "Over-Due",
+         "Price": 180,
+         "Image": "images/dummy-data/five.jpg"
+         }];*/
     });

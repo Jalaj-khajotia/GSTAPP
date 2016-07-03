@@ -6,9 +6,8 @@
 var module = angular.module('sbAdminApp');
 
 function service($http, $q) {
-    var libraryBooks;
-    var bookCatalog;
-    libraryBooks = [], bookCatalog = [];
+
+    var libraryBooks = [], bookCatalog = [], returnBooks =[];
 
     this.getCatalog = function () {
         var deferred = $q.defer();
@@ -22,6 +21,28 @@ function service($http, $q) {
             });
         return deferred.promise;
     };
+
+    this.getReturnBooks = function(){
+        var deferred = $q.defer();
+        deferred.resolve(returnBooks);
+        return deferred.promise;
+    }
+
+    this.setReturnBooks = function(data){
+        returnBooks = data;
+    }
+
+    this.updateReturnBooks = function(data){
+        var newReturnBooks = [];
+
+            if(returnBooks.length > 0 && data.length >0){
+                newReturnBooks =  joinarrays(returnBooks, data);
+                returnBooks = newReturnBooks;
+            }
+             else{
+                returnBooks = data;
+            }
+    }
 
     this.getBooksByName = function (name) {
         var deferred = $q.defer();
@@ -107,6 +128,35 @@ function service($http, $q) {
             });
         return deferred.promise;
     };
+    /*
+
+    * */
+    this.returnIssueBooks = function(payload){
+        var deferred = $q.defer();
+        $http.put('http://localhost:8000/issuebooksReturn' , payload).success(function (data) {
+            deferred.resolve(data);
+        }).error(function (error) {
+            deferred.reject(error);
+        });
+        return deferred.promise;
+    }
+
+    function joinarrays(dataset1, dataset2) {
+        var dataset = [], hash = {};
+        for (var i = 0; i < dataset1.length; i++) {
+            if (!hash[dataset1[i].BookId]) {
+                hash[dataset1[i].BookId] = true;
+                dataset.push(dataset1[i]);
+            }
+        }
+        for (var j = 0; j < dataset2.length; j++) {
+            if (!hash[dataset2[j].BookId]) {
+                hash[dataset2[j].BookId] = true;
+                dataset.push(dataset2[j]);
+            }
+        }
+        return dataset;
+    }
 
 };
 module.service('Library', ['$http', '$q', service]);

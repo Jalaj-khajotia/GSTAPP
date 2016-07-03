@@ -37,11 +37,7 @@ angular
                         return $ocLazyLoad.load({
                             name: 'sbAdminApp',
                             files: [
-                                'scripts/controllers/dash-controller.js',
-                                'scripts/directives/header/header.js',
-                                'scripts/directives/header/header-notification/header-notification.js',
-                                'scripts/directives/sidebar/sidebar.js',
-                                'scripts/directives/sidebar/sidebar-search/sidebar-search.js'
+                                'scripts/controllers/dash-controller.js'
                             ]
                         }),
                             $ocLazyLoad.load({
@@ -102,7 +98,6 @@ angular
                         return $ocLazyLoad.load({
                             name: 'sbAdminApp',
                             files: [
-                                'styles/dashboard.css',
                                 'scripts/controllers/csearch-controller.js'
                             ]
                         })
@@ -118,7 +113,6 @@ angular
                         return $ocLazyLoad.load({
                             name: 'sbAdminApp',
                             files: [
-                                'styles/dashboard.css',
                                 'scripts/controllers/catalog-controller.js'
                             ]
                         })
@@ -134,7 +128,6 @@ angular
                         return $ocLazyLoad.load({
                             name: 'sbAdminApp',
                             files: [
-                                'styles/dashboard.css',
                                 'scripts/controllers/return-controller.js'
                             ]
                         })

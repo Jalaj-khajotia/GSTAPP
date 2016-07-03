@@ -11,6 +11,7 @@ angular.module('sbAdminApp')
         function($scope, $position, $http, $timeout, $cookieStore, $location) {
 
        var loggedUser = $cookieStore.get('loggedUser');
+
         if(typeof(loggedUser)=== "undefined" ){
             $location.path('/login');
         }else{
