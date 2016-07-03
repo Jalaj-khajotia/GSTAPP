@@ -8,6 +8,8 @@ var module = angular.module('sbAdminApp');
 function service($http, $q, $cookieStore) {
 
     var libraryBooks = [], bookCatalog = [], returnBooks = [];
+    var cookie = $cookieStore.get('loggedUser');
+    $http.defaults.headers.common['authorization'] = cookie.token;
 
     this.getCatalog = function () {
         var deferred = $q.defer();
@@ -20,7 +22,6 @@ function service($http, $q, $cookieStore) {
                         "id": data[i].id
                     });
                 }
-                //bookCatalog = _.map(data, 'name');
                 deferred.resolve(bookCatalog);
             })
             .error(function (data, status, headers, config) {
@@ -99,8 +100,8 @@ function service($http, $q, $cookieStore) {
                         "id": data[i].id,
                         "totalIssued": data[i].Issue_books.length,
                         "isBookAvailable": isBookAvailable,
-                        "createdAt":data[i].createdAt,
-                        "updatedAt":data[i].updatedAt
+                        "createdAt": data[i].createdAt,
+                        "updatedAt": data[i].updatedAt
                     });
                 }
 
@@ -191,6 +192,30 @@ function service($http, $q, $cookieStore) {
     this.returnIssueBooks = function (payload) {
         var deferred = $q.defer();
         $http.put('http://localhost:8000/issuebooksReturn', payload).success(function (data) {
+            deferred.resolve(data);
+        }).error(function (error) {
+            deferred.reject(error);
+        });
+        return deferred.promise;
+    }
+    this.updateUserData = function (data, id) {
+        var payload = {
+            "user": {}
+        };
+        if (data.email) {
+            payload.user.userEmail = data.email;
+        }
+        if (data.password) {
+            payload.user.userPassword = data.password;
+        }
+        if (data.department) {
+            payload.user.department = data.department;
+        }
+        if (data.name) {
+            payload.user.name = data.name;
+        }
+        var deferred = $q.defer();
+        $http.put('http://localhost:8000/user/' + id, payload).success(function (data) {
             deferred.resolve(data);
         }).error(function (error) {
             deferred.reject(error);

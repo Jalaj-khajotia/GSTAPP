@@ -12,9 +12,9 @@ controller.$inject = ['$scope','Library'];
      Library.getCatalog().then(function(data){
          $scope.catalogBooks = data;
          if( $scope.catalogBooks.length >1){
-             $scope.images.push('images/categories/auto.jpg');
+             $scope.images.push('images/categories/fic.jpg');
              $scope.images.push('images/categories/sci-fi.jpg');
-             $scope.images.push('images/categories/fiction.jpg');
+             $scope.images.push('images/categories/auto.jpg');
          }
      }, function(){
          alert('may be service is down')

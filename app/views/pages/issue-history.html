@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container"  ng-show="issueHistory.length !== 0">
     <h3>Your Issued History</h3>
 
     <div class="row" style="margin-top: 20px;">
@@ -11,9 +11,9 @@
         <thead>
         <tr>
             <th>No.</th>
-            <th>Issue Date</th>
+            <th>Issue date</th>
             <th>No. of books issued</th>
-            <th>Anything Due</th>
+            <th>No. of due books</th>
         </tr>
         </thead>
         <tbody>
@@ -66,6 +66,13 @@
             <a href="" class="modal-action modal-close waves-effect waves-green btn">Close</a>
             <a href="" class="modal-action modal-close waves-effect waves-green btn" ng-show="areRBooksSelected"
                ng-click="ReturnBooks()">Return Books</a>
+        </div>
+    </div>
+</div>
+<div class="container" ng-show="issueHistory.length === 0">
+    <div class="row" style="margin-top: 20px" >
+        <div class="col s12">
+            <h3>Oo oh..! You haven't issued any books since ages. </h3>
         </div>
     </div>
 </div>
