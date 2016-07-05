@@ -14,8 +14,7 @@ angular
         'ui.bootstrap',
         'angular-loading-bar',
         'ngCookies',
-        'ngStorage',
-        'ngTable'
+        'ngStorage'
     ])
 
     .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', function ($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
@@ -25,7 +24,7 @@ angular
             events: true,
         });
 
-      /*  $urlRouterProvider.otherwise('/login');*/
+        $urlRouterProvider.otherwise('/login');
 
         $stateProvider
             .state('dashboard', {

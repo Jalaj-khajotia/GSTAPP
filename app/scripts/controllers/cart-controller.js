@@ -11,8 +11,7 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')
-    .controller('CartCtrl', function ($scope, $http, $location, $stateParams, $localStorage, $cookieStore, Library, NgTableParams,
-                                      ngTableDefaults) {
+    .controller('CartCtrl', function ($scope, $http, $location, $stateParams, $localStorage, $cookieStore, Library) {
 
         Library.checkForLogin();
         var sciBooks = $cookieStore.get('SciFi');
@@ -39,8 +38,8 @@ angular.module('sbAdminApp')
             }
 
         }
-        ngTableDefaults.params.count = 5;
-        ngTableDefaults.settings.counts = [];
+       /* ngTableDefaults.params.count = 5;
+        ngTableDefaults.settings.counts = [];*/
 
         Library.getAllInfo().then(function (data) {
             $scope.catalogBooks = data;
@@ -50,7 +49,7 @@ angular.module('sbAdminApp')
                 }
                 return n.Books;
             }
-
+/*
             console.log($scope.cartBooks);
             var result = _.flatMap(data, duplicate);
             console.log(result);
@@ -59,7 +58,7 @@ angular.module('sbAdminApp')
                 group: "categoryName"
             }, {
                 dataset: $scope.cartBooks
-            });
+            });*/
 
         }, function () {
             alert('may be service is down')
