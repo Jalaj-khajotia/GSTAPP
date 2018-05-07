@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="row" style="font-size: 18px;margin-top:25px; ">
+        <h3 class="form-signin-heading">Delete client Information</h3>
+    </div>
+
+    <form>
+        <div class="row">
+            <div class="col col-md-3">
+                <div dropdown-select="keyOptions" dropdown-model="key" dropdown-item-label="text">
+                </div>
+            </div>
+            <div class="col col-md-9">
+                <div mass-autocomplete>
+                    <input ng-model="dirty.value" mass-autocomplete-item="autocomplete_options" on_attach="callme(dirty.value)">
+                </div>
+            </div>
+        </div>
+        <div class="form-check" style="margin-bottom: 15px;">
+            <input class="form-check-input" type="checkbox" ng-model="isDeleteConfirmed" id="defaultCheck1">
+            <label class="form-check-label" for="defaultCheck1">
+                Check me to confirm
+            </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" ng-click="deleteClient()">Delete Client</button>
+    </form>
+</div>

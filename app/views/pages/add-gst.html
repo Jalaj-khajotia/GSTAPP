@@ -1,0 +1,59 @@
+<div class="container">
+    <div class="row" style="font-size: 18px;margin-top:25px; ">
+        <h3 class="form-signin-heading">Add client GST Information</h3>
+    </div>
+    <div class="row">
+        <div class="col col-md-3">
+            <div dropdown-select="keyOptions" dropdown-model="key" dropdown-item-label="text">
+            </div>
+        </div>
+        <div class="col col-md-9">
+            <div mass-autocomplete>
+                <input ng-model="dirty.value" mass-autocomplete-item="autocomplete_options" on_attach="callme(dirty.value)">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-md-6">GST Type</div>
+        <div class="col col-md-6">
+            <div dropdown-select="gsttyperesult" dropdown-onchange="ShowGSTPeriod(selected)" dropdown-model="gsttypekey" dropdown-item-label="text">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-md-6">Financial Year</div>
+        <div class="col col-md-6">
+            <div dropdown-select="yearsResult" dropdown-model="yearkey" dropdown-item-label="text">
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-show="showMonths">
+        <div class="col col-md-6">Month</div>
+        <div class="col col-md-6">
+            <div dropdown-select="monthResult" dropdown-model="monthkey" dropdown-item-label="text">
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-show="!showMonths">
+        <div class="col col-md-6">Quarter</div>
+        <div class="col col-md-6">
+            <div dropdown-select="quaterResult" dropdown-model="quaterKey" dropdown-item-label="text">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-md-6">GST Status</div>
+        <div class="col col-md-6">
+            <div dropdown-select="gststatusresult" dropdown-model="gststatuskey" dropdown-item-label="text">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <label for="remark">GST Status Remarks</label>
+        <input ng-model="remark" type="text" class="form-control" id="remark" placeholder="Additional Remarks">
+    </div>
+    <form>
+        <button class="btn btn-lg btn-primary btn-block" ng-click="addClientGST()">Add Information</button>
+    </form>
+</div>

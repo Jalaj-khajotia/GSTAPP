@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="row" style="font-size: 18px;margin-top:25px; ">
+        <h3 class="form-signin-heading">Add a client</h3>
+    </div>
+
+    <form>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input ng-model="name" type="text" class="form-control" id="name" placeholder="Mention a name">
+        </div>
+        <div class="form-group">
+            <label for="client">Client Id</label>
+            <input ng-model="clientid" type="text" class="form-control" id="client" placeholder="Mention a clientId">
+        </div>
+        <div class="form-group">
+            <label for="mobile">Mobile no</label>
+            <input ng-model="mobile" type="number" class="form-control" id="mobile" placeholder="Mention a mobile no.">
+        </div>
+        <div class="form-group">
+            <label for="email"> Email Id</label>
+            <input ng-model="emailid" type="email" class="form-control" id="email" placeholder="Mention a email id">
+        </div>
+        <div class="form-group">
+            <label for="gst"> GST Number</label>
+            <input ng-model="gstno" type="text" class="form-control" id="gst" placeholder="Mention GST no.">
+        </div>
+        <div class="form-group">
+            <label for="id"> GST Id</label>
+            <input ng-model="gstid" type="text" class="form-control" id="id" placeholder="Mention GST Id">
+        </div>
+        <div class="form-group">
+            <label for="gstp">GST Password</label>
+            <input ng-model="password" type="text" class="form-control" id="gstp" placeholder="Mention a gst password">
+        </div>
+        <div class="form-group">
+            <label for="ebill">Ebill Number</label>
+            <input ng-model="ewaybillid" type="text" class="form-control" id="ebill" placeholder="Mention ebill no.">
+        </div>
+        <div class="form-group">
+            <label for="ebillp">Ebill Password</label>
+            <input ng-model="ewaypassword" type="text" class="form-control" id="ebillp" placeholder="Mention a ebill password">
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" ng-click="addClient()">Add Client</button>
+    </form>
+
+</div>

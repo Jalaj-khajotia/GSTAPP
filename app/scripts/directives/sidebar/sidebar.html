@@ -2,7 +2,7 @@
      <div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak style="
     padding: 0px;">
          <div id="sidebar-wrapper" ng-hide="hideNav">
-      <ul class="sidebar">
+      <ul class="sidebar" style="padding-left: 15px;">
         <li class="sidebar-main">
           <a ng-click="toggleSidebar()">
             Toggle me
@@ -14,16 +14,22 @@
           <a href="#/dashboard/home">Home <span class="menu-icon fa fa-tachometer"></span></a>
         </li>
         <li class="sidebar-list">
-          <a href="#/dashboard/catalog">Browse Catalog<span class="menu-icon fa fa-search"></span></a>
+          <a ui-sref="dashboard.client">Add Client<span class="menu-icon fa fa-user"></span></a>
         </li>
+        <li class="sidebar-list">
+          <a ui-sref="dashboard.addGst">Add Client GST<span class="menu-icon fa fa-globe"></span></a>
+         </li>
           <li class="sidebar-list">
-              <a href="#/dashboard/cart">Cart<span class="menu-icon fa fa-shopping-cart"></span></a>
+              <a ui-sref="dashboard.viewClient">View Client<span class="menu-icon fa fa-search"></span></a>
           </li>
           <li class="sidebar-list">
-              <a href="#/dashboard/issue-history">Issue-History<span class="menu-icon fa fa-history"></span></a>
+            <a ui-sref="dashboard.gst">View GST<span class="menu-icon fa fa-search"></span></a>
+         </li>
+          <li class="sidebar-list">
+              <a ui-sref="dashboard.report">Report<span class="menu-icon fa fa-file"></span></a>
           </li>
           <li class="sidebar-list">
-              <a href="#/dashboard/returns">Returns<i class="menu-icon fa fa-undo" aria-hidden="true"></i></span></a>
+              <a ui-sref="dashboard.deleteClient">Delete Client<i class="menu-icon fa fa-trash"></i></span></a>
           </li>
       </ul>
     </div>

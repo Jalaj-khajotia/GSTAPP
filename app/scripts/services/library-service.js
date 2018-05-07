@@ -4,12 +4,13 @@
 'use strict';
 
 var module = angular.module('sbAdminApp');
+var api = "http://localhost:3000/v1/";
 
 function service($http, $q, $cookieStore) {
 
     var libraryBooks = [], bookCatalog = [], returnBooks = [];
     var cookie = $cookieStore.get('loggedUser');
-    $http.defaults.headers.common['authorization'] = cookie.token;
+   // $http.defaults.headers.common['authorization'] = cookie.token;
 
     this.getCatalog = function () {
         var deferred = $q.defer();

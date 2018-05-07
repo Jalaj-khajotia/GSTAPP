@@ -6,6 +6,7 @@
     "url": "https://github.com/start-angular/sb-admin-angular"
   },
   "dependencies": {
+    "angular-dropdowns": "^1.5.1",
     "checklist-model": "^0.9.0",
     "tough-cookie": "^2.2.1"
   },
