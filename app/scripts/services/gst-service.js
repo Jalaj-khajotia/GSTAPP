@@ -13,13 +13,24 @@ function service($http, $q, $cookieStore) {
         returnBooks = [];
     var cookie = $cookieStore.get('loggedUser');
     $http.defaults.headers.common['Authorization'] = cookie.token;
+    try {
+;
+    } catch (error) {
+        $cookieStore.remove('loggedUser');
+    }
 
-    this.checkForLogin = function () {
-        var loggedUser = $cookieStore.get('loggedUser');
-
-        if (typeof (loggedUser) === "undefined" || loggedUser === '' || !loggedUser) {
-            $('#login').openModal();
-        }
+    this.getLoggedInUser = function () {
+        //http://localhost:3000/v1/users/data
+        var deferred = $q.defer();
+        $http.get(api + "users/data")
+            .success(function (data) {
+                deferred.resolve(data.data);
+            })
+            .error(function (data) {
+                deferred.reject(data);
+                $cookieStore.remove('loggedUser');
+            });
+        return deferred.promise;
     }
 
     this.getClientGstData = function (id) {
@@ -43,6 +54,20 @@ function service($http, $q, $cookieStore) {
             deferred.reject(error);
         });
         return deferred.promise;
+    }
+
+    this.getSearchUrl = function (type) {
+        if (type == "tname") {
+            return api + "clients/tname/";
+        } else if (type == "lnname") {
+            return api + "clients/lname/";
+        } else if (type == "userid") {
+            return api + "clients/userid/";
+        } else if (type == "codeno") {
+            return api + "clients/codeno/";
+        } else {
+            return api + "clients/gstid/";
+        }
     }
 
     this.getClientbyId = function (id) {
@@ -135,7 +160,7 @@ function service($http, $q, $cookieStore) {
         var payload = {
             clientid: id
         };
-        $http.delete(api + 'clients/'+id).success(function (data) {
+        $http.delete(api + 'clients/' + id).success(function (data) {
             deferred.resolve(data);
         }).error(function (error) {
             deferred.reject(error);

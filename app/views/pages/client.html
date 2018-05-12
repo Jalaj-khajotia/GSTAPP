@@ -1,15 +1,23 @@
 <div class="container">
-    <div class="row" style="font-size: 18px;margin-top:25px; ">View Client GST Information</div>
+    <div class="row" style="font-size: 18px;margin-top:25px; ">
+        <h3 class="form-signin-heading">View Client Information</h3>
+    </div>
     <div class="row">
         <div class="row">
             <div class="col col-md-3">
-                <div dropdown-select="keyOptions" dropdown-model="key" dropdown-item-label="text">
+                <div dropdown-select="keyOptions" dropdown-model="key" dropdown-item-label="text" dropdown-onchange="changeSearchType()">
                 </div>
             </div>
-            <div class="col col-md-9">
-                <div mass-autocomplete>
-                    <input ng-model="dirty.label" mass-autocomplete-item="autocomplete_options" on_attach="callme(dirty)">
+            <div class="col col-md-6">
+                <div class="padded-row">
+                    <div angucomplete-ie8 id="ex5" placeholder="Search" pause="500" selected-object="selectedClient" remote-url="{{searchApi}}"
+                        token-required="true" remote-url-data-field="clients" title-field="{{firField}}" description-field="{{secField}}"
+                        minlength="2" input-class="form-control form-control-small" match-class="highlight">
+                    </div>
                 </div>
+            </div>
+            <div class="col col-md-3">
+                <button class="btn btn-lg btn-primary btn-block" ng-click="editClient()">Edit Client</button>
             </div>
         </div>
 
@@ -20,23 +28,65 @@
                 <tr>
                     <th>Field</th>
                     <th>Value</th>
-                    <th>Comments if any</th>
-
                 </tr>
             </thead>
             <tbody>
 
                 <tr style="cursor:pointer">
                     <td>
-                        Client Id
+                        Code No.
                     </td>
-                    <td>{{client.clientid||"-not given-"}}</td>
+                    <td>{{client.codeno||"-not given-"}}</td>
                 </tr>
                 <tr>
                     <td>
-                        Name
+                        Trade Name
                     </td>
-                    <td>{{client.name||"-not given-"}}</td>
+                    <td>{{client.tradename||"-not given-"}}</td>
+                </tr>
+                <tr>
+                    <td>
+                        Legal Name
+                    </td>
+                    <td>{{client.legalname||"-not given-"}}</td>
+                </tr>
+                <tr>
+                    <td>
+                        Address
+                    </td>
+                    <td>{{client.address||"-not given-"}}</td>
+                </tr>
+                <tr>
+                    <td>
+                        GST IN
+                    </td>
+                    <td>{{client.gstin||"-not given-"}}</td>
+                </tr>
+                <tr>
+                    <td>
+                        Registration Date
+                    </td>
+                    <td>{{client.regdate||"-not given-"}}</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Dealer Type
+                    </td>
+                    <td>{{client.dealertype||"-not given-"}}</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        User Id
+                    </td>
+                    <td>{{client.userid||"-not given-"}}</td>
+                </tr>
+                <tr>
+                    <td>
+                        Password
+                    </td>
+                    <td>{{client.password||"-not given-"}}</td>
                 </tr>
                 <tr>
                     <td>
@@ -52,29 +102,9 @@
                 </tr>
                 <tr>
                     <td>
-                        Password
+                        Eway User Id
                     </td>
-                    <td>{{client.password||"-not given-"}}</td>
-                </tr>
-                <tr>
-                    <td>
-                        GST Id
-                    </td>
-                    <td>{{client.gstid||"-not given-"}}</td>
-                </tr>
-
-                <tr>
-                    <td>
-                        GST Number
-                    </td>
-                    <td>{{client.gstno||"-not given-"}}</td>
-                </tr>
-
-                <tr>
-                    <td>
-                        Eway Bill Id
-                    </td>
-                    <td>{{client.ewaybillid||"-not given-"}}</td>
+                    <td>{{client.ewayuserid||"-not given-"}}</td>
                 </tr>
                 <tr>
                     <td>
@@ -82,7 +112,18 @@
                     </td>
                     <td>{{client.ewaypassword||"-not given-"}}</td>
                 </tr>
+                <tr>
+                    <td>
+                        Eway Password
+                    </td>
+                    <td>{{client.cancellationdate||"-not given-"}}</td>
+                </tr>
+                <tr>
+                    <td>
+                        Cancellation Date
+                    </td>
+                    <td>{{client.companyid||"-not given-"}}</td>
+                </tr>
             </tbody>
         </table>
     </div>
-</div>

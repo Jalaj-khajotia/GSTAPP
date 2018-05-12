@@ -22,12 +22,11 @@ angular.module('sbAdminApp')
                     }
                 })
                 .then(function (response) {
-                    $location.path('/dashboard/home');
                     $cookieStore.put('loggedUser', response.data);
+                    $location.path('/dashboard/home');
                 }, function (response) {
                     alert("Either password or username is wrong");
+                    $cookieStore.remove('loggedUser');
                 });
-            $location.path('/dashboard/home');
-            $cookieStore.put('loggedUser', 'jalaj');
         }
     });

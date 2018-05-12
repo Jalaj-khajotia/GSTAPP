@@ -17,7 +17,9 @@ angular
         'ngStorage',
         'MassAutoComplete',
         'ngSanitize',
-        'ngDropdowns'
+        'ngDropdowns',
+        'angucomplete-ie8',
+        'smart-table'
     ])
 
     .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider',

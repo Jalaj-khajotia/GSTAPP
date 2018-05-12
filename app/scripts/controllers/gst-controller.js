@@ -3,12 +3,94 @@
  * Created by Jalaj Khajotia on 6/26/2016.
  */
 
-var module = angular.module('sbAdminApp');
+var module = angular.module('sbAdminApp'); //, ['ui.compat']
 
-controller.$inject = ['$scope', 'Gst', '$q', '$timeout'];
+controller.$inject = ['$scope', 'Gst', '$q', '$timeout', '$cookieStore'];
 
-function controller($scope, Gst, $q, $timeout) {
+function controller($scope, Gst, $q, $timeout, $cookieStore) {
+
+    try {
+        var loggedUser = $cookieStore.get('loggedUser');
+
+        if (typeof (loggedUser) === "undefined") {
+            $('#login').openModal();
+        } else {
+            Gst.getLoggedInUser().then(function () {
+                //$state.go('dashboard.home')
+            }, function () {
+                $('#login').openModal();
+            });
+        }
+
+    } catch (error) {
+        //  $cookieStore.remove('loggedUser');
+        $('#login').openModal();
+    }
+    $scope.data = [{
+            periodTime: 1,
+            gstTypeId: 2,
+            gstStatus: 3,
+            receiptDate: new Date('1987-05-21'),
+            fillingDate: new Date('1987-05-21'),
+            remark: 'yet to be'
+        },
+        {
+            periodTime: 3,
+            gstTypeId: 2,
+            gstStatus: 3,
+            receiptDate: new Date('1987-05-21'),
+            fillingDate: new Date('1987-05-21'),
+            remark: 'to be completed'
+        },
+        {
+            periodTime: 2,
+            gstTypeId: 1,
+            gstStatus: 4,
+            receiptDate: new Date('1987-05-21'),
+            fillingDate: new Date('1987-05-21'),
+            remark: 'yet to be'
+        }
+    ];
+
+
+    // $scope.rowCollection = [{
+    //         firstName: 'Laurent',
+    //         lastName: 'Renard',
+    //         birthDate: new Date('1987-05-21'),
+    //         balance: 102,
+    //         email: 'whatever@gmail.com'
+    //     },
+    //     {
+    //         firstName: 'Blandine',
+    //         lastName: 'Faivre',
+    //         birthDate: new Date('1987-04-25'),
+    //         balance: -2323.22,
+    //         email: 'oufblandou@gmail.com'
+    //     },
+    //     {
+    //         firstName: 'Francoise',
+    //         lastName: 'Frere',
+    //         birthDate: new Date('1955-08-27'),
+    //         balance: 42343,
+    //         email: 'raymondef@gmail.com'
+    //     }
+    // ];
+
+    $scope.predicates = ['periodTime', 'gstTypeId', 'gstStatus', 'receiptDate', 'fillingDate', 'remark'];
+    $scope.selectedPredicate = $scope.predicates[0];
     $scope.dirty = {};
+
+    $scope.saveNAddClientGST = function () {
+
+    };
+
+    $scope.editClient = function () {
+
+    };
+
+    $scope.editGST = function () {
+
+    }
 
     function suggest_state(term) {
         var results = [];
@@ -25,25 +107,59 @@ function controller($scope, Gst, $q, $timeout) {
         return results;
     }
 
+
     $scope.keyOptions = [{
-            text: 'Search by Name',
-            value: 'name'
+            text: 'Search by Trade Name',
+            value: 'tname'
         },
         {
-            text: 'Search by Client Id',
-            value: 'clientid'
+            text: 'Search by Legal Name',
+            value: 'lnname'
         },
         {
-            // Example of an option with the 'href' property
-            text: 'Search by GST Id',
+            text: 'Search by Code No.',
+            value: 'codeno'
+        },
+        {
+            text: 'Search by GSTIN',
             value: 'gstid'
+        },
+        {
+            text: 'Search by User Id',
+            value: 'userid'
         }
     ];
+
+    $scope.changeSearchType = function () {
+        $timeout(function () {
+            var searchType = $scope.key.value;
+            $scope.searchApi = Gst.getSearchUrl(searchType);
+            //tname 
+            if (searchType == "tname") {
+                $scope.firField = "tradename";
+                $scope.secField = "gstin";
+            } else if (searchType == "userid") {
+                $scope.firField = "userid";
+                $scope.secField = "legalname";
+            } else if (searchType == "lnname") {
+                $scope.firField = "userid";
+                $scope.secField = "legalname";
+            } else {
+                $scope.firField = "gstid";
+                $scope.secField = "legalname";
+            }
+        }, 100);
+    }
 
     $scope.key = {
         text: 'Search by',
         value: ''
     };
+
+    $scope.gstdealerKey = {
+        text: 'Select GST Type',
+        value: ''
+    }
 
     function SetDefaults() {
 
@@ -151,26 +267,39 @@ function controller($scope, Gst, $q, $timeout) {
     };
 
     $scope.addClient = function () {
+        $scope.gstin = new Date();
+        $scope.cancellationdate = new Date();
         Gst.addClient({
-            "clientid": $scope.clientid,
-            "name": $scope.name,
+            "codeno": $scope.clientid,
+            "tradename": $scope.tradename,
+            "legalname": $scope.legalname,
+            "address": $scope.address,
+            "gstin": $scope.gstin,
+            "regdate": $scope.regdate,
+            "dealertype": $scope.INTEGER,
+            "userid": $scope.userid,
             "password": $scope.password,
             "mobile": $scope.mobile,
-            "gstid": $scope.gstid,
-            "gstno": $scope.gstno,
             "emailid": $scope.emailid,
-            "ewaybillid": $scope.ewaybillid,
-            "ewaypassword": $scope.ewaypassword
+            "ewayuserid": $scope.ewaybillid,
+            "ewaypassword": $scope.ewaypassword,
+            "cancellationdate": $scope.cancellationdate
         });
-        $scope.clientid = "";
-        $scope.name = "";
+        $scope.codeno = "";
+        $scope.tradename = "";
+        $scope.legalname = "";
+        $scope.address = "";
+        $scope.gstin = "";
+        $scope.regdate = "";
+        $scope.dealertype = "";
+        $scope.userid = "";
         $scope.password = "";
         $scope.mobile = "";
-        $scope.gstid = "";
-        $scope.gstno = "";
         $scope.emailid = "";
-        $scope.ewaybillid = "";
+        $scope.ewayuserid = "";
         $scope.ewaypassword = "";
+        $scope.cancellationdate = "";
+        $scope.ewaybillid = "";
     }
 
 
@@ -262,6 +391,11 @@ function controller($scope, Gst, $q, $timeout) {
             }
         }
     }
+    $scope.yearsResult = [];
+    $scope.monthResult = [];
+    $scope.gsttyperesult = [];
+    $scope.gststatusresult = [];
+    $scope.quaterResult = [];
 
     $scope.getClientGstData = function () {
         Gst.getClientGstData().then(function (result) {
@@ -270,11 +404,7 @@ function controller($scope, Gst, $q, $timeout) {
             $scope.months = result.months;
             $scope.gstType = result.gstType;
             $scope.quarters = result.quarters;
-            $scope.yearsResult = [];
-            $scope.monthResult = [];
-            $scope.gsttyperesult = [];
-            $scope.gststatusresult = [];
-            $scope.quaterResult = [];
+
 
             for (var i = 0; i < Object.values(result.years).length; i++) {
                 $scope.yearsResult.push({
@@ -315,11 +445,53 @@ function controller($scope, Gst, $q, $timeout) {
                     id: Object.keys(result.quarters)[i]
                 });
             }
-
+            processTable();
         })
     }
+
     $scope.getClientGstData();
 
+    function processTable() {
+        // for (let i = 0; i < $scope.data.length; i++) {
+        //     var period = $scope.getGstPeriod($scope.data[i].periodTime, $scope.data[i].gstTypeId);
+        //     var gsttypeid = $scope.getGstType($scope.data[i].gstTypeId);
+        //     var gstStatus = $scope.getGstStatus($scope.data[i].gstStatus);
+        //     $scope.rowCollection.push({
+        //         periodTime: period,
+        //         gstTypeId: gsttypeid,
+        //         gstStatus: gstStatus,
+        //         receiptDate: $scope.data[i].receiptDate,
+        //         fillingDate: $scope.data[i].receiptDate,
+        //         remark: $scope.data[i].remark
+        //     });
+
+        // }
+        $scope.rowCollection = [{
+                periodTime: 'january',
+                gstTypeId: 'primary',
+                gstStatus: 'completed',
+                receiptDate: new Date('1987-05-21'),
+                fillingDate: new Date('1987-05-21'),
+                remark: 'yet to be'
+            },
+            {
+                periodTime: 'feberury',
+                gstTypeId: 'composite',
+                gstStatus: 'failed',
+                receiptDate: new Date('1987-05-21'),
+                fillingDate: new Date('1987-05-21'),
+                remark: 'to be completed'
+            },
+            {
+                periodTime: 'march',
+                gstTypeId: 'primary',
+                gstStatus: 'error',
+                receiptDate: new Date('1987-05-21'),
+                fillingDate: new Date('1987-05-21'),
+                remark: 'yet to be'
+            }
+        ];
+    }
 
     $scope.deleteClient = function () {
         if ($scope.isDeleteConfirmed) {
@@ -330,6 +502,12 @@ function controller($scope, Gst, $q, $timeout) {
             }
         }
     }
+
+    $scope.selectedClient = function (data) {
+        console.log(data);
+        $scope.client = data.originalObject;
+    }
+
 
 
 };

@@ -5,42 +5,73 @@
 
     <form>
         <div class="form-group">
-            <label for="name">Name</label>
-            <input ng-model="name" type="text" class="form-control" id="name" placeholder="Mention a name">
+            <label for="code">Code Number</label>
+            <input ng-model="codeno" type="number" class="form-control" id="code" placeholder="Mention Code No.">
         </div>
         <div class="form-group">
-            <label for="client">Client Id</label>
-            <input ng-model="clientid" type="text" class="form-control" id="client" placeholder="Mention a clientId">
+            <label for="trade">Trade Name</label>
+            <input ng-model="tradename" type="text" class="form-control" id="trade" placeholder="Mention Trade Name">
+        </div>
+        <div class="form-group">
+            <label for="name">Legal Name</label>
+            <input ng-model="legalname" type="text" class="form-control" id="name" placeholder="Mention legal name">
+        </div>
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input ng-model="address" type="text" class="form-control" id="address" placeholder="Mention Address">
+        </div>
+        <div class="form-group">
+            <label for="gst"> GSTIN Number</label>
+            <input ng-model="gstin" type="number" class="form-control" id="gst" placeholder="Mention GST no.">
+        </div>
+        <div class="form-group">
+            <label for="regdate">Date of Registration</label>
+            <input ng-model="regdate" type="text" class="form-control" id="regdate" placeholder="Format 01/12/2018">
+        </div>
+        <div class="form-group">
+            <label for="">Type Of Dealer</label>
+            <br/>
+            <div class="pull-left" dropdown-select="gsttyperesult" dropdown-model="gstdealerKey" dropdown-item-label="text">
+            </div>
+            <br/>
+            <br/>
+
+        </div>
+        <div class="form-group">
+            <label for="UserId ">User Id</label>
+            <input ng-model="userid" type="number" class="form-control" id="UserId" placeholder="Mention User Id">
+        </div>
+        <div class="form-group">
+            <label for="gstp">Password</label>
+            <input ng-model="password" type="text" class="form-control" id="gstp" placeholder="Mention GST password">
         </div>
         <div class="form-group">
             <label for="mobile">Mobile no</label>
             <input ng-model="mobile" type="number" class="form-control" id="mobile" placeholder="Mention a mobile no.">
         </div>
         <div class="form-group">
-            <label for="email"> Email Id</label>
+            <label for="email">Email Id</label>
             <input ng-model="emailid" type="email" class="form-control" id="email" placeholder="Mention a email id">
         </div>
         <div class="form-group">
-            <label for="gst"> GST Number</label>
-            <input ng-model="gstno" type="text" class="form-control" id="gst" placeholder="Mention GST no.">
+            <label for="ebill">E Way User Id</label>
+            <input ng-model="ewaybillid" type="text" class="form-control" id="ebill" placeholder="Mention Eway UserId">
         </div>
         <div class="form-group">
-            <label for="id"> GST Id</label>
-            <input ng-model="gstid" type="text" class="form-control" id="id" placeholder="Mention GST Id">
+            <label for="ebillp">E way Password</label>
+            <input ng-model="ewaypassword" type="text" class="form-control" id="ebillp" placeholder="Mention a Eway password">
         </div>
         <div class="form-group">
-            <label for="gstp">GST Password</label>
-            <input ng-model="password" type="text" class="form-control" id="gstp" placeholder="Mention a gst password">
+            <label for="canceldate">Cancel Date</label>
+            <input ng-model="cancellationdate" type="text" class="form-control" id="canceldate" placeholder="Format 01/12/2018">
         </div>
-        <div class="form-group">
-            <label for="ebill">Ebill Number</label>
-            <input ng-model="ewaybillid" type="text" class="form-control" id="ebill" placeholder="Mention ebill no.">
-        </div>
-        <div class="form-group">
-            <label for="ebillp">Ebill Password</label>
-            <input ng-model="ewaypassword" type="text" class="form-control" id="ebillp" placeholder="Mention a ebill password">
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" ng-click="addClient()">Add Client</button>
     </form>
-
+    <div>
+        <div class="col col-md-6">
+            <button class="btn btn-lg btn-primary btn-block" ng-click="addClient()">Save Client</button>
+        </div>
+        <div class="col col-md-6">
+            <button class="btn btn-lg btn-primary btn-block" ng-click="saveNAddClientGST()">Save & Add Client GST</button>
+        </div>
+    </div>
 </div>
