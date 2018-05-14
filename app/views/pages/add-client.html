@@ -26,12 +26,27 @@
         </div>
         <div class="form-group">
             <label for="regdate">Date of Registration</label>
-            <input ng-model="regdate" type="text" class="form-control" id="regdate" placeholder="Format 01/12/2018">
+            <div class="col-md-12">
+                <p class="input-group">
+                    <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="regdate" is-open="opened2"
+                        max-date="'2025-06-22'" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open2($event)">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+                </p>
+            </div>
         </div>
+        <br/>
+        <br/>
+        <br/>
+        
         <div class="form-group">
             <label for="">Type Of Dealer</label>
             <br/>
-            <div class="pull-left" dropdown-select="gsttyperesult" dropdown-model="gstdealerKey" dropdown-item-label="text">
+            <div class="pull-left" dropdown-onchange="ShowGSTPeriod(selected)" dropdown-select="gsttyperesult" dropdown-model="gstdealerKey"
+                dropdown-item-label="text">
             </div>
             <br/>
             <br/>
@@ -63,9 +78,25 @@
         </div>
         <div class="form-group">
             <label for="canceldate">Cancel Date</label>
-            <input ng-model="cancellationdate" type="text" class="form-control" id="canceldate" placeholder="Format 01/12/2018">
+            <!-- <input ng-model="cancellationdate" type="text" class="form-control" id="canceldate" placeholder="Format 01/12/2018">
+             -->
+            <div class="col-md-12">
+                <p class="input-group">
+                    <input id="datepicker" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="cancellationdate" 
+                    is-open="opened"
+                        max-date="'2025-06-22'" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open($event)">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+                </p>
+            </div>
         </div>
     </form>
+    <br/>
+    <br/>
+    <br/>
     <div>
         <div class="col col-md-6">
             <button class="btn btn-lg btn-primary btn-block" ng-click="addClient()">Save Client</button>

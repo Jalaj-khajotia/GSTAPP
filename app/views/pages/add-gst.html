@@ -19,7 +19,7 @@
     <div class="row">
         <div class="col col-md-6">GST Type</div>
         <div class="col col-md-6">
-            <div dropdown-select="gsttyperesult" dropdown-onchange="ShowGSTPeriod(selected)" dropdown-model="gsttypekey" dropdown-item-label="text">
+            <div dropdown-select="gstformresult" dropdown-onchange="ShowGSTPeriod(selected)" dropdown-model="gsttypekey" dropdown-item-label="text">
             </div>
         </div>
     </div>
@@ -50,6 +50,36 @@
         <div class="col col-md-6">
             <div dropdown-select="gststatusresult" dropdown-model="gststatuskey" dropdown-item-label="text">
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <label for="regdate">Date of Receipt</label>
+        <div class="col-md-12">
+            <p class="input-group">
+                <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="receiptDate" is-open="receipt" max-date="'2025-06-22'"
+                    datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="receiptOpen($event)">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                </span>
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <label for="regdate">Date of filling</label>
+        <div class="col-md-12">
+            <p class="input-group">
+                <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="fillingDate" is-open="filling" 
+                max-date="'2025-06-22'"
+                    datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="fillingOpen($event)">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                </span>
+            </p>
         </div>
     </div>
     <div class="row">

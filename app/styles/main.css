@@ -3,41 +3,71 @@
 body {
     padding-bottom: 20px;
 }
-.categories-img{
+
+.text-red {
+    color: red;
+}
+
+.custom-icons {
+    padding: 0px 5px !important;
+    width: 35px;
+}
+
+button.btn.btn-default.btn-sm {
+    padding: 0 !important;
+}
+
+#myclienttable td,
+#myclienttable th {
+    padding: 15px 5px;
+}
+
+.categories-img {
     width: 150px !important;
     opacity: 0.6;
 }
-.modal-footer>a{
-    margin:0 10px !important;
+
+.modal-footer>a {
+    margin: 0 10px !important;
 }
-.col.row-column{
+
+.col.row-column {
     text-align: center;
     margin: 0 40px;
 }
 
-.book-image{
+.book-image {
     transition: all 1s ease-in-out;
 }
 
-.book-image:hover{
+.book-image:hover {
     transform: scale(3);
- }
+}
 
-.book-unavailable{
+.book-unavailable {
     opacity: 0.6;
 }
-.over-due{
+
+.over-due {
     background-color: #efc2c2;
 }
-.column-header{
+
+.column-header {
     font-size: 15px;
     font-weight: bold;
     position: absolute;
     z-index: 4;
     margin: 10px 15px;
 }
-.col.row-column >.column-header { transition: all 1s ease-in-out; }
-.col.row-column > .column-header:hover { transform: scale(1.3); }
+
+.col.row-column>.column-header {
+    transition: all 1s ease-in-out;
+}
+
+.col.row-column>.column-header:hover {
+    transform: scale(1.3);
+}
+
 /* Everything but the jumbotron gets side spacing for mobile first views */
 
 .header,
@@ -47,13 +77,11 @@ body {
     padding-right: 15px;
 }
 
-
 /* Custom page header */
 
 .header {
     border-bottom: 1px solid #e5e5e5;
 }
-
 
 /* Make the masthead heading the same height as the navigation */
 
@@ -64,7 +92,6 @@ body {
     padding-bottom: 19px;
 }
 
-
 /* Custom page footer */
 
 .footer {
@@ -72,7 +99,6 @@ body {
     color: #777;
     border-top: 1px solid #e5e5e5;
 }
-
 
 /* Customize container */
 
@@ -82,10 +108,9 @@ body {
   } */
 }
 
-.container-narrow > hr {
+.container-narrow>hr {
     margin: 30px 0;
 }
-
 
 /* Main marketing message and sign up button */
 
@@ -99,17 +124,15 @@ body {
     padding: 14px 24px;
 }
 
-
 /* Supporting marketing content */
 
 .marketing {
     margin: 40px 0;
 }
 
-.marketing p + h4 {
+.marketing p+h4 {
     margin-top: 28px;
 }
-
 
 /* Responsive: Portrait tablets and up */
 
@@ -146,7 +169,7 @@ body {
     margin: 0 0 0 50px !important;
 }
 
-.dropdown-toggle > .fa {
+.dropdown-toggle>.fa {
     height: 20px;
 }
 
@@ -166,7 +189,7 @@ body {
     padding: 10px 20px !important;
 }
 
-#slides_control > div {
+#slides_control>div {
     height: 200px;
 }
 
@@ -212,7 +235,6 @@ li>img {
     background-size: contain;
     background-repeat: no-repeat;
 }
-
 
 /*item review page Grid CSS */
 
@@ -303,7 +325,7 @@ li>img {
     text-align: center;
 }
 
-.grid >.li {
+.grid>.li {
     display: inline-block;
     width: 440px;
     margin: 0;
@@ -356,4 +378,3 @@ figcaption h3 {
     background: #ed4e6e;
     color: #fff;
 }
-

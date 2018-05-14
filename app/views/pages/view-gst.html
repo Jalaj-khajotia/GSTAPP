@@ -7,16 +7,13 @@
             <div dropdown-select="keyOptions" dropdown-model="key" dropdown-item-label="text" dropdown-onchange="changeSearchType()">
             </div>
         </div>
-        <div class="col col-md-6">
+        <div class="col col-md-9">
             <div class="padded-row">
                 <div angucomplete-ie8 id="ex5" placeholder="Search" pause="500" selected-object="selectedClient" remote-url="{{searchApi}}"
                     token-required="true" remote-url-data-field="clients" title-field="{{firField}}" description-field="{{secField}}"
                     minlength="2" input-class="form-control form-control-small" match-class="highlight">
                 </div>
             </div>
-        </div>
-        <div class="col col-md-3">
-            <button class="btn btn-lg btn-primary btn-block" ng-click="editGST()">Edit GST</button>
         </div>
     </div>
     <div class="row">
@@ -26,22 +23,23 @@
             </div>
         </div>
     </div>
-    <table  st-table="rowCollection"  st-safe-src="rowCollection" class="table table-striped">
+    <table st-table="rowCollection" class="table table-striped">
         <thead>
             <tr>
-                <th st-sort="periodTime">periodTime</th>
-                <th st-sort="gstTypeId">gstTypeId</th>
-                <th st-sort="gstStatus">gstStatus</th>
-                <th st-sort="receiptDate">receiptDate</th>
-                <th st-sort="fillingDate">fillingDate</th>
-                <th st-sort="remark">remark</th>
+                <th st-sort="periodTime">Period</th>
+                <th st-sort="gstFormType">GST Type</th>
+                <th st-sort="gstStatus">Status</th>
+                <th st-sort="receiptDate">Receipt Date</th>
+                <th st-sort="fillingDate">Filling Date</th>
+                <th st-sort="remark">Remark</th>
+                <th>Action</th>
             </tr>
             <tr>
                 <th>
                     <input st-search="periodTime" placeholder="Search" />
                 </th>
                 <th>
-                    <input st-search="gstTypeId" placeholder="Search" />
+                    <input st-search="gstFormType" placeholder="Search" />
                 </th>
                 <th>
                     <input st-search="gstStatus" placeholder="Search" />
@@ -64,13 +62,121 @@
                 <td>
                     {{data.periodTime|uppercase }}
                 </td>
-                <td>{{data.gstTypeId | uppercase }}</td>
+                <td>{{data.gstFormType | uppercase }}</td>
                 <td>{{data.gstStatus}}</td>
                 <td>{{data.receiptDate | date}}</td>
                 <td>{{data.fillingDate | date}}</td>
                 <td>{{data.remark}}</td>
+                <td>
+                    <div class="row">
+                        <div class="col col-md-6">
+                            <button class="btn btn-lg btn-primary btn-block custom-icons" ng-click="editGstInfo(data.id)">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="col col-md-6">
+                            <button class="btn btn-lg btn-primary btn-block custom-icons" ng-click="deleteGstInfo(data.id)">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </td>
             </tr>
         </tbody>
     </table>
+
+    <div id="deleteGst" class="modal" style="padding: 20px 5px; max-height: 35%">
+        <div class="container">
+            <h4>Are you sure you want to delete
+                <span class="text-red"> {{periodTime}}</span> Record</h4>
+            <br/>
+            <br/>
+
+            <div class="row">
+                <div class="col col-md-6">
+                    <button class="btn btn-lg btn-primary btn-block" ng-click="confirmDeleteGst()">Delete Client</button>
+                </div>
+                <div class="col col-md-6">
+                    <button class="btn btn-lg btn-primary btn-block" ng-click="closeDeleteModel()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="viewGst" class="modal" style="padding: 25px; max-height: 80%">
+        <div class="row">
+            <div class="col col-md-6">GST Type</div>
+            <div class="col col-md-6">
+                <div dropdown-select="gstformresult" dropdown-onchange="ShowGSTPeriod(selected)" 
+                dropdown-model="selectedGst.gsttypekey"
+                    dropdown-item-label="text">
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-show="selectedGst.showMonths">
+            <div class="col col-md-6">Month</div>
+            <div class="col col-md-6">
+                <div dropdown-select="monthResult" dropdown-model="selectedGst.monthkey" dropdown-item-label="text">
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-show="!selectedGst.showMonths">
+            <div class="col col-md-6">Quarter</div>
+            <div class="col col-md-6">
+                <div dropdown-select="quaterResult" dropdown-model="selectedGst.quaterKey" dropdown-item-label="text">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-md-6">GST Status</div>
+            <div class="col col-md-6">
+                <div dropdown-select="gststatusresult" dropdown-model="selectedGst.gststatuskey" dropdown-item-label="text">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <label for="regdate">Date of Receipt</label>
+            <div class="col-md-12">
+                <p class="input-group">
+                    <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="selectedGst.receiptDate" is-open="receipt"
+                        max-date="'2025-06-22'" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="receiptOpen($event)">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <label for="regdate">Date of filling</label>
+            <div class="col-md-12">
+                <p class="input-group">
+                    <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="selectedGst.fillingDate" is-open="filling"
+                        max-date="'2025-06-22'" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="fillingOpen($event)">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <label for="remark">GST Status Remarks</label>
+            <input ng-model="selectedGst.remark" type="text" class="form-control" id="remark" placeholder="Additional Remarks">
+        </div>
+        <br/>
+        <br/>
+        <div class="col col-md-6">
+            <button class="btn btn-lg btn-primary btn-block" ng-click="updateGSTRecord()">Update Record</button>
+        </div>
+        <div class="col col-md-6">
+            <button class="btn btn-lg btn-primary btn-block" ng-click="cancelUpdateGSTRecord()">Cancel</button>
+        </div>
+        <br/>
+        <br/>
+    </div>
 
 </div>

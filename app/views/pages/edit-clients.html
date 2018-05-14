@@ -1,0 +1,173 @@
+<div class="container">
+    <div class="row" style="font-size: 18px;margin-top:25px; ">
+        <h3 class="form-signin-heading">Edit Client Information</h3>
+    </div>
+    <div class="row">
+        <table st-table="rowCollection" class="table table-striped">
+            <thead>
+                <tr>
+                    <th st-sort="tradename">Trade Name</th>
+                    <th st-sort="gstin">GST No</th>
+                    <th st-sort="regdate">Registration Date</th>
+                    <th st-sort="userid">User Id</th>
+                    <th>Action</th>
+                    <th>Action</th>
+                </tr>
+                <tr>
+                    <th>
+                        <input st-search="tradename" placeholder="Search" />
+                    </th>
+                    <th>
+                        <input st-search="gstin" placeholder="Search" />
+                    </th>
+                    <th>
+                        <input st-search="regdate" placeholder="Search" />
+                    </th>
+                    <th>
+                        <input st-search="userid" placeholder="Search" />
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="data in rowCollection">
+                    <td>
+                        {{data.tradename|uppercase }}
+                    </td>
+                    <td>{{data.gstin }}</td>
+                    <td>{{data.regdate | date}}</td>
+                    <td>{{data.userid}}</td>
+                    <td>
+                        <a class="btn" href="" ng-click="editClient(data.id)">Edit</a>
+                    </td>
+                    <td>
+                        <a class="btn" href="" ng-click="deleteClient(data.id)">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="deleteclient" class="modal" style="padding: 20px 5px; max-height: 35%">
+        <div class="container">
+            <h4>Are you sure you want to delete
+                <span class="text-red"> {{clientName}}</span> client</h4>
+                <br/>
+                <br/>
+
+            <div class="row">
+                <div class="col col-md-6">
+                    <button class="btn btn-lg btn-primary btn-block" ng-click="confirmDeleteClient()">Delete Client</button>
+                </div>
+                <div class="col col-md-6">
+                    <button class="btn btn-lg btn-primary btn-block" ng-click="closeDeleteModel()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="editclient" class="modal">
+        <div class="container">
+            <h4>Edit Client</h4>
+
+            <form>
+                <div class="form-group">
+                    <label for="code">Code Number</label>
+                    <input ng-model="selectedClient.codeno" type="number" class="form-control" id="code" placeholder="Mention Code No.">
+                </div>
+                <div class="form-group">
+                    <label for="trade">Trade Name</label>
+                    <input ng-model="selectedClient.tradename" type="text" class="form-control" id="trade" placeholder="Mention Trade Name">
+                </div>
+                <div class="form-group">
+                    <label for="name">Legal Name</label>
+                    <input ng-model="selectedClient.legalname" type="text" class="form-control" id="name" placeholder="Mention legal name">
+                </div>
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input ng-model="selectedClient.address" type="text" class="form-control" id="address" placeholder="Mention Address">
+                </div>
+                <div class="form-group">
+                    <label for="gst"> GSTIN Number</label>
+                    <input ng-model="selectedClient.gstin" type="number" class="form-control" id="gst" placeholder="Mention GST no.">
+                </div>
+                <div class="form-group">
+                    <label for="regdate">Date of Registration</label>
+                    <div class="col-md-12">
+                        <p class="input-group">
+                            <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="selectedClient.regdate" is-open="reg" max-date="'2025-06-22'"
+                                datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="regDate($event)">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <br/>
+                <br/>
+                <br/>
+
+                <div class="form-group">
+                    <label for="">Type Of Dealer</label>
+                    <br/>
+                    <div class="pull-left" dropdown-onchange="ShowGSTPeriod(selected)" dropdown-select="gsttyperesult" dropdown-model="selectedClient.gstdealerKey"
+                        dropdown-item-label="text">
+                    </div>
+                    <br/>
+                    <br/>
+
+                </div>
+                <div class="form-group">
+                    <label for="UserId ">User Id</label>
+                    <input ng-model="selectedClient.userid" type="number" class="form-control" id="UserId" placeholder="Mention User Id">
+                </div>
+                <div class="form-group">
+                    <label for="gstp">Password</label>
+                    <input ng-model="selectedClient.password" type="text" class="form-control" id="gstp" placeholder="Mention GST password">
+                </div>
+                <div class="form-group">
+                    <label for="mobile">Mobile no</label>
+                    <input ng-model="selectedClient.mobile" type="number" class="form-control" id="mobile" placeholder="Mention a mobile no.">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Id</label>
+                    <input ng-model="selectedClient.emailid" type="email" class="form-control" id="email" placeholder="Mention a email id">
+                </div>
+                <div class="form-group">
+                    <label for="ebill">E Way User Id</label>
+                    <input ng-model="selectedClient.ewaybillid" type="text" class="form-control" id="ebill" placeholder="Mention Eway UserId">
+                </div>
+                <div class="form-group">
+                    <label for="ebillp">E way Password</label>
+                    <input ng-model="selectedClient.ewaypassword" type="text" class="form-control" id="ebillp" placeholder="Mention a Eway password">
+                </div>
+                <div class="form-group">
+                    <label for="canceldate">Cancel Date</label>
+                    <!-- <input ng-model="cancellationdate" type="text" class="form-control" id="canceldate" placeholder="Format 01/12/2018">
+                 -->
+                    <div class="col-md-12">
+                        <p class="input-group">
+                            <input id="datepicker" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="selectedClient.cancellationdate"
+                                is-open="cancel" max-date="'2025-06-22'" datepicker-options="dateOptions" ng-required="true"
+                                close-text="Close" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="cancelDate($event)">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </form>
+            <br/>
+            <br/>
+            <div class="col col-md-6">
+                <button class="btn btn-lg btn-primary btn-block" ng-click="updateClient()">Update Client</button>
+            </div>
+            <br/>
+            <br/>
+
+        </div>
+    </div>
+</div>

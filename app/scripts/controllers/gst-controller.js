@@ -26,55 +26,7 @@ function controller($scope, Gst, $q, $timeout, $cookieStore) {
         //  $cookieStore.remove('loggedUser');
         $('#login').openModal();
     }
-    $scope.data = [{
-            periodTime: 1,
-            gstTypeId: 2,
-            gstStatus: 3,
-            receiptDate: new Date('1987-05-21'),
-            fillingDate: new Date('1987-05-21'),
-            remark: 'yet to be'
-        },
-        {
-            periodTime: 3,
-            gstTypeId: 2,
-            gstStatus: 3,
-            receiptDate: new Date('1987-05-21'),
-            fillingDate: new Date('1987-05-21'),
-            remark: 'to be completed'
-        },
-        {
-            periodTime: 2,
-            gstTypeId: 1,
-            gstStatus: 4,
-            receiptDate: new Date('1987-05-21'),
-            fillingDate: new Date('1987-05-21'),
-            remark: 'yet to be'
-        }
-    ];
 
-
-    // $scope.rowCollection = [{
-    //         firstName: 'Laurent',
-    //         lastName: 'Renard',
-    //         birthDate: new Date('1987-05-21'),
-    //         balance: 102,
-    //         email: 'whatever@gmail.com'
-    //     },
-    //     {
-    //         firstName: 'Blandine',
-    //         lastName: 'Faivre',
-    //         birthDate: new Date('1987-04-25'),
-    //         balance: -2323.22,
-    //         email: 'oufblandou@gmail.com'
-    //     },
-    //     {
-    //         firstName: 'Francoise',
-    //         lastName: 'Frere',
-    //         birthDate: new Date('1955-08-27'),
-    //         balance: 42343,
-    //         email: 'raymondef@gmail.com'
-    //     }
-    // ];
 
     $scope.predicates = ['periodTime', 'gstTypeId', 'gstStatus', 'receiptDate', 'fillingDate', 'remark'];
     $scope.selectedPredicate = $scope.predicates[0];
@@ -156,12 +108,15 @@ function controller($scope, Gst, $q, $timeout, $cookieStore) {
         value: ''
     };
 
-    $scope.gstdealerKey = {
-        text: 'Select GST Type',
-        value: ''
-    }
 
     function SetDefaults() {
+
+        $scope.fillingDate = "";
+        $scope.receiptDate = "";
+        $scope.gstdealerKey = {
+            text: 'Select GST Type',
+            value: ''
+        }
 
         $scope.yearkey = {
             text: 'Select Year',
@@ -267,16 +222,15 @@ function controller($scope, Gst, $q, $timeout, $cookieStore) {
     };
 
     $scope.addClient = function () {
-        $scope.gstin = new Date();
-        $scope.cancellationdate = new Date();
+
         Gst.addClient({
-            "codeno": $scope.clientid,
+            "codeno": $scope.codeno,
             "tradename": $scope.tradename,
             "legalname": $scope.legalname,
             "address": $scope.address,
             "gstin": $scope.gstin,
             "regdate": $scope.regdate,
-            "dealertype": $scope.INTEGER,
+            "dealertype": $scope.gstdealerKey.id,
             "userid": $scope.userid,
             "password": $scope.password,
             "mobile": $scope.mobile,
@@ -300,22 +254,55 @@ function controller($scope, Gst, $q, $timeout, $cookieStore) {
         $scope.ewaypassword = "";
         $scope.cancellationdate = "";
         $scope.ewaybillid = "";
+        SetDefaults();
     }
+    $scope.open = function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.opened = true;
+    };
+
+    $scope.open2 = function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.opened2 = true;
+    };
 
 
-    $scope.getClientGst = function () {
-        Gst.viewGst(1).then(function (data) {
-            $scope.gst = data;
-        })
-    }
+    $scope.fillingOpen = function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.filling = true;
+    };
+
+    $scope.receiptOpen = function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.receipt = true;
+    };
+
+    $scope.dateOptions = {
+        formatYear: 'yy',
+        startingDay: 1
+    };
+
+    $scope.today = function () {
+        $scope.dt = new Date();
+    };
+    $scope.today();
+
+    $scope.clear = function () {
+        $scope.dt = null;
+    };
+
+    $scope.toggleMin = function () {
+        $scope.minDate = $scope.minDate ? null : new Date();
+    };
+    $scope.toggleMin();
+    $scope.format = 'shortDate';
 
     $scope.ShowGSTPeriod = function (data) {
-        setTimeout(function () {
-            if ($scope.gsttypekey.text == "Primary") {
-                $scope.showMonths = true;
-            } else {
-                $scope.showMonths = false;
-            }
+        setTimeout(function () {;
         }, 100)
     }
 
@@ -327,11 +314,13 @@ function controller($scope, Gst, $q, $timeout, $cookieStore) {
             period = $scope.quaterKey.id;
         }
         var gstObj = {
-            clientid: $scope.client.clientid,
+            clientInfoId: $scope.client.id,
             year: $scope.yearkey.id,
             period: period,
-            gsttypeid: $scope.gsttypekey.id,
+            gstFormType: $scope.gsttypekey.id,
             gststatus: $scope.gststatuskey.id,
+            receiptDate: $scope.receiptDate,
+            fillingDate: $scope.fillingDate,
             remark: $scope.remark
         }
         Gst.addGst(gstObj).then(function () {
@@ -340,37 +329,17 @@ function controller($scope, Gst, $q, $timeout, $cookieStore) {
         });
     }
 
-    $scope.loadGstFYChanged = function () {
-        $scope.GstData = [];
-        setTimeout(function () {
-            console.log($scope.yearkey.id);
-
-            if ($scope.client.clientid == "0" || $scope.client.clientid) {
-                Gst.gstInfo($scope.client.clientid).then(function (data) {
-                    for (var i = 0; i < data.length; i++) {
-                        if (data[i].year == $scope.yearkey.id) {
-                            $scope.GstData.push(data[i]);
-                            console.log($scope.GstData);
-                        }
-                    }
-                    console.log(data);
-                });
-            }
-        }, 100)
-    }
-
-
     $scope.getGstPeriod = function (data, typeId) {
-        if (typeId == "2") {
+        if (typeId == 1) {
             for (let i = 0; i < $scope.monthResult.length; i++) {
                 if ($scope.monthResult[i].id == data) {
-                    return $scope.monthResult[i].text;
+                    return $scope.monthResult[i];
                 }
             }
         } else {
             for (let i = 0; i < $scope.quaterResult.length; i++) {
                 if ($scope.quaterResult[i].id == data) {
-                    return $scope.quaterResult[i].text;
+                    return $scope.quaterResult[i];
                 }
             }
         }
@@ -379,7 +348,7 @@ function controller($scope, Gst, $q, $timeout, $cookieStore) {
     $scope.getGstStatus = function (data) {
         for (let i = 0; i < $scope.gststatusresult.length; i++) {
             if ($scope.gststatusresult[i].id == data) {
-                return $scope.gststatusresult[i].text;
+                return $scope.gststatusresult[i];
             }
         }
     }
@@ -387,15 +356,26 @@ function controller($scope, Gst, $q, $timeout, $cookieStore) {
     $scope.getGstType = function (data) {
         for (let i = 0; i < $scope.gsttyperesult.length; i++) {
             if ($scope.gsttyperesult[i].id == data) {
-                return $scope.gsttyperesult[i].text;
+                return $scope.gsttyperesult[i];
             }
         }
     }
+
+    $scope.getGstFormType = function (data) {
+        for (let i = 0; i < $scope.gstformresult.length; i++) {
+            if ($scope.gstformresult[i].id == data) {
+                return $scope.gstformresult[i];
+            }
+        }
+    }
+
     $scope.yearsResult = [];
     $scope.monthResult = [];
     $scope.gsttyperesult = [];
     $scope.gststatusresult = [];
+    $scope.gstformresult = [];
     $scope.quaterResult = [];
+    $scope.rowCollection = [];
 
     $scope.getClientGstData = function () {
         Gst.getClientGstData().then(function (result) {
@@ -405,6 +385,13 @@ function controller($scope, Gst, $q, $timeout, $cookieStore) {
             $scope.gstType = result.gstType;
             $scope.quarters = result.quarters;
 
+            for (var i = 0; i < Object.values(result.formType).length; i++) {
+                $scope.gstformresult.push({
+                    text: Object.values(result.formType)[i],
+                    value: Object.values(result.formType)[i],
+                    id: Object.keys(result.formType)[i]
+                });
+            }
 
             for (var i = 0; i < Object.values(result.years).length; i++) {
                 $scope.yearsResult.push({
@@ -445,52 +432,53 @@ function controller($scope, Gst, $q, $timeout, $cookieStore) {
                     id: Object.keys(result.quarters)[i]
                 });
             }
-            processTable();
         })
     }
 
     $scope.getClientGstData();
 
-    function processTable() {
-        // for (let i = 0; i < $scope.data.length; i++) {
-        //     var period = $scope.getGstPeriod($scope.data[i].periodTime, $scope.data[i].gstTypeId);
-        //     var gsttypeid = $scope.getGstType($scope.data[i].gstTypeId);
-        //     var gstStatus = $scope.getGstStatus($scope.data[i].gstStatus);
-        //     $scope.rowCollection.push({
-        //         periodTime: period,
-        //         gstTypeId: gsttypeid,
-        //         gstStatus: gstStatus,
-        //         receiptDate: $scope.data[i].receiptDate,
-        //         fillingDate: $scope.data[i].receiptDate,
-        //         remark: $scope.data[i].remark
-        //     });
+    function processTable(data) {
+        $scope.rowCollection = [];
+        for (let i = 0; i < data.length; i++) {
+            var period = $scope.getGstPeriod(data[i].period, $scope.client.dealertype).text;
+            var gsttypeid = $scope.getGstFormType(data[i].gstFormType).text;
+            var gstStatus = $scope.getGstStatus(data[i].gststatus).text;
+            $scope.rowCollection.push({
+                periodTime: period,
+                gstFormType: gsttypeid,
+                gstStatus: gstStatus,
+                receiptDate: data[i].receiptDate,
+                fillingDate: data[i].receiptDate,
+                remark: data[i].remark,
+                id: data[i].id
+            });
+        }
+    }
 
-        // }
-        $scope.rowCollection = [{
-                periodTime: 'january',
-                gstTypeId: 'primary',
-                gstStatus: 'completed',
-                receiptDate: new Date('1987-05-21'),
-                fillingDate: new Date('1987-05-21'),
-                remark: 'yet to be'
-            },
-            {
-                periodTime: 'feberury',
-                gstTypeId: 'composite',
-                gstStatus: 'failed',
-                receiptDate: new Date('1987-05-21'),
-                fillingDate: new Date('1987-05-21'),
-                remark: 'to be completed'
-            },
-            {
-                periodTime: 'march',
-                gstTypeId: 'primary',
-                gstStatus: 'error',
-                receiptDate: new Date('1987-05-21'),
-                fillingDate: new Date('1987-05-21'),
-                remark: 'yet to be'
+    function LoadGstData() {
+        $scope.GstData = [];
+        setTimeout(function () {
+            console.log($scope.yearkey.id);
+
+            if ($scope.client.id == "0" || $scope.client.id) {
+                Gst.gstInfo($scope.client.id).then(function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        if (data[i].year == $scope.yearkey.id) {
+                            $scope.GstData.push(data[i]);
+                            console.log($scope.GstData);
+                            processTable($scope.GstData);
+                        }
+                    }
+                    console.log(data);
+                });
             }
-        ];
+        }, 100)
+    }
+
+    $scope.loadGstFYChanged = function () {
+        $scope.rowCollection = [];
+
+        LoadGstData();
     }
 
     $scope.deleteClient = function () {
@@ -504,12 +492,91 @@ function controller($scope, Gst, $q, $timeout, $cookieStore) {
     }
 
     $scope.selectedClient = function (data) {
-        console.log(data);
         $scope.client = data.originalObject;
+        console.log(data);
+        if ($scope.client.dealertype == 1) {
+            $scope.showMonths = true;
+        } else {
+            $scope.showMonths = false;
+        }
     }
 
+    function getSelectedGst(id) {
+        for (let i = 0; i < $scope.GstData.length; i++) {
+            const element = $scope.GstData[i];
+            if (element.id == id) {
+                return element;
+            }
+        }
+    }
 
+    $scope.editGstInfo = function (id) {
+        $scope.selectedGst = getSelectedGst(id);
+        if ($scope.client.dealertype == 1) {
+            $scope.selectedGst.showMonths = true;
+            var monthkeyData = $scope.getGstPeriod($scope.selectedGst.period, $scope.client.dealertype);
+            $scope.selectedGst.monthkey = monthkeyData;
 
+        } else {
+            $scope.selectedGst.showMonths = false;
+            var quaterkeyData = $scope.getGstPeriod($scope.selectedGst.period, $scope.client.dealertype);
+            $scope.selectedGst.quaterKey = quaterkeyData;
+        }
+
+        var gstformTypeData = $scope.getGstFormType($scope.selectedGst.gstFormType);
+        var gststatuskeyData = $scope.getGstStatus($scope.selectedGst.gststatus);
+        $scope.selectedGst.gsttypekey = gstformTypeData;
+        $scope.selectedGst.gststatuskey = gststatuskeyData;
+        $('#viewGst').openModal();
+    }
+
+    $scope.deleteGstInfo = function (id) {
+        $('#deleteGst').openModal();
+        $scope.selectedGst = getSelectedGst(id);
+        $scope.periodTime = getSelectedGst(id).periodTime;
+    }
+
+    $scope.confirmDeleteGst = function (id) {
+        Gst.deleteGst($scope.selectedGst.id).then(function (data) {
+            console.log(data);
+            $scope.rowCollection = [];
+            LoadGstData();
+            $('#deleteGst').closeModal();
+        });
+    }
+
+    $scope.closeDeleteModel = function () {
+        $('#deleteGst').closeModal();
+    }
+
+    $scope.cancelUpdateGSTRecord = function () {
+        $('#viewGst').closeModal();
+    }
+
+    $scope.updateGSTRecord = function () {
+        var period;
+        if ($scope.client.dealertype == 1) {
+            period = $scope.selectedGst.monthkey.id;
+        } else {
+            period = $scope.selectedGst.quaterKey.id;
+        }
+        var gstObj = {
+            id: $scope.selectedGst.id,
+            clientInfoId: $scope.client.id,
+            year: $scope.selectedGst.year,
+            period: period,
+            gstFormType: $scope.selectedGst.gsttypekey.id,
+            gststatus: $scope.selectedGst.gststatuskey.id,
+            receiptDate: $scope.selectedGst.receiptDate,
+            fillingDate: $scope.selectedGst.fillingDate,
+            remark: $scope.selectedGst.remark
+        }
+        Gst.updateGSTRecord(gstObj).then(function () {
+            $scope.rowCollection = [];
+            LoadGstData();
+            $('#viewGst').closeModal();
+        })
+    }
 };
 
 module.controller('GstCtrl', controller);

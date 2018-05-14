@@ -1,0 +1,74 @@
+<div class="container">
+    <h3>Edit GST</h3>
+    <div class="row">
+        <div class="col col-md-3">
+            <div dropdown-select="keyOptions" dropdown-model="key" dropdown-item-label="text" dropdown-onchange="changeSearchType()">
+            </div>
+        </div>
+        <div class="col col-md-9">
+            <div class="padded-row">
+                <div angucomplete-ie8 id="ex5" placeholder="Search" pause="500" selected-object="selectedClient" remote-url="{{searchApi}}"
+                    token-required="true" remote-url-data-field="clients" title-field="{{firField}}" description-field="{{secField}}"
+                    minlength="2" input-class="form-control form-control-small" match-class="highlight">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-md-6">Financial Year</div>
+        <div class="col col-md-6">
+            <div dropdown-select="yearsResult" dropdown-onchange="LoadEditGSTTable(selected)" dropdown-model="yearkey" dropdown-item-label="text">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <table st-table="editGSTCollection" class="table table-striped">
+            <thead>
+                <tr>
+                    <th st-sort="gstFormType">GST Type</th>
+                    <th st-sort="period">Period</th>
+                    <th st-sort="gststatus">Status</th>
+                    <th st-sort="receiptDate">Receipt Date</th>
+                    <th st-sort="remark">Remark</th>
+                    <th>Action</th>
+                    <th>Action</th>
+                </tr>
+                <tr>
+                    <th>
+                        <input st-search="gstFormType" placeholder="Search" />
+                    </th>
+                    <th>
+                        <input st-search="period" placeholder="Search" />
+                    </th>
+                    <th>
+                        <input st-search="gststatus" placeholder="Search" />
+                    </th>
+                    <th>
+                        <input st-search="receiptDate" placeholder="Search" />
+                    </th>
+                    <th>
+                        <input st-search="remark" placeholder="Search" />
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="data in rowCollection">
+                    <td>
+                        {{data.gstFormType }}
+                    </td>
+                    <td>{{data.period }}</td>
+                    <td>{{data.gststatus }}</td>
+                    <td>{{data.receiptDate | date}}</td>
+                    <td>{{data.remark}}</td>
+                    <td>
+                        <a class="btn" href="" ng-click="editClient(data.id)">Edit</a>
+                    </td>
+                    <td>
+                        <a class="btn" href="" ng-click="deleteClient(data.id)">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

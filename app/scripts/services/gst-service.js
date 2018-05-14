@@ -8,13 +8,9 @@ var api = "http://localhost:3000/v1/";
 
 function service($http, $q, $cookieStore) {
 
-    var libraryBooks = [],
-        bookCatalog = [],
-        returnBooks = [];
     var cookie = $cookieStore.get('loggedUser');
     $http.defaults.headers.common['Authorization'] = cookie.token;
-    try {
-;
+    try {;
     } catch (error) {
         $cookieStore.remove('loggedUser');
     }
@@ -33,6 +29,7 @@ function service($http, $q, $cookieStore) {
         return deferred.promise;
     }
 
+    // fetch data for dropdowns
     this.getClientGstData = function (id) {
         var deferred = $q.defer();
         $http.get(api + "clients/gstdata")
@@ -48,11 +45,23 @@ function service($http, $q, $cookieStore) {
     this.addClient = function (client) {
         var deferred = $q.defer();
         var payload = client;
-        $http.post(api + 'clients', payload).success(function (data) {
+        $http.post(api + 'client', payload).success(function (data) {
             deferred.resolve(data);
         }).error(function (error) {
             deferred.reject(error);
         });
+        return deferred.promise;
+    }
+
+    this.getAllClients = function () {
+        var deferred = $q.defer();
+        $http.get(api + "clients")
+            .success(function (data) {
+                deferred.resolve(data);
+            })
+            .error(function (data) {
+                deferred.reject(data);
+            });
         return deferred.promise;
     }
 
@@ -118,23 +127,10 @@ function service($http, $q, $cookieStore) {
         return deferred.promise;
     }
 
-    this.viewGst = function (clientId) {
-        var deferred = $q.defer();
-        var payload = {
-            clientId: clientId
-        };
-        $http.post(api + 'receivegst', payload).success(function (data) {
-            deferred.resolve(data);
-        }).error(function (error) {
-            deferred.reject(error);
-        });
-        return deferred.promise;
-    }
-
     this.gstInfo = function (id) {
         var deferred = $q.defer();
         var payload = {
-            clientid: id
+            id: id
         };
         $http.post(api + 'fetchclientgst', payload).success(function (data) {
             deferred.resolve(data);
@@ -155,12 +151,32 @@ function service($http, $q, $cookieStore) {
         return deferred.promise;
     }
 
+    this.updateClient = function (client) {
+        var deferred = $q.defer();
+        var payload = client;
+        $http.put(api + 'clients', payload).success(function (data) {
+            deferred.resolve(data);
+        }).error(function (error) {
+            deferred.reject(error);
+        });
+        return deferred.promise;
+    }
+
+    this.updateGSTRecord = function (gstrecord) {
+        var deferred = $q.defer();
+        var payload = gstrecord;
+        $http.put(api + 'clientgst', payload).success(function (data) {
+            deferred.resolve(data);
+        }).error(function (error) {
+            deferred.reject(error);
+        });
+        return deferred.promise;
+    }
+
     this.deleteClient = function (id) {
         var deferred = $q.defer();
-        var payload = {
-            clientid: id
-        };
-        $http.delete(api + 'clients/' + id).success(function (data) {
+
+        $http.delete(api + 'client/' + id).success(function (data) {
             deferred.resolve(data);
         }).error(function (error) {
             deferred.reject(error);
@@ -168,71 +184,15 @@ function service($http, $q, $cookieStore) {
         return deferred.promise;
     }
 
-    this.generateIssueId = function (userid, issueDate) {
+    this.deleteGst = function (id) {
         var deferred = $q.defer();
-        var payload = {
-            "issue": {
-                "UserId": userid,
-                "issueDate": issueDate
-            }
-        };
-        $http.post('http://localhost:8000/issue', payload).success(function (data) {
+
+        $http.delete(api + 'clientgst/' + id).success(function (data) {
             deferred.resolve(data);
         }).error(function (error) {
             deferred.reject(error);
         });
         return deferred.promise;
     }
-
-
-    this.getAllBooks = function () {
-        var deferred = $q.defer();
-        $http.get("http://localhost:8000/books")
-            .success(function (data) {
-                deferred.resolve(data);
-            })
-            .error(function (data) {
-                deferred.reject(data);
-            });
-        return deferred.promise;
-    };
-
-
-
-    this.returnIssueBooks = function (payload) {
-        var deferred = $q.defer();
-        $http.put('http://localhost:8000/issuebooksReturn', payload).success(function (data) {
-            deferred.resolve(data);
-        }).error(function (error) {
-            deferred.reject(error);
-        });
-        return deferred.promise;
-    }
-    this.updateUserData = function (data, id) {
-        var payload = {
-            "user": {}
-        };
-        if (data.email) {
-            payload.user.userEmail = data.email;
-        }
-        if (data.password) {
-            payload.user.userPassword = data.password;
-        }
-        if (data.department) {
-            payload.user.department = data.department;
-        }
-        if (data.name) {
-            payload.user.name = data.name;
-        }
-        var deferred = $q.defer();
-        $http.put('http://localhost:8000/user/' + id, payload).success(function (data) {
-            deferred.resolve(data);
-        }).error(function (error) {
-            deferred.reject(error);
-        });
-        return deferred.promise;
-    }
-
-
 };
 module.service('Gst', ['$http', '$q', '$cookieStore', service]);

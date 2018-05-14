@@ -124,6 +124,36 @@ angular
                         }
                     }
                 })
+                .state('dashboard.editClients', {
+                    url: '/editclients',
+                    controller: 'EditClientsCtrl',
+                    templateUrl: 'views/pages/edit-clients.html',
+                    resolve: {
+                        loadMyFiles: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'sbAdminApp',
+                                files: [
+                                    'scripts/controllers/editclients-controller.js'
+                                ]
+                            })
+                        }
+                    }
+                })
+                .state('dashboard.editGST', {
+                    url: '/editclientgst',
+                    controller: 'GstCtrl',
+                    templateUrl: 'views/pages/edit-clientgst.html',
+                    resolve: {
+                        loadMyFiles: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'sbAdminApp',
+                                files: [
+                                    'scripts/controllers/gst-controller.js'
+                                ]
+                            })
+                        }
+                    }
+                })
                 .state('dashboard.viewClient', {
                     url: '/viewclient',
                     controller: 'GstCtrl',
