@@ -11,7 +11,7 @@
  */
 angular.module('sbAdminApp')
     .controller('LoginCtrl', function ($scope, $http, $location, $cookieStore) {
-        var endPoint = "http://localhost:3000/v1/";
+        var endPoint = api;
         $scope.signin = function () {
             $http({
                     method: 'POST',

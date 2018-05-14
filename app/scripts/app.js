@@ -7,6 +7,9 @@
  *
  * Main module of the application.
  */
+var local = 'http://localhost:3000/v1/';
+var server = 'http://ec2-52-90-92-197.compute-1.amazonaws.com:3000/v1/';
+var api = local;
 angular
     .module('sbAdminApp', [
         'oc.lazyLoad',

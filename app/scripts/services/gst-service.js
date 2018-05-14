@@ -4,15 +4,25 @@
 'use strict';
 
 var module = angular.module('sbAdminApp');
-var api = "http://localhost:3000/v1/";
+
 
 function service($http, $q, $cookieStore) {
-
     var cookie = $cookieStore.get('loggedUser');
     $http.defaults.headers.common['Authorization'] = cookie.token;
     try {;
     } catch (error) {
         $cookieStore.remove('loggedUser');
+    }
+
+    this.signIn = function (dt) {
+        var deferred = $q.defer();
+        var payload = dt;
+        $http.post(api + 'users/login', payload).success(function (data) {
+            deferred.resolve(data);
+        }).error(function (error) {
+            deferred.reject(error);
+        });
+        return deferred.promise;
     }
 
     this.getLoggedInUser = function () {

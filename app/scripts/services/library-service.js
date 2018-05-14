@@ -4,7 +4,6 @@
 'use strict';
 
 var module = angular.module('sbAdminApp');
-var api = "http://localhost:3000/v1/";
 
 function service($http, $q, $cookieStore) {
 
