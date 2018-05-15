@@ -6,10 +6,25 @@
  * # MainCtrl
  */
 angular.module('sbAdminApp')
-    .controller('EditClientsCtrl', ['$scope', '$position', '$http', '$timeout', '$cookieStore', '$location', 'Gst', '$state',
-        function ($scope, $position, $http, $timeout, $cookieStore, $location, Gst, $state) {
+    .controller('EditClientsCtrl', ['$scope', '$position', '$http', '$timeout', '$cookieStore',
+        '$location', 'Gst', '$state', 'localStorageService',
+        function ($scope, $position, $http, $timeout, $cookieStore, $location, Gst, $state, localStorageService) {
             $scope.rowCollection = [];
             $scope.clients = [];
+            localStorageService.set('ab121', 'hello');
+            $scope.gsttyperesult = [];
+
+            Gst.getClientGstData().then(function (result) {
+                console.log(result);
+                $scope.gstType = result.gstType;
+                for (var i = 0; i < Object.values(result.gstType).length; i++) {
+                    $scope.gsttyperesult.push({
+                        text: Object.values(result.gstType)[i],
+                        value: Object.values(result.gstType)[i],
+                        id: Object.keys(result.gstType)[i]
+                    });
+                }
+            });
 
             function LoadSelectedClient(id) {
                 for (let i = 0; i < $scope.clients.length; i++) {
@@ -20,6 +35,7 @@ angular.module('sbAdminApp')
                     }
                 }
             }
+            console.log(localStorageService.get('ab121'));
 
             function LoadClientsData() {
                 Gst.getAllClients().then(function (data) {
@@ -35,6 +51,8 @@ angular.module('sbAdminApp')
                             id: clients[i].id
                         });
                     }
+                }, function () {
+                    Gst.showErrorToast('Error', 'Unable to load clients');
                 });
             }
             LoadClientsData();
@@ -49,10 +67,14 @@ angular.module('sbAdminApp')
                 $('#deleteclient').closeModal();
             }
 
+            $scope.closeUpdateModel = function () {
+                $('#editclient').closeModal();
+            }
+
             $scope.getGstType = function (data) {
                 for (let i = 0; i < $scope.gsttyperesult.length; i++) {
                     if ($scope.gsttyperesult[i].id == data) {
-                        return $scope.gsttyperesult[i].text;
+                        return $scope.gsttyperesult[i];
                     }
                 }
             }
@@ -92,22 +114,30 @@ angular.module('sbAdminApp')
             $scope.editClient = function (id) {
                 $('#editclient').openModal();
                 LoadSelectedClient(id);
+                $scope.selectedClient.gstdealerKey = $scope.getGstType($scope.selectedClient.dealertype);
                 $scope.editdata = "You are editing this client";
             }
 
             $scope.updateClient = function () {
+                $scope.selectedClient.dealertype = $scope.selectedClient.gstdealerKey.id;
                 Gst.updateClient($scope.selectedClient).then(function (data) {
                     console.log(data);
+                    Gst.showSuccessToast('Success', 'Client updated');
                     $('#editclient').closeModal();
                     LoadClientsData();
+                }, function () {
+                    Gst.showErrorToast('Error', 'Unable to update client');
                 });
             }
             $scope.confirmDeleteClient = function () {
                 var clientid = $scope.selectedClient.id;
                 Gst.deleteClient(clientid).then(function (data) {
                     console.log(data);
+                    Gst.showSuccessToast('Success', 'Client deleted');
                     LoadClientsData();
                     $('#deleteclient').closeModal();
+                }, function () {
+                    Gst.showErrorToast('Error', 'Unable to delete client');
                 });
             }
         }

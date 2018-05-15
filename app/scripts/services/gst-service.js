@@ -6,12 +6,20 @@
 var module = angular.module('sbAdminApp');
 
 
-function service($http, $q, $cookieStore) {
+function service($http, $q, $cookieStore, localStorageService, toaster) {
     var cookie = $cookieStore.get('loggedUser');
     $http.defaults.headers.common['Authorization'] = cookie.token;
     try {;
     } catch (error) {
         $cookieStore.remove('loggedUser');
+    }
+
+    this.showSuccessToast = function (title, body) {
+        toaster.pop('info', title, body);
+    }
+
+    this.showErrorToast = function (title, body) {
+        toaster.pop('error', title, body);
     }
 
     this.signIn = function (dt) {
@@ -28,27 +36,38 @@ function service($http, $q, $cookieStore) {
     this.getLoggedInUser = function () {
         //http://localhost:3000/v1/users/data
         var deferred = $q.defer();
-        $http.get(api + "users/data")
-            .success(function (data) {
-                deferred.resolve(data.data);
-            })
-            .error(function (data) {
-                deferred.reject(data);
-                $cookieStore.remove('loggedUser');
-            });
+        var userInfo = localStorageService.get('userInfo');
+        if (userInfo) {
+            deferred.resolve(userInfo);
+        } else {
+            $http.get(api + "users/data")
+                .success(function (data) {
+                    localStorageService.set('userInfo', data);
+                    deferred.resolve(data);
+                })
+                .error(function (data) {
+                    deferred.reject(data);
+                    $cookieStore.remove('loggedUser');
+                });
+        }
         return deferred.promise;
     }
 
     // fetch data for dropdowns
     this.getClientGstData = function (id) {
         var deferred = $q.defer();
-        $http.get(api + "clients/gstdata")
-            .success(function (data) {
-                deferred.resolve(data);
-            })
-            .error(function (data) {
-                deferred.reject(data);
-            });
+        var gstData = localStorageService.get('GSTData');
+        if (gstData) {
+            deferred.resolve(gstData);
+        } else {
+            $http.get(api + "clients/gstdata")
+                .success(function (data) {
+                    deferred.resolve(data);
+                })
+                .error(function (data) {
+                    deferred.reject(data);
+                });
+        }
         return deferred.promise;
     }
 
@@ -205,4 +224,4 @@ function service($http, $q, $cookieStore) {
         return deferred.promise;
     }
 };
-module.service('Gst', ['$http', '$q', '$cookieStore', service]);
+module.service('Gst', ['$http', '$q', '$cookieStore', 'localStorageService', 'toaster', service]);

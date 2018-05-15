@@ -2,7 +2,6 @@
     <div class="row" style="font-size: 18px;margin-top:25px; ">
         <h3 class="form-signin-heading">Add a client</h3>
     </div>
-
     <form>
         <div class="form-group">
             <label for="code">Code Number</label>
@@ -28,8 +27,8 @@
             <label for="regdate">Date of Registration</label>
             <div class="col-md-12">
                 <p class="input-group">
-                    <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="regdate" is-open="opened2"
-                        max-date="'2025-06-22'" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                    <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="regdate" is-open="opened2" max-date="'2025-06-22'"
+                        datepicker-options="dateOptions" ng-required="true" close-text="Close" />
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="open2($event)">
                             <i class="glyphicon glyphicon-calendar"></i>
@@ -41,7 +40,7 @@
         <br/>
         <br/>
         <br/>
-        
+
         <div class="form-group">
             <label for="">Type Of Dealer</label>
             <br/>
@@ -50,7 +49,6 @@
             </div>
             <br/>
             <br/>
-
         </div>
         <div class="form-group">
             <label for="UserId ">User Id</label>
@@ -82,8 +80,7 @@
              -->
             <div class="col-md-12">
                 <p class="input-group">
-                    <input id="datepicker" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="cancellationdate" 
-                    is-open="opened"
+                    <input id="datepicker" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="cancellationdate" is-open="opened"
                         max-date="'2025-06-22'" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="open($event)">

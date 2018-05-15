@@ -5,9 +5,9 @@
 
 var module = angular.module('sbAdminApp'); //, ['ui.compat']
 
-controller.$inject = ['$scope', 'Gst', '$q', '$timeout', '$cookieStore'];
+controller.$inject = ['$scope', 'Gst', '$q', '$timeout', '$cookieStore', 'toaster'];
 
-function controller($scope, Gst, $q, $timeout, $cookieStore) {
+function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
 
     try {
         var loggedUser = $cookieStore.get('loggedUser');
@@ -238,6 +238,11 @@ function controller($scope, Gst, $q, $timeout, $cookieStore) {
             "ewayuserid": $scope.ewaybillid,
             "ewaypassword": $scope.ewaypassword,
             "cancellationdate": $scope.cancellationdate
+
+        }).then(function () {
+            Gst.showSuccessToast('Success', 'Client added');
+        }, function () {
+            Gst.showErrorToast('Error', 'Try adding client again');
         });
         $scope.codeno = "";
         $scope.tradename = "";
@@ -326,6 +331,9 @@ function controller($scope, Gst, $q, $timeout, $cookieStore) {
         Gst.addGst(gstObj).then(function () {
             SetDefaults();
             $scope.remark = "";
+            Gst.showSuccessToast('Success', 'GST record added');
+        }, function () {
+            Gst.showErrorToast('Error','Adding GST record');
         });
     }
 
@@ -432,7 +440,7 @@ function controller($scope, Gst, $q, $timeout, $cookieStore) {
                     id: Object.keys(result.quarters)[i]
                 });
             }
-        })
+        });
     }
 
     $scope.getClientGstData();
@@ -470,6 +478,8 @@ function controller($scope, Gst, $q, $timeout, $cookieStore) {
                         }
                     }
                     console.log(data);
+                }, function () {
+                    Gst.showSuccessToast('Error', 'Unable to load GST');
                 });
             }
         }, 100)
@@ -477,7 +487,6 @@ function controller($scope, Gst, $q, $timeout, $cookieStore) {
 
     $scope.loadGstFYChanged = function () {
         $scope.rowCollection = [];
-
         LoadGstData();
     }
 
@@ -539,9 +548,12 @@ function controller($scope, Gst, $q, $timeout, $cookieStore) {
     $scope.confirmDeleteGst = function (id) {
         Gst.deleteGst($scope.selectedGst.id).then(function (data) {
             console.log(data);
+            Gst.showSuccessToast('Success', 'GST record deleted');
             $scope.rowCollection = [];
             LoadGstData();
             $('#deleteGst').closeModal();
+        }, function () {
+            Gst.showErrorToast('Error', 'Error deleting GST record');
         });
     }
 
@@ -573,8 +585,11 @@ function controller($scope, Gst, $q, $timeout, $cookieStore) {
         }
         Gst.updateGSTRecord(gstObj).then(function () {
             $scope.rowCollection = [];
+            Gst.showSuccessToast('Success', 'Gst record updated');
             LoadGstData();
             $('#viewGst').closeModal();
+        }, function () {
+            Gst.showErrorToast('Error', 'Unable to update GsT record');
         })
     }
 };

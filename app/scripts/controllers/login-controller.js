@@ -10,7 +10,7 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')
-    .controller('LoginCtrl', function ($scope, $http, $location, $cookieStore) {
+    .controller('LoginCtrl', function ($scope, $http, $location, $cookieStore, localStorageService) {
         var endPoint = api;
         $scope.signin = function () {
             $http({
@@ -22,6 +22,7 @@ angular.module('sbAdminApp')
                     }
                 })
                 .then(function (response) {
+                    localStorageService.remove('userInfo');
                     $cookieStore.put('loggedUser', response.data);
                     $location.path('/dashboard/home');
                 }, function (response) {

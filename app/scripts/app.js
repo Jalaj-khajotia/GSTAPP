@@ -7,7 +7,7 @@
  *
  * Main module of the application.
  */
-var local = 'http://localhost:3000/v1/';
+var local = 'http://localhost:80/v1/';
 var server = 'http://ec2-52-90-92-197.compute-1.amazonaws.com:3000/v1/';
 var api = local;
 angular
@@ -22,7 +22,10 @@ angular
         'ngSanitize',
         'ngDropdowns',
         'angucomplete-ie8',
-        'smart-table'
+        'smart-table',
+        'LocalStorageModule',
+        'toaster',
+        'ngAnimate'
     ])
 
     .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider',
@@ -54,10 +57,6 @@ angular
                                         "bower_components/angular-toggle-switch/angular-toggle-switch.css"
                                     ]
                                 }),
-                                $ocLazyLoad.load({
-                                    name: 'ngAnimate',
-                                    files: ['bower_components/angular-animate/angular-animate.js']
-                                })
                             $ocLazyLoad.load({
                                 name: 'ngCookies',
                                 files: ['bower_components/angular-cookies/angular-cookies.js']

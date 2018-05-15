@@ -37,10 +37,10 @@
                     <td>{{data.regdate | date}}</td>
                     <td>{{data.userid}}</td>
                     <td>
-                        <a class="btn" href="" ng-click="editClient(data.id)">Edit</a>
+                        <a class="btn" href="" ng-click="editClient(data.id)">  <i class="fa fa-pencil" aria-hidden="true"></i></a>
                     </td>
                     <td>
-                        <a class="btn" href="" ng-click="deleteClient(data.id)">Delete</a>
+                        <a class="btn" href="" ng-click="deleteClient(data.id)">   <i class="fa fa-trash" aria-hidden="true"></i></a>
                     </td>
                 </tr>
             </tbody>
@@ -51,8 +51,8 @@
         <div class="container">
             <h4>Are you sure you want to delete
                 <span class="text-red"> {{clientName}}</span> client</h4>
-                <br/>
-                <br/>
+            <br/>
+            <br/>
 
             <div class="row">
                 <div class="col col-md-6">
@@ -65,10 +65,9 @@
         </div>
     </div>
 
-    <div id="editclient" class="modal">
+    <div id="editclient" class="modal" style="max-height: 80%;">
         <div class="container">
             <h4>Edit Client</h4>
-
             <form>
                 <div class="form-group">
                     <label for="code">Code Number</label>
@@ -111,7 +110,8 @@
                 <div class="form-group">
                     <label for="">Type Of Dealer</label>
                     <br/>
-                    <div class="pull-left" dropdown-onchange="ShowGSTPeriod(selected)" dropdown-select="gsttyperesult" dropdown-model="selectedClient.gstdealerKey"
+                    <div class="pull-left" dropdown-onchange="ShowGSTPeriod(selected)" dropdown-select="gsttyperesult" 
+                    dropdown-model="selectedClient.gstdealerKey"
                         dropdown-item-label="text">
                     </div>
                     <br/>
@@ -136,7 +136,7 @@
                 </div>
                 <div class="form-group">
                     <label for="ebill">E Way User Id</label>
-                    <input ng-model="selectedClient.ewaybillid" type="text" class="form-control" id="ebill" placeholder="Mention Eway UserId">
+                    <input ng-model="selectedClient.ewayuserid" type="text" class="form-control" id="ebill" placeholder="Mention Eway UserId">
                 </div>
                 <div class="form-group">
                     <label for="ebillp">E way Password</label>
@@ -162,8 +162,13 @@
             </form>
             <br/>
             <br/>
-            <div class="col col-md-6">
-                <button class="btn btn-lg btn-primary btn-block" ng-click="updateClient()">Update Client</button>
+            <div class="row">
+                <div class="col col-md-6">
+                    <button class="btn btn-lg btn-primary btn-block" ng-click="updateClient()">Update Client</button>
+                </div>
+                <div class="col col-md-6">
+                    <button class="btn btn-lg btn-primary btn-block" ng-click="closeUpdateModel()">Cancel</button>
+                </div>
             </div>
             <br/>
             <br/>
