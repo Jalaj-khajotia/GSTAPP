@@ -27,7 +27,7 @@ angular.module('sbAdminApp')
                     $location.path('/dashboard/home');
                 }, function (response) {
                     alert("Either password or username is wrong");
-                    $cookieStore.remove('loggedUser');
+                  //  $cookieStore.remove('loggedUser');
                 });
         }
     });

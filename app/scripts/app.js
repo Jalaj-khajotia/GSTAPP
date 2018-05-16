@@ -57,10 +57,10 @@ angular
                                         "bower_components/angular-toggle-switch/angular-toggle-switch.css"
                                     ]
                                 }),
-                            $ocLazyLoad.load({
-                                name: 'ngCookies',
-                                files: ['bower_components/angular-cookies/angular-cookies.js']
-                            })
+                                $ocLazyLoad.load({
+                                    name: 'ngCookies',
+                                    files: ['bower_components/angular-cookies/angular-cookies.js']
+                                })
                             $ocLazyLoad.load({
                                 name: 'ngResource',
                                 files: ['bower_components/angular-resource/angular-resource.js']
@@ -211,6 +211,36 @@ angular
                                 name: 'sbAdminApp',
                                 files: [
                                     'scripts/controllers/gst-controller.js'
+                                ]
+                            })
+                        }
+                    }
+                })
+                .state('dashboard.manageCompany', {
+                    url: '/company',
+                    controller: 'CompanyCtrl',
+                    templateUrl: 'views/pages/company.html',
+                    resolve: {
+                        loadMyFiles: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'sbAdminApp',
+                                files: [
+                                    'scripts/controllers/company-controller.js'
+                                ]
+                            })
+                        }
+                    }
+                })
+                .state('dashboard.manageUser', {
+                    url: '/users',
+                    controller: 'UserCtrl',
+                    templateUrl: 'views/pages/user.html',
+                    resolve: {
+                        loadMyFiles: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load({
+                                name: 'sbAdminApp',
+                                files: [
+                                    'scripts/controllers/user-controller.js'
                                 ]
                             })
                         }

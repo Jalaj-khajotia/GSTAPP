@@ -11,7 +11,7 @@ function service($http, $q, $cookieStore, localStorageService, toaster) {
     $http.defaults.headers.common['Authorization'] = cookie.token;
     try {;
     } catch (error) {
-        $cookieStore.remove('loggedUser');
+        //  $cookieStore.remove('loggedUser');
     }
 
     this.showSuccessToast = function (title, body) {
@@ -47,7 +47,7 @@ function service($http, $q, $cookieStore, localStorageService, toaster) {
                 })
                 .error(function (data) {
                     deferred.reject(data);
-                    $cookieStore.remove('loggedUser');
+                    // $cookieStore.remove('loggedUser');
                 });
         }
         return deferred.promise;
@@ -62,6 +62,7 @@ function service($http, $q, $cookieStore, localStorageService, toaster) {
         } else {
             $http.get(api + "clients/gstdata")
                 .success(function (data) {
+                    localStorageService.set('GSTData', data);
                     deferred.resolve(data);
                 })
                 .error(function (data) {

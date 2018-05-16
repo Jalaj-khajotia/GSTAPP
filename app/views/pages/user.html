@@ -1,0 +1,137 @@
+<div class="container">
+    <div class="row" style="font-size: 18px;margin-top:25px; ">
+        <div class="col col-md-9">
+            <h3 class="form-signin-heading">Manage Users</h3>
+        </div>
+        <div class="col col-md-3" style="padding-top: 30px;">
+            <a class="btn" href="" ng-click="openAddUserModel()">
+                Add User
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Email Id</th>
+                    <th>Is Active</th>
+                    <th>Role</th>
+                    <th>Company</th>
+                    <th>Date Created</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="data in userData">
+                    <td>
+                        {{data.email|uppercase }}
+                    </td>
+                    <td>{{(data.isActive?'Yes':'No') }}</td>
+                    <td>{{getRoleName(data.role)}}</td>
+                    <td>{{getCompanyName(data.companyid)}}</td>
+                    <td>{{data.createdAt |date}}</td>
+                    <td>
+                        <a class="btn" href="" ng-click="openEditUserModel(data)">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a>
+                        <a class="btn" href="" ng-click="openDeleteUserModel(data)">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="addUser" class="modal" style="padding: 20px 5px; max-height: 80%">
+        <div class="container">
+            <h4>Add User </h4>
+            <br/>
+            <div class="row">
+                <label for="UserId ">Email Id</label>
+                <input ng-model="addUser.userName" type="text" class="form-control" id="UserId" placeholder="Mention email Id">
+            </div>
+            <div class="row">
+                <label for="password ">Password</label>
+                <input ng-model="addUser.password" type="text" class="form-control" id="UserId" placeholder="Mention Password">
+            </div>
+            <div class="row">
+                <label for="role">Role</label>
+                <br/>
+                <div class="pull-left" id="role" dropdown-select="roles" dropdown-model="addUser.role" dropdown-item-label="text">
+                </div>
+                <br/>
+            </div>
+            <div class="row">
+                <label for="company">Company</label>
+                <br/>
+                <div class="pull-left" id="company" dropdown-select="company" dropdown-model="addUser.company" dropdown-item-label="text">
+                </div>
+                <br/>
+            </div>
+            <div class="row">
+                <div class="col col-md-6">
+                    <button class="btn btn-lg btn-primary btn-block" ng-click="addUser()">Add User</button>
+                </div>
+                <div class="col col-md-6">
+                    <button class="btn btn-lg btn-primary btn-block" ng-click="closeAddUserModel()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="editUser" class="modal" style="padding: 20px 5px; max-height: 62%">
+        <div class="container">
+            <h4>Edit User
+            </h4>
+            <br/>
+            <div class="row">
+                <label for="UserId ">Name</label>
+                <input ng-model="editUser.email" type="text" class="form-control" id="UserId" placeholder="Mention User Name">
+            </div>
+            <div class="row">
+                <label for="password ">Password</label>
+                <input ng-model="editUser.password" type="text" class="form-control" id="UserId" placeholder="Mention Password">
+            </div>
+            <div class="row">
+                <label for="active">Role</label>
+                <br/>
+                <div class="pull-left" id="active" dropdown-select="roles" dropdown-model="editUser.role" dropdown-item-label="text">
+                </div>
+                <br/>
+            </div>
+            <div class="row">
+                <label for="company">Company</label>
+                <br/>
+                <div class="pull-left" id="company" dropdown-select="company" dropdown-model="editUser.company" dropdown-item-label="text">
+                </div>
+                <br/>
+            </div>
+            <div class="row">
+                <div class="col col-md-6">
+                    <button class="btn btn-lg btn-primary btn-block" ng-click="updateUser()">Update User</button>
+                </div>
+                <div class="col col-md-6">
+                    <button class="btn btn-lg btn-primary btn-block" ng-click="closeEditModel()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="deleteUser" class="modal" style="padding: 20px 5px; max-height: 35%">
+        <div class="container">
+            <h4>Are you sure you want to delete
+                <span class="text-red"> {{userName}}</span>
+            </h4>
+            <br/>
+
+            <div class="row">
+                <div class="col col-md-6">
+                    <button class="btn btn-lg btn-primary btn-block" ng-click="confirmDeleteUser()">Delete User</button>
+                </div>
+                <div class="col col-md-6">
+                    <button class="btn btn-lg btn-primary btn-block" ng-click="closeCancelDeleteModel()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

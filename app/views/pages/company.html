@@ -1,0 +1,105 @@
+<div class="container">
+    <div class="row" style="font-size: 18px;margin-top:25px; ">
+        <div class="col col-md-9">
+            <h3 class="form-signin-heading">Manage Companies</h3>
+        </div>
+        <div class="col col-md-3" style="padding-top: 30px;">
+            <a class="btn" href="" ng-click="openAddCompanyModel()">
+                Add Company
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <table st-table="rowCollection" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Company name</th>
+                    <th>Is Active</th>
+                    <th>No of Users</th>
+                    <th>Date Created</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="data in companyData">
+                    <td>
+                        {{data.name|uppercase }}
+                    </td>
+                    <td>{{(data.isActive?'Yes':'No') }}</td>
+                    <td>{{data.users}}</td>
+                    <td>{{data.createdAt |date}}</td>
+                    <td>
+                        <a class="btn" href="" ng-click="openEditCompanyModel(data)">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a>
+                        <a class="btn" href="" ng-click="openDeleteCompanyModel(data)">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="addCompany" class="modal" style="padding: 20px 5px; max-height: 45%">
+        <div class="container">
+            <h4>Add Company </h4>
+            <br/>
+            <div class="form-group">
+                <label for="UserId ">Name</label>
+                <input ng-model="companyName" type="text" class="form-control" id="UserId" placeholder="Mention Company Name">
+            </div>
+            <div class="row">
+                <div class="col col-md-6">
+                    <button class="btn btn-lg btn-primary btn-block" ng-click="addCompany()">Add Company</button>
+                </div>
+                <div class="col col-md-6">
+                    <button class="btn btn-lg btn-primary btn-block" ng-click="closeAddCompanyModel()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="editCompany" class="modal" style="padding: 20px 5px; max-height: 62%">
+        <div class="container">
+            <h4>Edit Company
+            </h4>
+            <br/>
+            <div class="row">
+                <label for="UserId ">Name</label>
+                <input ng-model="editCompany.name" type="text" class="form-control" id="UserId" placeholder="Mention Company Name">
+            </div>
+            <div class="row">
+                <label for="active">Company Activity</label>
+                <br/>
+                <div class="pull-left"
+                 id="active" dropdown-select="companyActiveOptions" dropdown-model="editCompany.selectedIsActive" dropdown-item-label="text">
+                </div>
+                <br/>
+            </div>
+            <div class="row">
+                <div class="col col-md-6">
+                    <button class="btn btn-lg btn-primary btn-block" ng-click="updateCompany()">Update Company</button>
+                </div>
+                <div class="col col-md-6">
+                    <button class="btn btn-lg btn-primary btn-block" ng-click="closeEditModel()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="deleteCompany" class="modal" style="padding: 20px 5px; max-height: 35%">
+        <div class="container">
+            <h4>Are you sure you want to delete
+                <span class="text-red"> {{companyName}}</span></h4>
+            <br/>
+
+            <div class="row">
+                <div class="col col-md-6">
+                    <button class="btn btn-lg btn-primary btn-block" ng-click="confirmDeleteCompany()">Delete Company</button>
+                </div>
+                <div class="col col-md-6">
+                    <button class="btn btn-lg btn-primary btn-block" ng-click="closeCancelDeleteModel()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
