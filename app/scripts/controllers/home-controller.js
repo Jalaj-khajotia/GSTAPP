@@ -18,6 +18,7 @@ angular.module('sbAdminApp')
                 } else {
                     Gst.getLoggedInUser().then(function (data) {
                         $rootScope.role = data.user.role;
+                        $scope.emailid = data.user.email
                         //$state.go('dashboard.home')
                     }, function () {
                         $('#login').openModal();

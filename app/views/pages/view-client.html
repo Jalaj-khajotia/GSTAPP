@@ -71,7 +71,7 @@
                     <td>
                         Dealer Type
                     </td>
-                    <td>{{client.dealertype||"-not given-"}}</td>
+                    <td>{{getGstType(client.dealertype).text||"-not given-"}}</td>
                 </tr>
 
                 <tr>
@@ -112,15 +112,9 @@
                 </tr>
                 <tr>
                     <td>
-                        Eway Password
+                        Eway Cancellation Date
                     </td>
                     <td>{{client.cancellationdate||"-not given-"}}</td>
-                </tr>
-                <tr>
-                    <td>
-                        Cancellation Date
-                    </td>
-                    <td>{{client.companyid||"-not given-"}}</td>
                 </tr>
             </tbody>
         </table>

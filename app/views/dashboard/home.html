@@ -1,15 +1,22 @@
+<style>
+    .hometable .ng-binding {
+        padding: 10px 2px;
+        font-size: 20px;
+        margin: 0 -14px;
+    }
+</style>
 <div>
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Dashboard</h1>
+            <h3 class="page-header">Welcome {{emailid}}</h3>
         </div>
     </div>
     <div class="row">
-        <stats number="5" comments="Add Client" goto="dashboard.client" colour="primary" type="user"></stats>
-        <stats number="12" goto="dashboard.viewClient" comments="View Client" colour="primary" type="search"></stats>
-        <stats number="24" goto="dashboard.editClients" comments="Edit Clients" colour="green" type="file"></stats>
-        <stats number="18" goto="dashboard.addGst" comments="Add GST" colour="yellow" type="globe"></stats>
-        <stats number="12" goto="dashboard.gst" comments="View/Edit GST" colour="primary" type="search"></stats>
+        <stats class="hometable" comments="Add Client" goto="dashboard.client" colour="primary" type="user"></stats>
+        <stats class="hometable" goto="dashboard.viewClient" comments="View Client" colour="primary" type="search"></stats>
+        <stats class="hometable" goto="dashboard.editClients" comments="Edit Clients" colour="green" type="file"></stats>
+        <stats class="hometable" goto="dashboard.addGst" comments="Add GST" colour="yellow" type="globe"></stats>
+        <stats class="hometable" goto="dashboard.gst" comments="View/Edit GST" colour="primary" type="search"></stats>
         <!-- <stats number="24" goto="dashboard.editGST" comments="Edit GST" colour="green" type="globe"></stats> -->
         <!-- <stats number="24" goto="dashboard.report" comments="Generate Reports" colour="green" type="file"></stats> -->
         <!-- <stats goto="dashboard.deleteClient" comments="Delete Client" colour="red" type="trash"></stats> -->

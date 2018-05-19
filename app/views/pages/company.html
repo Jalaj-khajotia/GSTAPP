@@ -15,7 +15,7 @@
                 <tr>
                     <th>Company name</th>
                     <th>Is Active</th>
-                    <th>No of Users</th>
+                    <!-- <th>No of Users</th> -->
                     <th>Date Created</th>
                     <th>Action</th>
                 </tr>
@@ -26,7 +26,7 @@
                         {{data.name|uppercase }}
                     </td>
                     <td>{{(data.isActive?'Yes':'No') }}</td>
-                    <td>{{data.users}}</td>
+                    <!-- <td>{{data.users}}</td> -->
                     <td>{{data.createdAt |date}}</td>
                     <td>
                         <a class="btn" href="" ng-click="openEditCompanyModel(data)">

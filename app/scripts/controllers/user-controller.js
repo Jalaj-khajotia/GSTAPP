@@ -89,10 +89,33 @@ angular.module('sbAdminApp')
       LoadUsers();
       LoadCompanies();
 
-      $scope.addUser = function () {
+      $scope.confirmAddUser = function () {
+
+        if (!$scope.addUser.userName) {
+          Gst.showErrorToast('Error', 'Please provide email id');
+          return;
+        }
+
+        if (!$scope.addUser.password) {
+          Gst.showErrorToast('Error', 'Please provide password');
+          return;
+        }
+
+        if (!$scope.addUser.role || $scope.addUser.role.text == "Select role") {
+          Gst.showErrorToast('Error', 'Please provide role');
+          return;
+        }
+
+        if (!$scope.addUser.company || $scope.addUser.company.text == "Select company") {
+          Gst.showErrorToast('Error', 'Please select company');
+          return;
+        }
+
         if ($scope.addUser.userName.split(' ').length > 1) {
           Gst.showErrorToast('Error', 'Spaces in emailid');
+          return;
         }
+
         if ($scope.addUser.userName) {
           Api.createUser({
             email: $scope.addUser.userName,
@@ -101,6 +124,7 @@ angular.module('sbAdminApp')
             role: $scope.addUser.role.id
           }).then(function () {
             Gst.showSuccessToast('Success', 'User added');
+            $scope.addUser = {};
             LoadUsers();
             $scope.closeAddUserModel();
           }, function () {
@@ -169,19 +193,28 @@ angular.module('sbAdminApp')
       }
 
       $scope.openDeleteUserModel = function (data) {
-        $scope.deleteCompany = data;
-        $scope.companyName = data.name;
+        $scope.deleteUserModel = data;
+        $scope.userName = data.email;
         $('#deleteUser').openModal();
       }
 
       $scope.confirmDeleteUser = function () {
-        var data = $scope.deleteCompany;
-        Api.deleteCompany(data.id).then(function () {
-          Gst.showSuccessToast('Success', 'Company deleted');
-          $scope.closeCancelDeleteModel();
+        var data = $scope.deleteUserModel;
+        Gst.getLoggedInUser().then(function (signInUser) {
+          if (signInUser.user.id == data.id) {
+            Gst.showErrorToast('Error', 'Cannot delete self');
+          } else {
+            Api.deleteUser(data.id).then(function () {
+              Gst.showSuccessToast('Success', 'User deleted');
+              LoadUsers();
+              $scope.closeCancelDeleteModel();
+            }, function () {
+              Gst.showErrorToast('Error', 'Try again');
+            });
+          }
         }, function () {
           Gst.showErrorToast('Error', 'Try again');
-        })
+        });
       }
 
       $scope.closeAddUserModel = function () {

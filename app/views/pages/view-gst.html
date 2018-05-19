@@ -26,12 +26,12 @@
     <table st-table="rowCollection" class="table table-striped">
         <thead>
             <tr>
-                <th st-sort="periodTime">Period</th>
-                <th st-sort="gstFormType">GST Type</th>
-                <th st-sort="gstStatus">Status</th>
+                <th style="cursor:pointer" st-sort="periodTime">Period</th>
+                <th style="cursor:pointer" st-sort="gstFormType">GST Type</th>
+                <th style="cursor:pointer" st-sort="gstStatus">Status</th>
+                <th style="cursor:pointer" st-sort="remark">Remark</th>
                 <th st-sort="receiptDate">Receipt Date</th>
                 <th st-sort="fillingDate">Filling Date</th>
-                <th st-sort="remark">Remark</th>
                 <th>Action</th>
             </tr>
             <tr>
@@ -43,12 +43,6 @@
                 </th>
                 <th>
                     <input st-search="gstStatus" placeholder="Search" />
-                </th>
-                <th>
-                    <input st-search="receiptDate" placeholder="Search" />
-                </th>
-                <th>
-                    <input st-search="fillingDate" placeholder="Search" />
                 </th>
                 <th>
                     <input st-search="remark" placeholder="Search" />
@@ -64,9 +58,9 @@
                 </td>
                 <td>{{data.gstFormType | uppercase }}</td>
                 <td>{{data.gstStatus}}</td>
+                <td>{{data.remark}}</td>
                 <td>{{data.receiptDate | date}}</td>
                 <td>{{data.fillingDate | date}}</td>
-                <td>{{data.remark}}</td>
                 <td>
                     <div class="row">
                         <div class="col col-md-6">
@@ -107,8 +101,7 @@
         <div class="row">
             <div class="col col-md-6">GST Type</div>
             <div class="col col-md-6">
-                <div dropdown-select="gstformresult" dropdown-onchange="ShowGSTPeriod(selected)" 
-                dropdown-model="selectedGst.gsttypekey"
+                <div dropdown-select="gstformresult" dropdown-onchange="ShowGSTPeriod(selected)" dropdown-model="selectedGst.gsttypekey"
                     dropdown-item-label="text">
                 </div>
             </div>

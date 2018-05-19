@@ -94,10 +94,13 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
                 $scope.firField = "userid";
                 $scope.secField = "legalname";
             } else if (searchType == "lnname") {
-                $scope.firField = "userid";
+                $scope.firField = "legalname";
+                $scope.secField = "userid";
+            } else if (searchType == "codeno") {
+                $scope.firField = "codeno";
                 $scope.secField = "legalname";
             } else {
-                $scope.firField = "gstid";
+                $scope.firField = "gstin";
                 $scope.secField = "legalname";
             }
         }, 100);
@@ -333,7 +336,7 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
             $scope.remark = "";
             Gst.showSuccessToast('Success', 'GST record added');
         }, function () {
-            Gst.showErrorToast('Error','Adding GST record');
+            Gst.showErrorToast('Error', 'Adding GST record');
         });
     }
 

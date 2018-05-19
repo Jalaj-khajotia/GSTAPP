@@ -159,7 +159,7 @@ angular
                 .state('dashboard.viewClient', {
                     url: '/viewclient',
                     controller: 'GstCtrl',
-                    templateUrl: 'views/pages/client.html',
+                    templateUrl: 'views/pages/view-client.html',
                     resolve: {
                         loadMyFiles: function ($ocLazyLoad) {
                             return $ocLazyLoad.load({
