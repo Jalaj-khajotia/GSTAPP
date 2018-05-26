@@ -610,7 +610,7 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
         }
 
         var gstformTypeData = $scope.getGstFormType($scope.selectedGst.gstFormType);
-        var gstpendingKey = $scope.getPendingGstStatus($scope.selectedGst.gststatus);
+        var gstpendingKey = $scope.getPendingGstStatus($scope.selectedGst.gstpendingstatus);
         var gststatuskey = $scope.getGstStatus($scope.selectedGst.gststatus);
 
         if (gststatuskey && gststatuskey.id == 3) {
