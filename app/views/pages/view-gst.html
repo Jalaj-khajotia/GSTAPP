@@ -123,7 +123,8 @@
         <div class="row">
             <div class="col col-md-6">GST Status</div>
             <div class="col col-md-6">
-                <div dropdown-select="gststatusresult" dropdown-model="selectedGst.gststatuskey" dropdown-item-label="text">
+                <div dropdown-select="gstStatusTypesResult" dropdown-model="selectedGst.gststatuskey" dropdown-onchange="modelGstStatusSelected()"
+                    dropdown-item-label="text">
                 </div>
             </div>
         </div>
@@ -139,6 +140,14 @@
                         </button>
                     </span>
                 </p>
+            </div>
+        </div>
+
+        <div class="row" ng-show="selectedGst.showPendingDropdown">
+            <div class="col col-md-6">Pending Status</div>
+            <div class="col col-md-6">
+                <div dropdown-select="gstpendingstatusresult" dropdown-model="selectedGst.gstpendingKey" dropdown-item-label="text">
+                </div>
             </div>
         </div>
 

@@ -354,6 +354,17 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
         }, 100);
     }
 
+    $scope.modelGstStatusSelected = function () {
+        $timeout(function () {
+            if ($scope.selectedGst.gststatuskey && $scope.selectedGst.gststatuskey.id == 3) {
+                $scope.selectedGst.showPendingDropdown = true;
+            } else {
+                $scope.selectedGst.showPendingDropdown = false;
+                $scope.selectedGst.gstpendingKey.id = null;
+            }
+        }, 100);
+    }
+
     $scope.addClientGST = function () {
         var period;
         if ($scope.showMonths) {
@@ -520,7 +531,7 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
                 periodTime: period,
                 gstFormType: gsttypeid,
                 gstPendingStatus: gstPendingStatus,
-                gstStatus:gstStatus,
+                gstStatus: gstStatus,
                 receiptDate: data[i].receiptDate,
                 fillingDate: data[i].fillingDate,
                 remark: data[i].remark,
@@ -599,9 +610,18 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
         }
 
         var gstformTypeData = $scope.getGstFormType($scope.selectedGst.gstFormType);
-        var gststatuskeyData = $scope.getPendingGstStatus($scope.selectedGst.gststatus);
+        var gstpendingKey = $scope.getPendingGstStatus($scope.selectedGst.gststatus);
+        var gststatuskey = $scope.getGstStatus($scope.selectedGst.gststatus);
+
+        if (gststatuskey && gststatuskey.id == 3) {
+            $scope.selectedGst.showPendingDropdown = true;
+        } else {
+            $scope.selectedGst.showPendingDropdown = false;
+        }
+
         $scope.selectedGst.gsttypekey = gstformTypeData;
-        $scope.selectedGst.gststatuskey = gststatuskeyData;
+        $scope.selectedGst.gstpendingKey = gstpendingKey;
+        $scope.selectedGst.gststatuskey = gststatuskey;
         $('#viewGst').openModal();
     }
 
@@ -645,6 +665,7 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
             period: period,
             gstFormType: $scope.selectedGst.gsttypekey.id,
             gststatus: $scope.selectedGst.gststatuskey.id,
+            gstpendingstatus: $scope.selectedGst.gstpendingKey.id,
             receiptDate: $scope.selectedGst.receiptDate,
             fillingDate: $scope.selectedGst.fillingDate,
             remark: $scope.selectedGst.remark
