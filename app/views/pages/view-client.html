@@ -10,7 +10,7 @@
             </div>
             <div class="col col-md-6">
                 <div class="padded-row">
-                    <div angucomplete-ie8 id="ex5" placeholder="Search" pause="500" selected-object="selectedClient" remote-url="{{searchApi}}"
+                    <div angucomplete-ie8 id="ex5" placeholder="Search keywords without space" pause="500" selected-object="selectedClient" remote-url="{{searchApi}}"
                         token-required="true" remote-url-data-field="clients" title-field="{{firField}}" description-field="{{secField}}"
                         minlength="2" input-class="form-control form-control-small" match-class="highlight">
                     </div>
@@ -64,7 +64,7 @@
                     <td>
                         Registration Date
                     </td>
-                    <td>{{client.regdate||"-not given-"}}</td>
+                    <td ng-bind="client.regdate | date:'dd/MM/yyyy'"></td>
                 </tr>
 
                 <tr>
@@ -114,8 +114,20 @@
                     <td>
                         Eway Cancellation Date
                     </td>
-                    <td>{{client.cancellationdate||"-not given-"}}</td>
+                    <td ng-bind="client.cancellationdate | date:'dd/MM/yyyy'"></td>
+                </tr>
+                <tr>
+                    <td>
+                        Client Remark
+                    </td>
+
+                    <td>
+                        <input ng-model="client.remark" type="text" class="form-control" placeholder="Mention a Client Remarks">
+                    </td>
                 </tr>
             </tbody>
         </table>
+        <div class="col col-md-12">
+            <button class="btn btn-lg btn-primary btn-block" ng-click="saveRemarks()">Save Remarks</button>
+        </div>
     </div>

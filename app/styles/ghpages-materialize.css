@@ -3206,7 +3206,7 @@ input[type=range]+.thumb {
 
 @media only screen and (min-width: 993px) {
     .container {
-        width: 70%
+        width: 95%
     }
 }
 
@@ -7976,7 +7976,7 @@ a.button-collapse.top-nav i {
 
 @media only screen and (min-width: 993px) {
     .container {
-        width: 85%
+        width: 95%
     }
 }
 

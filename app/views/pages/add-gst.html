@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row" style="font-size: 18px;margin-top:25px; ">
-        <h3 class="form-signin-heading">Add client GST Information</h3>
+        <h3 class="form-signin-heading">Add GST Information</h3>
     </div>
     <div class="row">
         <div class="col col-md-3">
@@ -9,7 +9,7 @@
         </div>
         <div class="col col-md-9">
             <div class="padded-row">
-                <div angucomplete-ie8 id="ex5" placeholder="Search" pause="500" selected-object="selectedClient" remote-url="{{searchApi}}"
+                <div angucomplete-ie8 id="ex5" placeholder="Search keywords without space" pause="500" selected-object="selectedClient" remote-url="{{searchApi}}"
                     token-required="true" remote-url-data-field="clients" title-field="{{firField}}" description-field="{{secField}}"
                     minlength="2" input-class="form-control form-control-small" match-class="highlight">
                 </div>
@@ -48,7 +48,7 @@
     <div class="row">
         <div class="col col-md-6">GST Status</div>
         <div class="col col-md-6">
-            <div dropdown-select="gststatusresult" dropdown-model="gststatuskey" dropdown-item-label="text">
+            <div dropdown-select="gstStatusTypesResult" dropdown-model="gststatuskey"  dropdown-onchange="gstStatusSelected()" dropdown-item-label="text">
             </div>
         </div>
     </div>
@@ -66,13 +66,19 @@
             </p>
         </div>
     </div>
+    <div class="row" ng-show="showPendingDropdown">
+        <div class="col col-md-6">Pending Status</div>
+        <div class="col col-md-6">
+            <div dropdown-select="gstpendingstatusresult" dropdown-model="gstpendingKey" dropdown-item-label="text">
+            </div>
+        </div>
+    </div>
 
     <div class="row">
         <label for="regdate">Date of filling</label>
         <div class="col-md-12">
             <p class="input-group">
-                <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="fillingDate" is-open="filling" 
-                max-date="'2025-06-22'"
+                <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="fillingDate" is-open="filling" max-date="'2025-06-22'"
                     datepicker-options="dateOptions" ng-required="true" close-text="Close" />
                 <span class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="fillingOpen($event)">

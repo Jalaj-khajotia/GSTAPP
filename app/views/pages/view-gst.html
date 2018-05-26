@@ -9,7 +9,7 @@
         </div>
         <div class="col col-md-9">
             <div class="padded-row">
-                <div angucomplete-ie8 id="ex5" placeholder="Search" pause="500" selected-object="selectedClient" remote-url="{{searchApi}}"
+                <div angucomplete-ie8 id="ex5" placeholder="Search keywords without space" pause="500" selected-object="selectedClient" remote-url="{{searchApi}}"
                     token-required="true" remote-url-data-field="clients" title-field="{{firField}}" description-field="{{secField}}"
                     minlength="2" input-class="form-control form-control-small" match-class="highlight">
                 </div>
@@ -29,9 +29,9 @@
                 <th style="cursor:pointer" st-sort="periodTime">Period</th>
                 <th style="cursor:pointer" st-sort="gstFormType">GST Type</th>
                 <th style="cursor:pointer" st-sort="gstStatus">Status</th>
-                <th style="cursor:pointer" st-sort="remark">Remark</th>
-                <th st-sort="receiptDate">Receipt Date</th>
-                <th st-sort="fillingDate">Filling Date</th>
+                <th style="cursor:pointer" st-sort="gstPendingStatus">Pending Reason</th>
+                <th>Receipt Date</th>
+                <th>Filling Date</th>
                 <th>Action</th>
             </tr>
             <tr>
@@ -45,7 +45,7 @@
                     <input st-search="gstStatus" placeholder="Search" />
                 </th>
                 <th>
-                    <input st-search="remark" placeholder="Search" />
+                    <input st-search="gstPendingStatus" placeholder="Search" />
                 </th>
             </tr>
         </thead>
@@ -58,9 +58,9 @@
                 </td>
                 <td>{{data.gstFormType | uppercase }}</td>
                 <td>{{data.gstStatus}}</td>
-                <td>{{data.remark}}</td>
-                <td>{{data.receiptDate | date}}</td>
-                <td>{{data.fillingDate | date}}</td>
+                <td>{{data.gstPendingStatus}}</td>
+                <td ng-bind="data.receiptDate | date:'dd/MM/yyyy'"></td>
+                <td ng-bind="data.fillingDate | date:'dd/MM/yyyy'"></td>
                 <td>
                     <div class="row">
                         <div class="col col-md-6">
@@ -88,7 +88,7 @@
 
             <div class="row">
                 <div class="col col-md-6">
-                    <button class="btn btn-lg btn-primary btn-block" ng-click="confirmDeleteGst()">Delete Client</button>
+                    <button class="btn btn-lg btn-primary btn-block" ng-click="confirmDeleteGst()">Delete Record</button>
                 </div>
                 <div class="col col-md-6">
                     <button class="btn btn-lg btn-primary btn-block" ng-click="closeDeleteModel()">Cancel</button>

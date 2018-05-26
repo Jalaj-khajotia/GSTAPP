@@ -192,6 +192,17 @@ function service($http, $q, $cookieStore, localStorageService, toaster) {
         return deferred.promise;
     }
 
+    this.updateClientRemarks = function (remarks) {
+        var deferred = $q.defer();
+        var payload = remarks;
+        $http.put(api + 'clients/remark', payload).success(function (data) {
+            deferred.resolve(data);
+        }).error(function (error) {
+            deferred.reject(error);
+        });
+        return deferred.promise;
+    }
+
     this.updateGSTRecord = function (gstrecord) {
         var deferred = $q.defer();
         var payload = gstrecord;

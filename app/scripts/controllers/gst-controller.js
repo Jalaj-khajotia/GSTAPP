@@ -44,6 +44,25 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
 
     }
 
+    $scope.saveRemarks = function () {
+        if (!$scope.client) {
+            Gst.showErrorToast('Error', 'No Client selected');
+            return;
+        }
+        if ($scope.client && $scope.client.remark) {
+            Gst.updateClientRemarks({
+                'remark': $scope.client.remark,
+                'id': $scope.client.id
+            }).then(function () {
+                Gst.showSuccessToast('Success', 'Remarks added');
+            }, function () {
+                Gst.showErrorToast('Error', 'Try Again');
+            });
+        } else {
+            Gst.showErrorToast('Error', 'No Remarks added');
+        }
+    }
+
     function suggest_state(term) {
         var results = [];
 
@@ -143,10 +162,34 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
             text: 'Select Quater',
             value: ''
         }
+
+        $scope.gstpendingKey = {
+            text: 'Select Pending Status',
+            value: ''
+        }
+
+        $scope.showPendingDropdown = false;
     }
     SetDefaults();
     $scope.showMonths = true;
 
+    function ResetFields() {
+        $scope.codeno = "";
+        $scope.tradename = "";
+        $scope.legalname = "";
+        $scope.address = "";
+        $scope.gstin = "";
+        $scope.regdate = "";
+        $scope.dealertype = "";
+        $scope.userid = "";
+        $scope.password = "";
+        $scope.mobile = "";
+        $scope.emailid = "";
+        $scope.ewayuserid = "";
+        $scope.ewaypassword = "";
+        $scope.cancellationdate = "";
+        $scope.ewaybillid = "";
+    }
 
     function suggest_state_remote(term) {
         var deferred = $q.defer();
@@ -244,24 +287,11 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
 
         }).then(function () {
             Gst.showSuccessToast('Success', 'Client added');
+            ResetFields();
         }, function () {
             Gst.showErrorToast('Error', 'Try adding client again');
         });
-        $scope.codeno = "";
-        $scope.tradename = "";
-        $scope.legalname = "";
-        $scope.address = "";
-        $scope.gstin = "";
-        $scope.regdate = "";
-        $scope.dealertype = "";
-        $scope.userid = "";
-        $scope.password = "";
-        $scope.mobile = "";
-        $scope.emailid = "";
-        $scope.ewayuserid = "";
-        $scope.ewaypassword = "";
-        $scope.cancellationdate = "";
-        $scope.ewaybillid = "";
+
         SetDefaults();
     }
     $scope.open = function ($event) {
@@ -314,6 +344,16 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
         }, 100)
     }
 
+    $scope.gstStatusSelected = function () {
+        $timeout(function () {
+            if ($scope.gststatuskey && $scope.gststatuskey.id == 3) {
+                $scope.showPendingDropdown = true;
+            } else {
+                $scope.showPendingDropdown = false;
+            }
+        }, 100);
+    }
+
     $scope.addClientGST = function () {
         var period;
         if ($scope.showMonths) {
@@ -326,10 +366,11 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
             year: $scope.yearkey.id,
             period: period,
             gstFormType: $scope.gsttypekey.id,
-            gststatus: $scope.gststatuskey.id,
+            gstpendingstatus: $scope.gstpendingKey.id,
             receiptDate: $scope.receiptDate,
             fillingDate: $scope.fillingDate,
-            remark: $scope.remark
+            remark: $scope.remark,
+            gststatus: $scope.gststatuskey.id
         }
         Gst.addGst(gstObj).then(function () {
             SetDefaults();
@@ -343,13 +384,13 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
     $scope.getGstPeriod = function (data, typeId) {
         if (typeId == 1) {
             for (let i = 0; i < $scope.monthResult.length; i++) {
-                if ($scope.monthResult[i].id == data) {
+                if (data && $scope.monthResult[i].id == data) {
                     return $scope.monthResult[i];
                 }
             }
         } else {
             for (let i = 0; i < $scope.quaterResult.length; i++) {
-                if ($scope.quaterResult[i].id == data) {
+                if (data && $scope.quaterResult[i].id == data) {
                     return $scope.quaterResult[i];
                 }
             }
@@ -357,16 +398,24 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
     }
 
     $scope.getGstStatus = function (data) {
-        for (let i = 0; i < $scope.gststatusresult.length; i++) {
-            if ($scope.gststatusresult[i].id == data) {
-                return $scope.gststatusresult[i];
+        for (let i = 0; i < $scope.gstStatusTypesResult.length; i++) {
+            if (data && $scope.gstStatusTypesResult[i].id == data) {
+                return $scope.gstStatusTypesResult[i];
+            }
+        }
+    }
+
+    $scope.getPendingGstStatus = function (data) {
+        for (let i = 0; i < $scope.gstpendingstatusresult.length; i++) {
+            if (data && $scope.gstpendingstatusresult[i].id == data) {
+                return $scope.gstpendingstatusresult[i];
             }
         }
     }
 
     $scope.getGstType = function (data) {
         for (let i = 0; i < $scope.gsttyperesult.length; i++) {
-            if ($scope.gsttyperesult[i].id == data) {
+            if (data && $scope.gsttyperesult[i].id == data) {
                 return $scope.gsttyperesult[i];
             }
         }
@@ -374,16 +423,17 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
 
     $scope.getGstFormType = function (data) {
         for (let i = 0; i < $scope.gstformresult.length; i++) {
-            if ($scope.gstformresult[i].id == data) {
+            if (data && $scope.gstformresult[i].id == data) {
                 return $scope.gstformresult[i];
             }
         }
     }
 
+    $scope.gstStatusTypesResult = [];
     $scope.yearsResult = [];
     $scope.monthResult = [];
     $scope.gsttyperesult = [];
-    $scope.gststatusresult = [];
+    $scope.gstpendingstatusresult = [];
     $scope.gstformresult = [];
     $scope.quaterResult = [];
     $scope.rowCollection = [];
@@ -395,6 +445,15 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
             $scope.months = result.months;
             $scope.gstType = result.gstType;
             $scope.quarters = result.quarters;
+            $scope.gstStatusTypes = result.gstStatusTypes;
+
+            for (var i = 0; i < Object.values(result.gstStatusTypes).length; i++) {
+                $scope.gstStatusTypesResult.push({
+                    text: Object.values(result.gstStatusTypes)[i],
+                    value: Object.values(result.gstStatusTypes)[i],
+                    id: Object.keys(result.gstStatusTypes)[i]
+                });
+            }
 
             for (var i = 0; i < Object.values(result.formType).length; i++) {
                 $scope.gstformresult.push({
@@ -429,7 +488,7 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
             }
 
             for (var i = 0; i < Object.values(result.gstStatus).length; i++) {
-                $scope.gststatusresult.push({
+                $scope.gstpendingstatusresult.push({
                     text: Object.values(result.gstStatus)[i],
                     value: Object.values(result.gstStatus)[i],
                     id: Object.keys(result.gstStatus)[i]
@@ -443,6 +502,8 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
                     id: Object.keys(result.quarters)[i]
                 });
             }
+
+
         });
     }
 
@@ -452,14 +513,16 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
         $scope.rowCollection = [];
         for (let i = 0; i < data.length; i++) {
             var period = $scope.getGstPeriod(data[i].period, $scope.client.dealertype).text;
-            var gsttypeid = $scope.getGstFormType(data[i].gstFormType).text;
-            var gstStatus = $scope.getGstStatus(data[i].gststatus).text;
+            var gsttypeid = $scope.getGstFormType(data[i].gstFormType) ? $scope.getGstFormType(data[i].gstFormType).text : '';
+            var gstPendingStatus = $scope.getPendingGstStatus(data[i].gstpendingstatus) ? $scope.getPendingGstStatus(data[i].gstpendingstatus).text : '';
+            var gstStatus = $scope.getGstStatus(data[i].gststatus) ? $scope.getGstStatus(data[i].gststatus).text : '';
             $scope.rowCollection.push({
                 periodTime: period,
                 gstFormType: gsttypeid,
-                gstStatus: gstStatus,
+                gstPendingStatus: gstPendingStatus,
+                gstStatus:gstStatus,
                 receiptDate: data[i].receiptDate,
-                fillingDate: data[i].receiptDate,
+                fillingDate: data[i].fillingDate,
                 remark: data[i].remark,
                 id: data[i].id
             });
@@ -536,7 +599,7 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
         }
 
         var gstformTypeData = $scope.getGstFormType($scope.selectedGst.gstFormType);
-        var gststatuskeyData = $scope.getGstStatus($scope.selectedGst.gststatus);
+        var gststatuskeyData = $scope.getPendingGstStatus($scope.selectedGst.gststatus);
         $scope.selectedGst.gsttypekey = gstformTypeData;
         $scope.selectedGst.gststatuskey = gststatuskeyData;
         $('#viewGst').openModal();
