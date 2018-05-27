@@ -6,11 +6,13 @@
 var module = angular.module('sbAdminApp');
 
 
-function service($http, $q, $cookieStore, localStorageService, toaster) {
-    var cookie = $cookieStore.get('loggedUser');
-    $http.defaults.headers.common['Authorization'] = cookie.token;
-    try {;
+function service($http, $q, $cookieStore, localStorageService, toaster, $location) {
+
+    try {
+        var cookie = $cookieStore.get('loggedUser');
+        $http.defaults.headers.common['Authorization'] = cookie.token;
     } catch (error) {
+        $location.path('login')
         //  $cookieStore.remove('loggedUser');
     }
 
@@ -236,4 +238,4 @@ function service($http, $q, $cookieStore, localStorageService, toaster) {
         return deferred.promise;
     }
 };
-module.service('Gst', ['$http', '$q', '$cookieStore', 'localStorageService', 'toaster', service]);
+module.service('Gst', ['$http', '$q', '$cookieStore', 'localStorageService', 'toaster', '$location', service]);

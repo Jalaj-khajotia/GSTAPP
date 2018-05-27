@@ -129,6 +129,7 @@ angular.module('sbAdminApp')
                     Gst.showErrorToast('Error', 'Unable to update client');
                 });
             }
+            
             $scope.confirmDeleteClient = function () {
                 var clientid = $scope.selectedClient.id;
                 Gst.deleteClient(clientid).then(function (data) {

@@ -195,11 +195,12 @@
             <i class="fa fa-caret-down"></i>
         </a>
         <ul class="dropdown-menu dropdown-user">
-            <li>
+            <li ng-show="showAdminPanel">
                 <a ui-sref="dashboard.manageUser">
                     <i class="fa fa-user fa-fw"></i> Manage Users</a>
             </li>
-            <li>
+      
+            <li ng-show="showAdminPanel">
                 <a ui-sref="dashboard.manageCompany">
                     <i class="fa fa-gear fa-fw"></i> Manage Company</a>
             </li>
