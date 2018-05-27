@@ -6,10 +6,10 @@
         <table st-table="rowCollection" class="table table-striped">
             <thead>
                 <tr>
-                    <th st-sort="tradename">Trade Name</th>
-                    <th st-sort="gstin">GST No</th>
-                    <th st-sort="regdate">Registration Date</th>
-                    <th st-sort="userid">User Id</th>
+                    <th style="cursor:pointer" st-sort="tradename">Trade Name</th>
+                    <th style="cursor:pointer" st-sort="gstin">GST No</th>
+                    <th style="cursor:pointer" st-sort="userid">User Id</th>
+                    <th style="cursor:pointer" st-sort="regdate">Registration Date</th>
                     <th>Action</th>
                     <th>Action</th>
                 </tr>
@@ -19,9 +19,6 @@
                     </th>
                     <th>
                         <input st-search="gstin" placeholder="Search" />
-                    </th>
-                    <th>
-                        <input st-search="regdate" placeholder="Search" />
                     </th>
                     <th>
                         <input st-search="userid" placeholder="Search" />
@@ -34,13 +31,17 @@
                         {{data.tradename|uppercase }}
                     </td>
                     <td>{{data.gstin }}</td>
-                    <td>{{data.regdate | date}}</td>
                     <td>{{data.userid}}</td>
+                    <td>{{data.regdate | date}}</td>
                     <td>
-                        <a class="btn" href="" ng-click="editClient(data.id)">  <i class="fa fa-pencil" aria-hidden="true"></i></a>
+                        <a class="btn" href="" ng-click="editClient(data.id)">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a>
                     </td>
                     <td>
-                        <a class="btn" href="" ng-click="deleteClient(data.id)">   <i class="fa fa-trash" aria-hidden="true"></i></a>
+                        <a class="btn" href="" ng-click="deleteClient(data.id)">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </a>
                     </td>
                 </tr>
             </tbody>
@@ -109,8 +110,7 @@
                 <div class="form-group">
                     <label for="">Type Of Dealer</label>
                     <br/>
-                    <div class="pull-left" dropdown-onchange="ShowGSTPeriod(selected)" dropdown-select="gsttyperesult" 
-                    dropdown-model="selectedClient.gstdealerKey"
+                    <div class="pull-left" dropdown-onchange="ShowGSTPeriod(selected)" dropdown-select="gsttyperesult" dropdown-model="selectedClient.gstdealerKey"
                         dropdown-item-label="text">
                     </div>
                     <br/>

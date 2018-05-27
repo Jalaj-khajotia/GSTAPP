@@ -372,6 +372,33 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
         } else {
             period = $scope.quaterKey.id;
         }
+        if(!$scope.client ||!$scope.client.id){
+            Gst.showErrorToast('Error', 'Client not selected');
+            return;  
+        }
+
+        if (!$scope.gsttypekey || !$scope.gsttypekey.id) {
+            Gst.showErrorToast('Error', 'GST Type not selected');
+            return;
+        }
+        if (!$scope.yearkey || !$scope.yearkey.id) {
+            Gst.showErrorToast('Error', 'FY not selected');
+            return;
+        }
+        if(!period){
+            Gst.showErrorToast('Error', 'Month not selected');
+            return;
+        }
+        if (!$scope.gststatuskey || !$scope.gststatuskey.id) {
+            Gst.showErrorToast('Error', 'GST Status not selected');
+            return;
+        }
+
+        if($scope.gststatuskey.id==3 && !($scope.gstpendingKey && $scope.gstpendingKey.id)){
+            Gst.showErrorToast('Error', 'Pending Status not selected');
+            return;
+        }
+
         var gstObj = {
             clientInfoId: $scope.client.id,
             year: $scope.yearkey.id,
