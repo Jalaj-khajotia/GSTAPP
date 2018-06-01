@@ -91,17 +91,31 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
             var report = Object.keys(data.report[0]);
             for (let i = 0; i < report.length; i++) {
                 const element = Object.values(data.report[0])[i];
-                $scope.gstReport.push({
-                    "tradename": element.tradename,
-                    "codeno": element.codeno,
-                    "gstin": element.gstin,
-                    "dealertype": element.dealertype,
-                    "gststatus": element.gststatus,
-                    "gstpendingstatus": element.gstpendingstatus,
-                    "receiptDate": element.receiptDate,
-                    "fillingDate": element.fillingDate,
-                    "remark": element.remark
-                });
+                if ($scope.showMonths && element.dealertype == 1) {
+                    $scope.gstReport.push({
+                        "tradename": element.tradename,
+                        "codeno": element.codeno,
+                        "gstin": element.gstin,
+                        "dealertype": element.dealertype,
+                        "gststatus": element.gststatus,
+                        "gstpendingstatus": element.gstpendingstatus,
+                        "receiptDate": element.receiptDate,
+                        "fillingDate": element.fillingDate,
+                        "remark": element.remark
+                    });
+                } else if (!$scope.showMonths && element.dealertype == 2) {
+                    $scope.gstReport.push({
+                        "tradename": element.tradename,
+                        "codeno": element.codeno,
+                        "gstin": element.gstin,
+                        "dealertype": element.dealertype,
+                        "gststatus": element.gststatus,
+                        "gstpendingstatus": element.gstpendingstatus,
+                        "receiptDate": element.receiptDate,
+                        "fillingDate": element.fillingDate,
+                        "remark": element.remark
+                    });
+                }
             }
         }, function () {
             Gst.showErrorToast('Error', 'Error while loading Report');
