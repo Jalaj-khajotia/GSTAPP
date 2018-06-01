@@ -48,7 +48,8 @@ angular.module('sbAdminApp')
                             gstin: clients[i].gstin,
                             regdate: clients[i].regdate,
                             userid: clients[i].userid,
-                            id: clients[i].id
+                            id: clients[i].id,
+                            dealertype: clients[i].dealertype
                         });
                     }
                 }, function () {
@@ -129,7 +130,7 @@ angular.module('sbAdminApp')
                     Gst.showErrorToast('Error', 'Unable to update client');
                 });
             }
-            
+
             $scope.confirmDeleteClient = function () {
                 var clientid = $scope.selectedClient.id;
                 Gst.deleteClient(clientid).then(function (data) {

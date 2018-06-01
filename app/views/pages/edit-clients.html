@@ -9,6 +9,7 @@
                     <th style="cursor:pointer" st-sort="tradename">Trade Name</th>
                     <th style="cursor:pointer" st-sort="gstin">GST No</th>
                     <th style="cursor:pointer" st-sort="userid">User Id</th>
+                    <th style="cursor:pointer" st-sort="dealertype">Dealer Type</th>
                     <th style="cursor:pointer" st-sort="regdate">Registration Date</th>
                     <th>Action</th>
                     <th>Action</th>
@@ -32,6 +33,7 @@
                     </td>
                     <td>{{data.gstin }}</td>
                     <td>{{data.userid}}</td>
+                    <td>{{data.dealertype==1?'Regular':'Composite'}}</td>
                     <td>{{data.regdate | date}}</td>
                     <td>
                         <a class="btn" href="" ng-click="editClient(data.id)">
