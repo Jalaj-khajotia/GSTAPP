@@ -40,6 +40,9 @@ angular.module('sbAdminApp')
             function LoadClientsData() {
                 Gst.getAllClients().then(function (data) {
                     $scope.rowCollection = [];
+                    if (!data || data.clients.length == 0) {
+                        Gst.showSuccessToast('Success', 'No Clients found');
+                    }
                     $scope.clients = data.clients;
                     var clients = data.clients;
                     for (let i = 0; i < clients.length; i++) {
@@ -49,7 +52,9 @@ angular.module('sbAdminApp')
                             regdate: clients[i].regdate,
                             userid: clients[i].userid,
                             id: clients[i].id,
-                            dealertype: clients[i].dealertype
+                            dealertype: clients[i].dealertype,
+                            codeno: clients[i].codeno,
+                            remark: clients[i].remark
                         });
                     }
                 }, function () {

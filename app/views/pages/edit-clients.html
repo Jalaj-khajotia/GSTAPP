@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row" style="font-size: 18px;margin-top:25px; ">
-        <h3 class="form-signin-heading">Edit Client Information</h3>
+        <h3 class="form-signin-heading">View/Edit Client Information</h3>
     </div>
     <div class="row">
         <table st-table="rowCollection" class="table table-striped">
@@ -11,7 +11,8 @@
                     <th style="cursor:pointer" st-sort="userid">User Id</th>
                     <th style="cursor:pointer" st-sort="dealertype">Dealer Type</th>
                     <th style="cursor:pointer" st-sort="regdate">Registration Date</th>
-                    <th>Action</th>
+                    <th style="cursor:pointer" st-sort="codeno">Code No</th>
+                    <th style="cursor:pointer" st-sort="remark">Remark</th>
                     <th>Action</th>
                 </tr>
                 <!-- <tr>
@@ -36,12 +37,14 @@
                     <td>{{data.dealertype==1?'Regular':'Composite'}}</td>
                     <td>{{data.regdate | date}}</td>
                     <td>
-                        <a class="btn" href="" ng-click="editClient(data.id)">
+                        {{data.codeno}}
+                    </td>
+                    <td>{{data.remark}}</td>
+                    <td>
+                        <a class="btn btn-padding" href="" ng-click="editClient(data.id)">
                             <i class="fa fa-pencil" aria-hidden="true"></i>
                         </a>
-                    </td>
-                    <td>
-                        <a class="btn" href="" ng-click="deleteClient(data.id)">
+                        <a class="btn btn-padding" href="" ng-click="deleteClient(data.id)">
                             <i class="fa fa-trash" aria-hidden="true"></i>
                         </a>
                     </td>

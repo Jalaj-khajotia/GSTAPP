@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row" style="font-size: 18px;margin-top:25px; ">
-        <h3 class="form-signin-heading">View GST Information</h3>
+        <h3 class="form-signin-heading">View/Edit GST Information</h3>
     </div>
     <div class="row">
         <div class="col col-md-3">
@@ -17,10 +17,13 @@
         </div>
     </div>
     <div class="row">
-        <div class="col col-md-6">Financial Year</div>
-        <div class="col col-md-6">
-            <div dropdown-select="yearsResult" dropdown-onchange="loadGstFYChanged(selected)" dropdown-model="yearkey" dropdown-item-label="text">
+        <div class="col col-md-5 item-font">Financial Year</div>
+        <div class="col col-md-5">
+            <div dropdown-select="yearsResult" dropdown-model="yearkey" dropdown-item-label="text">
             </div>
+        </div>
+        <div class="col col-md-2">
+            <button class="btn btn-lg btn-primary btn-block" ng-click="loadGstFYChanged()">Load</button>
         </div>
     </div>
     <table st-table="rowCollection" class="table table-striped">
@@ -62,18 +65,12 @@
                 <td ng-bind="data.receiptDate | date:'dd/MM/yyyy'"></td>
                 <td ng-bind="data.fillingDate | date:'dd/MM/yyyy'"></td>
                 <td>
-                    <div class="row">
-                        <div class="col col-md-6">
-                            <button class="btn btn-lg btn-primary btn-block custom-icons" ng-click="editGstInfo(data.id)">
-                                <i class="fa fa-pencil" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <div class="col col-md-6">
-                            <button class="btn btn-lg btn-primary btn-block custom-icons" ng-click="deleteGstInfo(data.id)">
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                    </div>
+                    <button class="btn btn-padding " ng-click="editGstInfo(data.id)">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn btn-padding " ng-click="deleteGstInfo(data.id)">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
                 </td>
             </tr>
         </tbody>

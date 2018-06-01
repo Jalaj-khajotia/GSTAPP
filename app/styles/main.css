@@ -10,6 +10,15 @@ body {
     opacity: 1 !important;
 }
 
+.btn-padding {
+    padding: 15px !important;
+    line-height: 6px !important;
+}
+
+.item-font {
+    font-size: 18px !important;
+}
+
 .text-red {
     color: red;
 }

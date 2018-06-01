@@ -550,7 +550,7 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
         for (let i = 0; i < data.length; i++) {
             var gstPeriod = $scope.getGstPeriod(data[i].period, $scope.client.dealertype);
             var period = gstPeriod ? gstPeriod.text : '';
-            if(!period){
+            if (!period) {
                 Gst.showErrorToast('Error', 'Error in GST table');
             }
             var gsttypeid = $scope.getGstFormType(data[i].gstFormType) ? $scope.getGstFormType(data[i].gstFormType).text : '';
@@ -571,12 +571,23 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
 
     function LoadGstData() {
         $scope.GstData = [];
+        if (!$scope.client || !$scope.client.id) {
+            Gst.showErrorToast('Error', 'Client not selected');
+            return;
+        }
+        if (!$scope.yearkey || !$scope.yearkey.id) {
+            Gst.showErrorToast('Error', 'Year not selected');
+            return;
+        }
         setTimeout(function () {
             console.log($scope.yearkey.id);
 
             if ($scope.client.id == "0" || $scope.client.id) {
-                Gst.gstInfo($scope.client.id).then(function (data) {
-                    delete  $scope.rowCollection;
+                Gst.gstInfo($scope.client.id, $scope.yearkey.id).then(function (data) {
+                    delete $scope.rowCollection;
+                    if (data.length == 0) {
+                        Gst.showSuccessToast('Success', 'No GST Record');
+                    }
                     for (var i = 0; i < data.length; i++) {
                         if (data[i].year == $scope.yearkey.id) {
                             $scope.GstData.push(data[i]);

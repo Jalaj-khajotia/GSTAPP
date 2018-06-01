@@ -3,45 +3,45 @@
         <h3 class="form-signin-heading">GST Report</h3>
     </div>
     <div class="row">
-        <div class="col col-md-6">Financial Year</div>
+        <div class="col col-md-6 item-font">Financial Year</div>
         <div class="col col-md-6">
             <div dropdown-select="yearsResult" dropdown-onchange="loadGstFYChanged(selected)" dropdown-model="yearkey" dropdown-item-label="text">
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col col-md-6">GST Type</div>
+        <div class="col col-md-6 item-font">GST Type</div>
         <div class="col col-md-6">
             <div dropdown-select="gstformresult" dropdown-onchange="loadGstFYChanged(selected)" dropdown-model="gsttypekey" dropdown-item-label="text">
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col col-md-6">Dealer Type</div>
+        <div class="col col-md-6 item-font">Dealer Type</div>
         <div class="col col-md-6">
             <div style="display:inline; margin-left: 125px;">
                 <label style="font-size:15px">
-                    <input class="radiobtn" type="radio" ng-click="selectDealerType()" ng-model="dealerType" name="name" value="quarter" required
+                    <input class="radiobtn" type="radio" ng-click="selectDealerType('month')" ng-model="dealerType" name="name" value="month" required
                     /> Regular
                 </label>
             </div>
             <div style="display:inline;">
                 <label style="font-size:15px">
-                    <input class="radiobtn" type="radio" ng-click="selectDealerType()" ng-model="dealerType" name="name" value="month" required
+                    <input class="radiobtn" type="radio" ng-click="selectDealerType('quarter')" ng-model="dealerType" name="name" value="quarter" required
                     /> Composite
                 </label>
             </div>
         </div>
     </div>
     <div class="row" ng-show="showMonths">
-        <div class="col col-md-6">Month</div>
+        <div class="col col-md-6 item-font">Month</div>
         <div class="col col-md-6">
-            <div dropdown-select="monthResult" dropdown-onchange="setPeriod(selected)" dropdown-model="monthResultKey" dropdown-item-label="text">
+            <div dropdown-select="monthResult" dropdown-onchange="setPeriod(selected)" dropdown-model="monthkey" dropdown-item-label="text">
             </div>
         </div>
     </div>
     <div class="row" ng-hide="showMonths">
-        <div class="col col-md-6">Quarter</div>
+        <div class="col col-md-6 item-font">Quarter</div>
         <div class="col col-md-6">
             <div dropdown-select="quaterResult" dropdown-onchange="setPeriod(selected)" dropdown-model="quaterKey" dropdown-item-label="text">
             </div>

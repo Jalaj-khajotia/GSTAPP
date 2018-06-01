@@ -17,7 +17,7 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
     $scope.gstformresult = [];
     $scope.quaterResult = [];
     $scope.gstReport = [];
-    $scope.showMonths = false;
+    $scope.showMonths = true;
     $scope.dealerType = 'month';
 
     $scope.yearkey = {
@@ -44,15 +44,22 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
         value: ''
     }
 
-    $scope.monthResultKey = {
-        text: 'Select Month',
-        value: ''
-    }
+    $scope.selectDealerType = function (value) {
+        $scope.monthkey = {
+            text: 'Select Month',
+            value: ''
+        };
 
+        $scope.quaterKey = {
+            text: 'Select Quarter',
+            value: ''
+        }
 
-    $scope.selectDealerType = function () {
-        if ($scope.dealerType == 'month') {
+        $scope.period = '';
+
+        if (value == 'month') {
             $scope.showMonths = true;
+
         } else {
             $scope.showMonths = false;
         }
@@ -76,8 +83,13 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
             return;
         }
 
-        if (!$scope.period || !$scope.period.id) {
-            Gst.showErrorToast('Error', 'Period not selected');
+        if ($scope.showMonths && (!$scope.period)) {
+            Gst.showErrorToast('Error', 'Month not selected');
+            return;
+        }
+
+        if (!$scope.showMonths && (!$scope.period)) {
+            Gst.showErrorToast('Error', 'Quarter not selected');
             return;
         }
 
@@ -117,11 +129,13 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
                     });
                 }
             }
+            if ( $scope.gstReport.length == 0) {
+                Gst.showSuccessToast('Success', 'No Reports found');
+            }
         }, function () {
             Gst.showErrorToast('Error', 'Error while loading Report');
         })
     }
-    $scope.itemsByPage = 5;
 
     $scope.getGstStatus = function (data) {
         for (let i = 0; i < $scope.gstStatusTypesResult.length; i++) {

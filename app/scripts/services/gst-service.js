@@ -169,10 +169,11 @@ function service($http, $q, $cookieStore, localStorageService, toaster, $locatio
         return deferred.promise;
     }
 
-    this.gstInfo = function (id) {
+    this.gstInfo = function (clientid, fy) {
         var deferred = $q.defer();
         var payload = {
-            id: id
+            id: clientid,
+            year: fy
         };
         $http.post(api + 'fetchclientgst', payload).success(function (data) {
             deferred.resolve(data);
