@@ -24,6 +24,16 @@ function service($http, $q, $cookieStore, localStorageService, toaster, $locatio
         toaster.pop('error', title, body);
     }
 
+    this.getGSTReport = function (payload) {
+        var deferred = $q.defer();
+        $http.post(api + 'getgstreport', payload).success(function (data) {
+            deferred.resolve(data);
+        }).error(function (error) {
+            deferred.reject(error);
+        });
+        return deferred.promise;
+    }
+
     this.signIn = function (dt) {
         var deferred = $q.defer();
         var payload = dt;

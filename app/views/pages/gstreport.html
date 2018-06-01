@@ -1,0 +1,104 @@
+<div class="container">
+    <div class="row" style="font-size: 18px;margin-top:25px; ">
+        <h3 class="form-signin-heading">GST Report</h3>
+    </div>
+    <div class="row">
+        <div class="col col-md-6">Financial Year</div>
+        <div class="col col-md-6">
+            <div dropdown-select="yearsResult" dropdown-onchange="loadGstFYChanged(selected)" dropdown-model="yearkey" dropdown-item-label="text">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-md-6">GST Type</div>
+        <div class="col col-md-6">
+            <div dropdown-select="gstformresult" dropdown-onchange="loadGstFYChanged(selected)" dropdown-model="gsttypekey" dropdown-item-label="text">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-md-6">Dealer Type</div>
+        <div class="col col-md-6">
+            <div style="display:inline; margin-left: 125px;">
+                <label style="font-size:15px">Regular
+                    <input class="radiobtn" type="radio" ng-click="selectDealerType()" ng-model="dealerType" name="name" value="quarter" required
+                    />
+                </label>
+            </div>
+            <div style="display:inline;">
+                <label style="font-size:15px">Composite
+                    <input class="radiobtn" type="radio" ng-click="selectDealerType()" ng-model="dealerType" name="name" value="month" required
+                    />
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-show="showMonths">
+        <div class="col col-md-6">Month</div>
+        <div class="col col-md-6">
+            <div dropdown-select="monthResult" dropdown-onchange="setPeriod(selected)" dropdown-model="monthResultKey" dropdown-item-label="text">
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-hide="showMonths">
+        <div class="col col-md-6">Quarter</div>
+        <div class="col col-md-6">
+            <div dropdown-select="quaterResult" dropdown-onchange="setPeriod(selected)" dropdown-model="quaterKey" dropdown-item-label="text">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" style="margin: 0px 40%; margin-bottom: 30px;">
+            <button class="btn btn-lg btn-primary btn-block" ng-click="getGSTReport()">Load Report</button>
+        </div>
+    </div>
+    <table st-table="gstReport" class="table table-striped">
+        <thead>
+            <tr>
+                <th style="cursor:pointer">Trade Name</th>
+                <th style="cursor:pointer">Code No.</th>
+                <th style="cursor:pointer">GSTIN</th>
+                <th style="cursor:pointer">Status</th>
+                <th style="cursor:pointer">Pending Reason</th>
+                <th>Receipt Date</th>
+                <th>Filling Date</th>
+            </tr>
+            <!-- <tr>
+                <th>
+                    <input st-search="periodTime" placeholder="Search" />
+                </th>
+                <th>
+                    <input st-search="gstFormType" placeholder="Search" />
+                </th>
+                <th>
+                    <input st-search="gstStatus" placeholder="Search" />
+                </th>
+                <th>
+                    <input st-search="gstPendingStatus" placeholder="Search" />
+                </th>
+            </tr> -->
+        </thead>
+        <tbody>
+            <tr ng-repeat="data in gstReport">
+                <td>
+                    {{data.tradename|uppercase }}
+                </td>
+                <td>{{data.codeno | uppercase }}</td>
+                <td>{{data.gstin}}</td>
+                <td>{{getGstStatus(data.gststatus).text}}</td>
+                <td>
+                    {{getPendingGstStatus(data.gstpendingstatus).text}}
+                </td>
+                <td ng-bind="data.receiptDate | date:'dd/MM/yyyy'"></td>
+                <td ng-bind="data.fillingDate | date:'dd/MM/yyyy'"></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5" class="text-center">
+                    <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>

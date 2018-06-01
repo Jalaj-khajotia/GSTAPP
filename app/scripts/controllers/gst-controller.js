@@ -159,7 +159,7 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
         };
 
         $scope.quaterKey = {
-            text: 'Select Quater',
+            text: 'Select Quarter',
             value: ''
         }
 

@@ -96,16 +96,16 @@ angular
                         }
                     }
                 })
-                .state('dashboard.Customer', {
-                    url: '/customer',
-                    controller: 'CustomerCtrl',
-                    templateUrl: 'views/pages/customer.html',
+                .state('dashboard.gstreport', {
+                    url: '/gstreport',
+                    controller: 'GSTReportCtrl',
+                    templateUrl: 'views/pages/gstreport.html',
                     resolve: {
                         loadMyFiles: function ($ocLazyLoad) {
                             return $ocLazyLoad.load({
                                 name: 'sbAdminApp',
                                 files: [
-                                    'scripts/controllers/csearch-controller.js'
+                                    'scripts/controllers/gstreport-controller.js'
                                 ]
                             })
                         }
