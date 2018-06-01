@@ -89,7 +89,6 @@ angular
                                     'styles/dashboard.css',
                                     'scripts/controllers/home-controller.js',
                                     'scripts/directives/notifications/notifications.js',
-                                    'scripts/directives/chat/chat.js',
                                     'scripts/directives/dashboard/stats/stats.js'
                                 ]
                             })
@@ -246,84 +245,6 @@ angular
                         }
                     }
                 })
-                .state('dashboard.catalog', {
-                    url: '/catalog',
-                    controller: 'CatalogCtrl',
-                    templateUrl: 'views/pages/browse-books.html',
-                    resolve: {
-                        loadMyFiles: function ($ocLazyLoad) {
-                            return $ocLazyLoad.load({
-                                name: 'sbAdminApp',
-                                files: [
-                                    'scripts/controllers/catalog-controller.js'
-                                ]
-                            })
-                        }
-                    }
-                })
-                .state('dashboard.returns', {
-                    url: '/returns',
-                    controller: 'ReturnCtrl',
-                    templateUrl: 'views/pages/returns-books.html',
-                    resolve: {
-                        loadMyFiles: function ($ocLazyLoad) {
-                            return $ocLazyLoad.load({
-                                name: 'sbAdminApp',
-                                files: [
-                                    'scripts/controllers/return-controller.js'
-                                ]
-                            })
-                        }
-                    }
-                })
-                .state('dashboard.browseCatalog', {
-                    url: '/catalog/:type/:id',
-                    controller: 'BookCtrl',
-                    templateUrl: 'views/pages/books.html',
-                    resolve: {
-                        loadMyFiles: function ($ocLazyLoad) {
-                            return $ocLazyLoad.load({
-                                name: 'sbAdminApp',
-                                files: [
-                                    'styles/dashboard.css',
-                                    'scripts/controllers/books-controller.js'
-                                ]
-                            })
-                        }
-                    }
-                })
-                .state('dashboard.cart', {
-                    url: '/cart',
-                    controller: 'CartCtrl',
-                    templateUrl: 'views/pages/cart.html',
-                    resolve: {
-                        loadMyFiles: function ($ocLazyLoad) {
-                            return $ocLazyLoad.load({
-                                name: 'sbAdminApp',
-                                files: [
-                                    'styles/dashboard.css',
-                                    'scripts/controllers/cart-controller.js'
-                                ]
-                            })
-                        }
-                    }
-                })
-                .state('dashboard.issue', {
-                    url: '/issue-history',
-                    controller: 'IssueCtrl',
-                    templateUrl: 'views/pages/issue-history.html',
-                    resolve: {
-                        loadMyFiles: function ($ocLazyLoad) {
-                            return $ocLazyLoad.load({
-                                name: 'sbAdminApp',
-                                files: [
-                                    'styles/dashboard.css',
-                                    'scripts/controllers/issue-controller.js'
-                                ]
-                            })
-                        }
-                    }
-                })
                 .state('login', {
                     templateUrl: 'views/pages/login.html',
                     url: '/login',
@@ -336,25 +257,6 @@ angular
                             })
                         }
                     }
-                })
-                .state('dashboard.profile', {
-                    templateUrl: 'views/pages/profile.html',
-                    url: '/profile',
-                    controller: 'ProfileCtrl',
-                    resolve: {
-                        loadMyFiles: function ($ocLazyLoad) {
-                            return $ocLazyLoad.load({
-                                name: 'sbAdminApp',
-                                files: ['scripts/controllers/profile-controller.js',
-                                    'styles/profile.css'
-                                ]
-                            })
-                        }
-                    }
-                })
-                .state('dashboard.notifications', {
-                    templateUrl: 'views/ui-elements/notifications.html',
-                    url: '/notifications'
                 })
         }
     ]);
