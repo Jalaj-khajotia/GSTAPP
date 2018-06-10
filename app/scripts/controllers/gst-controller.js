@@ -401,6 +401,8 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
             Gst.showErrorToast('Error', 'Pending Status not selected');
             return;
         }
+        var receiptDate = moment($scope.receiptDate).calendar();
+        var fillingDate = moment($scope.fillingDate).calendar();
 
         var gstObj = {
             clientInfoId: $scope.client.id,
@@ -408,8 +410,8 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
             period: period,
             gstFormType: $scope.gsttypekey.id,
             gstpendingstatus: $scope.gstpendingKey.id,
-            receiptDate: $scope.receiptDate,
-            fillingDate: $scope.fillingDate,
+            receiptDate: receiptDate,
+            fillingDate: fillingDate,
             remark: $scope.remark,
             gststatus: $scope.gststatuskey.id
         }
