@@ -337,7 +337,7 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
         $scope.minDate = $scope.minDate ? null : new Date();
     };
     $scope.toggleMin();
-    $scope.format = 'shortDate';
+    $scope.format = 'dd.MM.yyyy';
 
     $scope.ShowGSTPeriod = function (data) {
         setTimeout(function () {;
