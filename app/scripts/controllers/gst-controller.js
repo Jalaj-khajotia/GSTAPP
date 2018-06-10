@@ -269,8 +269,8 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
 
     $scope.addClient = function () {
 
-        var regDate = moment($scope.regdate).add(1, 'days').calendar();
-        var canDate = moment($scope.cancellationdate).add(1, 'days').calendar();
+        var regDate = moment($scope.regdate).calendar();
+        var canDate = moment($scope.cancellationdate).calendar();
 
         Gst.addClient({
             "codeno": $scope.codeno,
