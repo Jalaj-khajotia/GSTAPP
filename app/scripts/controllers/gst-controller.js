@@ -269,13 +269,16 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
 
     $scope.addClient = function () {
 
+        var regDate = moment($scope.regdate).add(1, 'days').calendar();
+        var canDate = moment($scope.cancellationdate).add(1, 'days').calendar();
+
         Gst.addClient({
             "codeno": $scope.codeno,
             "tradename": $scope.tradename,
             "legalname": $scope.legalname,
             "address": $scope.address,
             "gstin": $scope.gstin,
-            "regdate": $scope.regdate,
+            "regdate": regDate,
             "dealertype": $scope.gstdealerKey.id,
             "userid": $scope.userid,
             "password": $scope.password,
@@ -283,7 +286,7 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
             "emailid": $scope.emailid,
             "ewayuserid": $scope.ewaybillid,
             "ewaypassword": $scope.ewaypassword,
-            "cancellationdate": $scope.cancellationdate
+            "cancellationdate": canDate
 
         }).then(function () {
             Gst.showSuccessToast('Success', 'Client added');
@@ -337,7 +340,7 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
         $scope.minDate = $scope.minDate ? null : new Date();
     };
     $scope.toggleMin();
-    $scope.format = 'dd.MM.yyyy';
+    $scope.format = 'shortDate';
 
     $scope.ShowGSTPeriod = function (data) {
         setTimeout(function () {;

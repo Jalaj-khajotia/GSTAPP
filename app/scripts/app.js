@@ -25,7 +25,8 @@ angular
         'smart-table',
         'LocalStorageModule',
         'toaster',
-        'ngAnimate'
+        'ngAnimate',
+        'angularMoment'
     ])
 
     .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider',

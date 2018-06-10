@@ -26,7 +26,9 @@
     "angular-mass-autocomplete": "^0.8.0",
     "angucomplete-ie8": "^0.1.2",
     "AngularJS-Toaster": "angularjs-toaster#^2.2.0",
-    "angular-local-storage": "^0.7.1"
+    "angular-local-storage": "^0.7.1",
+    "angular-moment": "^1.2.0",
+    "moment": "^2.22.2"
   },
   "devDependencies": {
     "angular-mocks": "1.2.16"
