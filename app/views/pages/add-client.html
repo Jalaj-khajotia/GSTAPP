@@ -27,7 +27,7 @@
             <label for="regdate">Date of Registration</label>
             <div class="col-md-12">
                 <p class="input-group">
-                    <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="regdate" is-open="opened2" max-date="'2025-06-22'"
+                    <input type="text" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="regdate" is-open="opened2" max-date="'2025-06-22'"
                        datepicker-options="dateOptions" ng-required="true" close-text="Close"
                     />
                     <span class="input-group-btn">
@@ -81,7 +81,7 @@
              -->
             <div class="col-md-12">
                 <p class="input-group">
-                    <input id="datepicker" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="cancellationdate" is-open="opened"
+                    <input id="datepicker" type="text" datepicker-popup="dd/MM/yyyy" class="form-control" ng-model="cancellationdate" is-open="opened"
                         max-date="'2025-06-22'" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="open($event)">

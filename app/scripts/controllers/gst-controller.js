@@ -403,7 +403,9 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
         }
         var receiptDate = moment($scope.receiptDate).calendar();
         var fillingDate = moment($scope.fillingDate).calendar();
-
+        if (!$scope.showPendingDropdown) {
+            fillingDate = null;
+        }
         var gstObj = {
             clientInfoId: $scope.client.id,
             year: $scope.yearkey.id,
@@ -703,6 +705,11 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
             period = $scope.selectedGst.quaterKey.id;
         }
         var pendingId = $scope.selectedGst.gstpendingKey ? $scope.selectedGst.gstpendingKey.id : null;
+
+        if ($scope.selectedGst.showPendingDropdown) {
+            $scope.selectedGst.fillingDate = null;
+        }
+
         var gstObj = {
             id: $scope.selectedGst.id,
             clientInfoId: $scope.client.id,
