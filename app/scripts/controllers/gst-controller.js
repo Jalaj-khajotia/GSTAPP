@@ -291,8 +291,8 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
         }).then(function () {
             Gst.showSuccessToast('Success', 'Client added');
             ResetFields();
-        }, function () {
-            Gst.showErrorToast('Error', 'Try adding client again');
+        }, function (e) {
+            Gst.showErrorToast('Error', e.error +' in data');
         });
 
         SetDefaults();
