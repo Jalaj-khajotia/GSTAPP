@@ -114,7 +114,8 @@
                     <td>
                         Eway Cancellation Date
                     </td>
-                    <td ng-bind="client.cancellationdate | date:'dd/MM/yyyy'"></td>
+                    <td ng-hide="hideDate" ng-bind="client.cancellationdate | date:'dd/MM/yyyy'"></td>
+                    <td ng-show="hideDate">-not given-</td>
                 </tr>
                 <tr>
                     <td>

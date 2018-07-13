@@ -75,25 +75,26 @@
         <div class="container">
             <h4>Edit Client</h4>
             <form>
+                <input name="email" class="hide">
                 <div class="form-group">
                     <label for="code">Code Number</label>
-                    <input ng-model="selectedClient.codeno" type="number" class="form-control" id="code" placeholder="Mention Code No.">
+                    <input ng-model="selectedClient.codeno" autocomplete="new-password" type="number" class="form-control" id="code" placeholder="Mention Code No.">
                 </div>
                 <div class="form-group">
                     <label for="trade">Trade Name</label>
-                    <input ng-model="selectedClient.tradename" type="text" class="form-control" id="trade" placeholder="Mention Trade Name">
+                    <input ng-model="selectedClient.tradename" autocomplete="new-password" type="text" class="form-control" id="trade" placeholder="Mention Trade Name">
                 </div>
                 <div class="form-group">
                     <label for="name">Legal Name</label>
-                    <input ng-model="selectedClient.legalname" type="text" class="form-control" id="name" placeholder="Mention legal name">
+                    <input ng-model="selectedClient.legalname" autocomplete="new-password" type="text" class="form-control" id="name" placeholder="Mention legal name">
                 </div>
                 <div class="form-group">
                     <label for="address">Address</label>
-                    <input ng-model="selectedClient.address" type="text" class="form-control" id="address" placeholder="Mention Address">
+                    <input ng-model="selectedClient.address" autocomplete="new-password" type="text" class="form-control" id="address" placeholder="Mention Address">
                 </div>
                 <div class="form-group">
                     <label for="gst"> GSTIN Number</label>
-                    <input ng-model="selectedClient.gstin" type="text" class="form-control" id="gst" placeholder="Mention GST no.">
+                    <input ng-model="selectedClient.gstin" autocomplete="new-password" type="text" class="form-control" id="gst" placeholder="Mention GST no.">
                 </div>
                 <div class="form-group">
                     <label for="regdate">Date of Registration</label>
@@ -123,27 +124,27 @@
                 </div>
                 <div class="form-group">
                     <label for="UserId ">User Id</label>
-                    <input ng-model="selectedClient.userid" type="text" class="form-control" id="UserId" placeholder="Mention User Id">
+                    <input ng-model="selectedClient.userid" autocomplete="new-password" type="text" class="form-control" id="UserId" placeholder="Mention User Id">
                 </div>
                 <div class="form-group">
                     <label for="gstp">Password</label>
-                    <input ng-model="selectedClient.password" type="text" class="form-control" id="gstp" placeholder="Mention GST password">
+                    <input ng-model="selectedClient.password" autocomplete="new-password" type="text" class="form-control" id="gstp" placeholder="Mention GST password">
                 </div>
                 <div class="form-group">
                     <label for="mobile">Mobile no</label>
-                    <input ng-model="selectedClient.mobile" type="number" class="form-control" id="mobile" placeholder="Mention a mobile no.">
+                    <input ng-model="selectedClient.mobile" autocomplete="new-password" type="number" class="form-control" id="mobile" placeholder="Mention a mobile no.">
                 </div>
                 <div class="form-group">
                     <label for="email">Email Id</label>
-                    <input ng-model="selectedClient.emailid" type="email" class="form-control" id="email" placeholder="Mention a email id">
+                    <input ng-model="selectedClient.emailid" autocomplete="new-password" type="email" class="form-control" id="email" placeholder="Mention a email id">
                 </div>
                 <div class="form-group">
                     <label for="ebill">E Way User Id</label>
-                    <input ng-model="selectedClient.ewayuserid" type="text" class="form-control" id="ebill" placeholder="Mention Eway UserId">
+                    <input ng-model="selectedClient.ewayuserid" autocomplete="new-password" type="text" class="form-control" id="ebill" placeholder="Mention Eway UserId">
                 </div>
                 <div class="form-group">
                     <label for="ebillp">E way Password</label>
-                    <input ng-model="selectedClient.ewaypassword" type="text" class="form-control" id="ebillp" placeholder="Mention a Eway password">
+                    <input ng-model="selectedClient.ewaypassword" autocomplete="new-password" type="text" class="form-control" id="ebillp" placeholder="Mention a Eway password">
                 </div>
                 <div class="form-group">
                     <label for="canceldate">Cancel Date</label>

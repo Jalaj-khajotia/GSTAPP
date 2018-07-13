@@ -292,7 +292,7 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
             Gst.showSuccessToast('Success', 'Client added');
             ResetFields();
         }, function (e) {
-            Gst.showErrorToast('Error', e.error +' in data');
+            Gst.showErrorToast('Error', e.error + ' in data');
         });
 
         SetDefaults();
@@ -626,6 +626,8 @@ function controller($scope, Gst, $q, $timeout, $cookieStore, toaster) {
 
     $scope.selectedClient = function (data) {
         $scope.client = data.originalObject;
+        $scope.hideDate = data.originalObject.cancellationdate == '0000-00-00' ? true : false;
+        console.log($scope.hideDate);
         console.log(data);
         if ($scope.client.dealertype == 1) {
             $scope.showMonths = true;
